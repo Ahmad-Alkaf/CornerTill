@@ -22,7 +22,7 @@ export default function AccountsTable({
     { open: true; account: IUser } | { open: false; account?: IUser }
   >({ open: false });
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <section className="bg-white p-4 pb-0 shadow sm:rounded-lg sm:p-8 sm:pb-0">
       <CreateEditAccountModal
@@ -31,8 +31,8 @@ export default function AccountsTable({
         setModalAction={setModalAction}
       />
 
-      <header>
-        <h2 className="text-lg font-medium text-gray-900">Accounts</h2>
+      <header dir={i18n.dir()}>
+        <h2 className="text-lg font-medium text-gray-900">{ t( "Accounts" ) }</h2>
 
         <div className="flex">
           <p className="text-normal mt-1 grow text-gray-600">

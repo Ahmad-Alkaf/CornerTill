@@ -26,6 +26,8 @@ export default function FormImage({
     "removed" | "change" | "default"
   >(() => "default");
 
+  const {t} = useTranslation();
+
   if (state === "create")
     return (
       <InputImage
@@ -72,7 +74,7 @@ export default function FormImage({
               form.setData("img", null);
             }}
           >
-            Remove&nbsp;Image
+            { t( "Remove{{0}}Image" , {"0":"\u00A0"}) }
           </DangerButton>
         </div>
       </>
@@ -125,12 +127,10 @@ function InputImage({
           ((img === null && state === "edit") ||
           editImageState === "removed" ||
           state === "create"
-            ? t("Choose")
+            ? t("Choose Image")
             : editImageState === "change"
-              ? t("Change")
-              : "") +
-          " " +
-          t("Image")
+              ? t("Change Image")
+              : t( "Image" ))
         }
         type="file"
         className="mt-1 block w-full"
@@ -145,7 +145,6 @@ function InputImage({
         hideError={form.isDirty("img") || form.isDirty("imageFile")}
         hint={t("We recommend an image with white background")}
       />
-      {/* {form.progress && <Progress value={50}/>} */},
     </>
   );
 }

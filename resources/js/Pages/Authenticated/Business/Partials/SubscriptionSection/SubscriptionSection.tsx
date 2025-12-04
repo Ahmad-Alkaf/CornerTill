@@ -39,7 +39,7 @@ export default function SubscriptionSection({
     subscribedTo === "Basic";
   const downgradeClass = "!from-danger-500 !to-danger-700";
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <section className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
@@ -117,12 +117,16 @@ export default function SubscriptionSection({
           { text: "Cancel", type: "secondary" },
         ]}
       />
-      <div className="space-y-6">
+      <div dir={i18n.dir()} className="space-y-6">
         <header className="max-w-xl">
-          <h2 className="text-lg font-medium text-gray-900">Subscription</h2>
+          <h2 className="text-lg font-medium text-gray-900">
+            {t("Subscription")}
+          </h2>
           <p className="text-normal mb-4 text-gray-600">
-            { t( "If you need more resources for your POS system, please contact us and we will be happy to assist you with a custom plan." ) }
-              <SupportEmailLink />
+            {t(
+              "If you need more resources for your POS system, please contact us and we will be happy to assist you with a custom plan",
+            )}{" "}
+            <SupportEmailLink />
           </p>
           <SubscriptionState subscriptionData={subscriptionLinks} />
         </header>

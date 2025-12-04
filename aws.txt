@@ -1,0 +1,5 @@
+Mumbai > vpc-0dfbd26718c86c8bd > subnet-0f9d4b81685b29380 > EC2
+	  						   > subnet-08e66e4b615e33705 \
+	  						   > subnet-02c26b93e1d284f29  > RDS 
+	  						   > subnet-0bf4b611f9563873e /
+							   
