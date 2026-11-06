@@ -27,6 +27,26 @@ class BusinessController extends Controller
         ])->find($request->user()->business_id);
         Gate::authorize('edit', $business);
 
+        // Free beta (PAYMENTS_ENABLED=false): no Paddle plans, only the beta limits.
+        if (!config('features.payments_enabled')) {
+            return Inertia::render('Authenticated/Business/Edit', [
+                'business' => $business,
+                'plansMaxRes' => config('constants.planResources'),
+                'subscriptionLinks' => [
+                    'basic' => null,
+                    'enhanced' => null,
+                    'advanced' => null,
+                    'subscribedTo' => 'Beta',
+                    'state' => null,
+                    'onTrial' => null,
+                    'progress' => $business->progress(),
+                    'lastPayment' => null,
+                    'nextPayment' => null,
+                    'gracePeriodExpiresAt' => null,
+                ],
+            ]);
+        }
+
         // dd(
         //     'Subscribed:',
         //     $business->subscribed(),
@@ -47,11 +67,11 @@ class BusinessController extends Controller
         //     'Past Due (payment failed, customer should update payment method):',
         //     $business->subscription()?->pastDue(),
         //     'Subscribed to Advance:',
-        //     $business->subscription()?->hasProduct(env( 'PADDLE_PRODUCT_ID_ADVANCED' )),
+        //     $business->subscription()?->hasProduct(config('services.paddle.products.advanced')),
         //     'Subscribed to Enhanced:',
-        //     $business->subscription()?->hasProduct(env( 'PADDLE_PRODUCT_ID_ENHANCED' )),
+        //     $business->subscription()?->hasProduct(config('services.paddle.products.enhanced')),
         //     'Subscribed to Basic:',
-        //     $business->subscription()?->hasProduct(env( 'PADDLE_PRODUCT_ID_BASIC' )),
+        //     $business->subscription()?->hasProduct(config('services.paddle.products.basic')),
         // );
         // dd('Next billing cycle:', $business->subscription()->nextPayment());
         // dd('paused:', $business->subscription()->paused());
@@ -79,20 +99,20 @@ class BusinessController extends Controller
             else if ($sub->paused())
                 $state = 'Paused';
 
-            if ($sub->hasProduct(env('PADDLE_PRODUCT_ID_ADVANCED')))
+            if ($sub->hasProduct(config('services.paddle.products.advanced')))
                 $subscribedTo = 'Advanced';
-            else if ($sub->hasProduct(env('PADDLE_PRODUCT_ID_ENHANCED')))
+            else if ($sub->hasProduct(config('services.paddle.products.enhanced')))
                 $subscribedTo = 'Enhanced';
-            else if ($sub->hasProduct(env('PADDLE_PRODUCT_ID_BASIC')))
+            else if ($sub->hasProduct(config('services.paddle.products.basic')))
                 $subscribedTo = 'Basic';
         } else if ($business->onTrial()) {
             $subscribedTo = 'Trial';
         }
 
         //                                                monthly,                          annually
-        $basicPrices    = $subscribedTo === 'Basic'    ? [null, null] : [env('PADDLE_PRICE_ID_BASIC_MONTHLY'), env('PADDLE_PRICE_ID_BASIC_ANNUALLY')];
-        $enhancedPrices = $subscribedTo === 'Enhanced' ? [null, null] : [env('PADDLE_PRICE_ID_ENHANCED_MONTHLY'), env('PADDLE_PRICE_ID_ENHANCED_ANNUALLY')];
-        $advancedPrices = $subscribedTo === 'Advanced' ? [null, null] : [env('PADDLE_PRICE_ID_ADVANCED_MONTHLY'), env('PADDLE_PRICE_ID_ADVANCED_ANNUALLY')];
+        $basicPrices    = $subscribedTo === 'Basic'    ? [null, null] : [config('services.paddle.prices.basic.monthly'), config('services.paddle.prices.basic.annually')];
+        $enhancedPrices = $subscribedTo === 'Enhanced' ? [null, null] : [config('services.paddle.prices.enhanced.monthly'), config('services.paddle.prices.enhanced.annually')];
+        $advancedPrices = $subscribedTo === 'Advanced' ? [null, null] : [config('services.paddle.prices.advanced.monthly'), config('services.paddle.prices.advanced.annually')];
 
         $prices = [
             ...$basicPrices,
@@ -196,7 +216,7 @@ class BusinessController extends Controller
 
     private function deleteFile(string $filePath)
     {
-        if (env('FILESYSTEM_DISK') == 's3')
+        if (config('filesystems.default') == 's3')
             return Storage::disk('businesses-logo')->delete(basename($filePath));
         return Storage::disk('businesses-logo')->delete($filePath);
     }
@@ -204,7 +224,7 @@ class BusinessController extends Controller
     /**Store a file in the correspond filesystem and return the path/name. If file stored in the cloud and name if locally  */
     private function storeFile(Request $request): string
     {
-        if (env('FILESYSTEM_DISK') == 's3')
+        if (config('filesystems.default') == 's3')
             return $this->businessesStorage()->url($request->logoFile->store('', 'businesses-logo'));
         return $request->logoFile->store('', 'businesses-logo');
     }

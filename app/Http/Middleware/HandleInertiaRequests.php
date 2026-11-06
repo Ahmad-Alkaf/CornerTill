@@ -42,6 +42,15 @@ class HandleInertiaRequests extends Middleware
                 'error' => fn() => $request->session()->get('error'),
                 'warning' => fn() => $request->session()->get('warning'),
             ],
+            // Launch switches (config/features.php) for the React pages.
+            'features' => [
+                'paymentsEnabled' => (bool) config('features.payments_enabled'),
+                'social' => [
+                    'google' => (bool) config('features.social.google'),
+                    'github' => (bool) config('features.social.github'),
+                    'x' => (bool) config('features.social.x'),
+                ],
+            ],
             'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),

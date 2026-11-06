@@ -38,6 +38,8 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     message: string | null;
   };
   auth: { user: IUser | null; business: IBusiness | null };
+  /** Launch switches from config/features.php (shared by HandleInertiaRequests). */
+  features: IFeatures;
 }
 
 export type AuthPageProps<
@@ -216,6 +218,20 @@ export type CheckoutOptions = {
   customer: { id: string; },
 }
 
+export type IFeatures = {
+  /** false = free beta: no Paddle plans, pricing, or subscription pages. */
+  paymentsEnabled: boolean;
+  /** Social login providers that show a button and accept a login. */
+  social: { google: boolean; github: boolean; x: boolean };
+};
+
+/** Resource limits of every business during the free beta. */
+export type BetaMaxResources = {
+  accounts: number,
+  products: number,
+  bills: number,
+};
+
 export type Plan = 'Advanced' | 'Enhanced' | 'Basic';
 export type PlansMaxResources = {
   basic: {
@@ -247,7 +263,7 @@ export type ISubscriptionLinks = {
     products: { reached: number; max: number };
     bills: { reached: number; max: number };
   } | null;
-  subscribedTo: Plan | 'Trial' | null;//Trail is not Plan. null means not subscribed
+  subscribedTo: Plan | 'Trial' | 'Beta' | null;//Trail is not Plan. Beta is the free beta (PAYMENTS_ENABLED=false). null means not subscribed
   onTrial: string | null;//trial ends date if on trial otherwise null
   /**
    * Recurring: Active sub and not trail nor grace period.
@@ -282,6 +298,11 @@ export type ISubscriptionLinks = {
   basic: null;
   enhanced: { monthly: CheckoutOptions, annually: CheckoutOptions };
   advanced: { monthly: CheckoutOptions, annually: CheckoutOptions };
+} | {
+  subscribedTo: 'Beta';
+  basic: null;
+  enhanced: null;
+  advanced: null;
 } | {
   subscribedTo: 'Trial' | null;
   basic: { monthly: CheckoutOptions, annually: CheckoutOptions };

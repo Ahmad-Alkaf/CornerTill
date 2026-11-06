@@ -8,13 +8,19 @@ use Laravel\Socialite\Facades\Socialite;
 
 class OAuthRegister extends Controller
 {
+    /**
+     * True when the provider is known and its switch is on
+     * (SOCIAL_GOOGLE_ENABLED, SOCIAL_GITHUB_ENABLED, SOCIAL_X_ENABLED).
+     */
+    private function isEnabled(string $provider): bool
+    {
+        return in_array($provider, ['github', 'x', 'google'], true)
+            && config('features.social.' . $provider) === true;
+    }
+
     public function redirect(string $provider)
     {
-        if (
-            $provider == 'github'
-            || $provider == 'x'
-            || $provider == 'google'
-        ) {
+        if ($this->isEnabled($provider)) {
             if ($provider == 'x')
                 $provider = 'twitter-oauth-2';
             if (($plan = request()->query('plan')) && ($period = request()->query('period')) && !empty($plan) && !empty($period))
@@ -28,7 +34,7 @@ class OAuthRegister extends Controller
 
     public function callback(string $provider)
     {
-        if ($provider == 'github' || $provider == 'x' || $provider == 'google') {
+        if ($this->isEnabled($provider)) {
             if ($provider == 'x')
                 $provider = 'twitter-oauth-2';
 

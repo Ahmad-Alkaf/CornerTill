@@ -21,6 +21,9 @@ class Business extends Model
 
     public function subscribedOrOnTrial()
     {
+        // Free beta: every business has full access within the beta limits.
+        if (!config('features.payments_enabled'))
+            return true;
         return $this->onTrial() || ($this->subscribed() && (
             ($sub = $this->subscription())->recurring() || $sub->onGracePeriod() || $sub->onPausedGracePeriod()));
     }
@@ -42,23 +45,35 @@ class Business extends Model
      */
     public function progress(string $subscribedTo = null): null|array
     {
+        // Free beta: the beta limits apply to every business, whatever plan is asked for.
+        if (!config('features.payments_enabled'))
+            return $this->progressFor(config('constants.betaResources'));
+
         //return null if subscribedTo not valid plan OR ( business is not subscribed AND trial expired )
         if (
             !(isset($subscribedTo) &&
                 ($subscribedTo === 'advanced' || $subscribedTo === 'basic' || $subscribedTo === 'enhanced'))
         ) {
             if ($sub = $this->subscription()) {
-                if ($sub->hasProduct(env('PADDLE_PRODUCT_ID_ADVANCED')))
+                if ($sub->hasProduct(config('services.paddle.products.advanced')))
                     $subscribedTo = 'advanced';
-                else if ($sub->hasProduct(env('PADDLE_PRODUCT_ID_ENHANCED')))
+                else if ($sub->hasProduct(config('services.paddle.products.enhanced')))
                     $subscribedTo = 'enhanced';
-                else if ($sub->hasProduct(env('PADDLE_PRODUCT_ID_BASIC')))
+                else if ($sub->hasProduct(config('services.paddle.products.basic')))
                     $subscribedTo = 'basic';
             } else if ($this->onTrial()) { //trial considered a Basic Plan in terms of progress limit.
                 $subscribedTo = 'basic';
             } else return null;
         }
 
+        return $this->progressFor(config('constants.planResources.' . $subscribedTo));
+    }
+
+    /**
+     * @param array{accounts:int,products:int,bills:int} $max the resource limits
+     */
+    private function progressFor(array $max): array
+    {
         $accounts = $this->users()->count();
         $products = $this->products()->count();
         $bills    = $this->bills()->whereBetween('updated_at', [now()->subMonth(), now()])->count();
@@ -66,15 +81,15 @@ class Business extends Model
         return [
             'accounts' => [
                 'reached' => $accounts,
-                'max' => config('constants.planResources.' . $subscribedTo . '.accounts')
+                'max' => $max['accounts']
             ],
             'products' => [
                 'reached' => $products,
-                'max' => config('constants.planResources.' . $subscribedTo . '.products')
+                'max' => $max['products']
             ],
             'bills' => [
                 'reached' => $bills,
-                'max' => config('constants.planResources.' . $subscribedTo . '.bills')
+                'max' => $max['bills']
             ],
         ];
     }

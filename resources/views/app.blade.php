@@ -9,7 +9,7 @@
         $favicon = '/favicon.ico';
         $title = 'Laptop POS';
         $description = 'Simplify your sales process and boost your productivity.';
-        $url = env('APP_URL', 'http://localhost:8000');
+        $url = config('app.url', 'http://localhost:8000');
         $mediumLogo = '/assets/logo/laptop-pos-logo-medium.png';
 
     @endphp
@@ -47,8 +47,10 @@
     <!-- Styles -->
     @inertiaHead
 
-    <!-- Cashier Paddle -->
-    @paddleJS
+    <!-- Cashier Paddle (only when PAYMENTS_ENABLED=true) -->
+    @if (config('features.payments_enabled'))
+        @paddleJS
+    @endif
 </head>
 
 <body class="font-sans antialiased">

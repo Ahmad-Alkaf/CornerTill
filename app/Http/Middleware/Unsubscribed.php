@@ -16,7 +16,7 @@ class Unsubscribed
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->user()?->business?->subscribed())
-            return redirect('business.edit');
+            return redirect(route('business.edit'));
         return $next($request);
     }
 }

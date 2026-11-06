@@ -7,7 +7,7 @@ use App\Mail\InviteAccountToBusiness;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendEmailGreetingNewCustomer implements ShouldQueue
+class SendEmailInvitingNewAccountCreatedByOwner implements ShouldQueue
 {
     /**
      * Handle the event.

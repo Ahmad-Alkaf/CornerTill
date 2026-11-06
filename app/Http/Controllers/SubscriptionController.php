@@ -16,15 +16,15 @@ class SubscriptionController extends Controller
     {
         $prices = [
             'Basic' => [
-                'Monthly' => env('PADDLE_PRICE_ID_BASIC_MONTHLY'),
-                'Annually' =>  env('PADDLE_PRICE_ID_BASIC_ANNUALLY')
+                'Monthly' => config('services.paddle.prices.basic.monthly'),
+                'Annually' =>  config('services.paddle.prices.basic.annually')
             ], 'Enhanced' => [
-                'Monthly' => env('PADDLE_PRICE_ID_ENHANCED_MONTHLY'),
-                'Annually' => env('PADDLE_PRICE_ID_ENHANCED_ANNUALLY')
+                'Monthly' => config('services.paddle.prices.enhanced.monthly'),
+                'Annually' => config('services.paddle.prices.enhanced.annually')
             ],
             'Advanced' => [
-                'Monthly' => env('PADDLE_PRICE_ID_ADVANCED_MONTHLY'),
-                'Annually' => env('PADDLE_PRICE_ID_ADVANCED_ANNUALLY')
+                'Monthly' => config('services.paddle.prices.advanced.monthly'),
+                'Annually' => config('services.paddle.prices.advanced.annually')
             ],
         ];
         if (
@@ -79,7 +79,7 @@ class SubscriptionController extends Controller
             if ($period !== 'monthly' && $period !== 'annually')
                 abort(400);
         } else abort(400);
-        $advancedPrices = [env('PADDLE_PRICE_ID_ADVANCED_MONTHLY'), env('PADDLE_PRICE_ID_ADVANCED_ANNUALLY')];
+        $advancedPrices = [config('services.paddle.prices.advanced.monthly'), config('services.paddle.prices.advanced.annually')];
         $request->user()->business
             ->subscription()
             ->swapAndInvoice($advancedPrices[$period === 'monthly' ? 0 : 1]);
@@ -94,7 +94,7 @@ class SubscriptionController extends Controller
             if ($period !== 'monthly' && $period !== 'annually')
                 abort(400);
         } else abort(400);
-        $enhancedPrices = [env('PADDLE_PRICE_ID_ENHANCED_MONTHLY'), env('PADDLE_PRICE_ID_ENHANCED_ANNUALLY')];
+        $enhancedPrices = [config('services.paddle.prices.enhanced.monthly'), config('services.paddle.prices.enhanced.annually')];
         $request->user()->business
             ->subscription()
             ->swapAndInvoice($enhancedPrices[$period === 'monthly' ? 0 : 1]);
@@ -108,7 +108,7 @@ class SubscriptionController extends Controller
             if ($period !== 'monthly' && $period !== 'annually')
                 abort(400);
         } else abort(400);
-        $basicPrices    = [env('PADDLE_PRICE_ID_BASIC_MONTHLY'), env('PADDLE_PRICE_ID_BASIC_ANNUALLY')];
+        $basicPrices    = [config('services.paddle.prices.basic.monthly'), config('services.paddle.prices.basic.annually')];
         $request->user()->business
             ->subscription()
             ->swapAndInvoice($basicPrices[$period === 'monthly' ? 0 : 1]);

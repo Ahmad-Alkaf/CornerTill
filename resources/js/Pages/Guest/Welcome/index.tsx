@@ -10,8 +10,11 @@ import LastSection from "./Partials/LastSection";
 import OpenSourceSection from "./Partials/OpenSourceSection";
 import PoweredBySection from "./Partials/PoweredBySection";
 import PaymentMethodsSection from "./Partials/PaymentMethodsSection";
+import FreeBetaSection from "./Partials/FreeBetaSection";
+import useFeatures from "@/Utilities/useFeatures";
 
 export default function Welcome() {
+  const { paymentsEnabled } = useFeatures();
 
   return (
     <GuestLayout>
@@ -29,8 +32,14 @@ export default function Welcome() {
                       }}></div> */}
       {/* <span className="bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] blur-lg filter opacity-30 w-full h-full absolute inset-0"></span> */}
 
-      <PricingCards />
-      <PaymentMethodsSection />
+      {paymentsEnabled ? (
+        <>
+          <PricingCards />
+          <PaymentMethodsSection />
+        </>
+      ) : (
+        <FreeBetaSection />
+      )}
       {/**todo:
        * Grow Your Retail Business With Laptop POS:
        * Laptop POS software is a VAT ready cloud-based point of sale solution. Whether it is a supermarket, multi-brand retailer, lifestyle stores, hypermarket, fast food shop or boutique outlet; Laptop POS is the best point of sale systems for any retail businesses out there.

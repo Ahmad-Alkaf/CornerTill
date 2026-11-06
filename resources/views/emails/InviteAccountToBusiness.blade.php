@@ -11,7 +11,7 @@ You have been invited to join **{{ $owner->business->name }}** business by **{{ 
         Activate & Reset Password
 @endcomponent
 
-This activation link will expire in 60 minutes. If the link expired don't worry you can either contact the administrator **{{ $owner->name }}** for the initial password, or you can claim that you have [forgot your password]({{ env('APP_URL') }}/forgot-password) on the login page and get password reset link.
+This activation link will expire in 60 minutes. If the link expired don't worry you can either contact the administrator **{{ $owner->name }}** for the initial password, or you can claim that you have [forgot your password]({{ config('app.url') }}/forgot-password) on the login page and get password reset link.
 
 If you think this email is sent to you by mistake, you can ignore it and no further action is required.
 

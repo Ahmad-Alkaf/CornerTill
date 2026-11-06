@@ -49,7 +49,8 @@ class RegisterController extends Controller
             $user->save();
 
             //Laravel should be exposed to internet for this function to work
-            if (env('APP_ENV') !== 'testing')
+            //Free beta (PAYMENTS_ENABLED=false): no Paddle customer and no trial.
+            if (config('features.payments_enabled') && !app()->environment('testing'))
                 $business->createAsCustomer([
                     'trial_ends_at' => now()->addDays(3),
                 ]);
@@ -60,6 +61,7 @@ class RegisterController extends Controller
         Auth::login($user);
 
         if ( //registered by clicking a specific subscription plan
+            config('features.payments_enabled') &&
             !empty($request->period) &&
             !empty($request->plan)
         )

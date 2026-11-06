@@ -85,7 +85,7 @@ class ProductController extends Controller
 
     private function deleteImg(string $filePath)
     {
-        if (env('FILESYSTEM_DISK') == 's3')
+        if (config('filesystems.default') == 's3')
             return Storage::disk('products-images')->delete(basename($filePath));
         return Storage::disk('products-images')->delete($filePath);
     }
@@ -93,7 +93,7 @@ class ProductController extends Controller
     /**Store an img file in the correspond filesystem and return the img path/name. path if it stored in the cloud and name if locally  */
     private function storeImg(Request $request): string
     {
-        if (env('FILESYSTEM_DISK') == 's3')
+        if (config('filesystems.default') == 's3')
             return $this->productsImagesStorage()->url($request->imageFile->store('', 'products-images'));
         return $request->imageFile->store('', 'products-images');
     }

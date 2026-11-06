@@ -49,4 +49,28 @@ return [
         'redirect' => '/auth/google/callback',
     ],
 
+    // Paddle product and price IDs of the subscription plans.
+    // Used only when config('features.payments_enabled') is true.
+    'paddle' => [
+        'products' => [
+            'basic' => env('PADDLE_PRODUCT_ID_BASIC'),
+            'enhanced' => env('PADDLE_PRODUCT_ID_ENHANCED'),
+            'advanced' => env('PADDLE_PRODUCT_ID_ADVANCED'),
+        ],
+        'prices' => [
+            'basic' => [
+                'monthly' => env('PADDLE_PRICE_ID_BASIC_MONTHLY'),
+                'annually' => env('PADDLE_PRICE_ID_BASIC_ANNUALLY'),
+            ],
+            'enhanced' => [
+                'monthly' => env('PADDLE_PRICE_ID_ENHANCED_MONTHLY'),
+                'annually' => env('PADDLE_PRICE_ID_ENHANCED_ANNUALLY'),
+            ],
+            'advanced' => [
+                'monthly' => env('PADDLE_PRICE_ID_ADVANCED_MONTHLY'),
+                'annually' => env('PADDLE_PRICE_ID_ADVANCED_ANNUALLY'),
+            ],
+        ],
+    ],
+
 ];

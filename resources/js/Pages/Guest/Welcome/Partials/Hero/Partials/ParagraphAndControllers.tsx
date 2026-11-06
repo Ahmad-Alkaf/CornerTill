@@ -1,9 +1,11 @@
 import SecondaryLink from "@/Components/Buttons/SecondaryLink";
 import { useTranslation } from "react-i18next";
 import { FaCircleCheck } from "react-icons/fa6";
+import useFeatures from "@/Utilities/useFeatures";
 
 export default function ParagraphAndControllers() {
   const { t,i18n } = useTranslation();
+  const { paymentsEnabled } = useFeatures();
   return (
     <div dir={i18n.dir()} className="mx-auto max-w-3xl">
       <p
@@ -32,7 +34,7 @@ export default function ParagraphAndControllers() {
       <div className="mt-5 flex translate-x-[20%] flex-col justify-center text-gray-500 md:translate-x-0 md:flex-row md:space-x-4 ">
         <div className="flex ">
           <FaCircleCheck className="mx-1 mt-0.5 text-lg text-green-400" />
-          {t("Free Trial")}
+          {paymentsEnabled ? t("Free Trial") : t("Free during beta")}
         </div>
         <div className="flex">
           <FaCircleCheck className="mx-1 mt-0.5 text-lg text-green-400" />
