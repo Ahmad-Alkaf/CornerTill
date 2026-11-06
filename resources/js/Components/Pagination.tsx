@@ -15,7 +15,9 @@ export default function Pagination({
   return (
     <>
       {paginateItems.links.length > 3 && (
-        <div {...props} className={"flex justify-center pb-10 " + className}>
+        // Many pages make the row wider than a phone screen: it scrolls sideways.
+        <div {...props} className={"max-w-full overflow-x-auto pb-10 " + className}>
+        <div className="mx-auto flex w-max">
           <BetterLink
             href={paginateItems.prev_page_url ?? ""}
             disabled={!paginateItems.prev_page_url}
@@ -68,6 +70,7 @@ export default function Pagination({
               <FaArrowRight strokeWidth={2} className="h-4 w-4 rtl:rotate-180" />
             </IconButton>
           </BetterLink>
+        </div>
         </div>
       )}
     </>
