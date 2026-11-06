@@ -8,12 +8,19 @@ i18n
   .use(initReactI18next)
   .use(LanguageDetector)
   .init({
+    // English unless the browser asks for Arabic (or the user picked a language before).
     fallbackLng: "en",
-    lng: 'ar',//todo: delete me
+    supportedLngs: ["en", "ar"],
+    load: "languageOnly", // "ar-SA" -> "ar"
     detection: {
-      order: ["path", "localStorage", "htmlTag", "cookie"],
-      caches: ["localStorage", "cookie"], // cache user language on
+      order: ["localStorage", "cookie", "navigator"],
+      caches: ["localStorage", "cookie"], // keep the user's language
     },
   });
+
+// Keep <html lang> in step with the selected language.
+i18n.on("languageChanged", (lng) => {
+  document.documentElement.lang = i18n.resolvedLanguage ?? lng;
+});
 
 export default i18n;
