@@ -1,5 +1,3 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Laravel-AAA_Laptop-POS&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Laravel-AAA_Laptop-POS)
-
 # Laptop Point of Sale
 
 This is a simple Point of Sale (POS) application.
@@ -115,6 +113,10 @@ php artisan serve
 
 A disabled provider hides its button, and its routes return 404.
 
+# Language
+
+The app detects the browser language. Arabic browsers get Arabic; all other browsers get English (the default). The selected language is kept in `localStorage` and a cookie. Translations are in `public/locales/<lang>/translation.json`.
+
 # Deploy on Coolify
 
 Build pack: **Dockerfile** (the repository `Dockerfile`). The image builds the Composer and Vite assets. No build-time variable is necessary.
@@ -136,7 +138,8 @@ Required environment variables:
 | `QUEUE_CONNECTION` | `database` (image default; the `jobs` table comes from the migrations) |
 | `FILESYSTEM_DISK` | `local` (image default; uploads on the volume) or `s3`. Do not leave it empty: `config/filesystems.php` then selects the S3 disks. |
 | `MAIL_MAILER`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_ENCRYPTION` | SMTP account |
-| `MAIL_FROM_ADDRESS`, `MAIL_FROM_NAME` | A kaflabs.com sender, `Laptop POS` |
+| `MAIL_FROM_ADDRESS`, `MAIL_FROM_NAME` | `noreply@kaflabs.com`, `Laptop POS` |
+| `ADMIN_REPORT_EMAIL` | Receiver of the daily database table counts email (scheduled task). Empty: no email; the counts go only to the log. |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | OAuth apps, or turn the provider off with its `SOCIAL_*_ENABLED` switch |
 | `PAYMENTS_ENABLED` | `false` for the free beta |
 
