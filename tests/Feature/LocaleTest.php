@@ -99,4 +99,31 @@ class LocaleTest extends TestCase
             ->post('/logout')
             ->assertSessionHas('message', 'نراك قريبًا 👋');
     }
+
+    public function test_error_pages_follow_the_language(): void
+    {
+        $this->get('/no-such-page')->assertNotFound()
+            ->assertSee('dir="ltr"', false)->assertSee('Not Found');
+
+        $this->withUnencryptedCookie('i18next', 'ar')
+            ->get('/no-such-page')->assertNotFound()
+            ->assertSee('dir="rtl"', false)->assertSee('الصفحة غير موجودة');
+    }
+
+    public function test_beta_limit_error_page_in_arabic(): void
+    {
+        config([
+            'features.payments_enabled' => false,
+            'constants.betaResources' => ['accounts' => 1, 'products' => 0, 'bills' => 0],
+        ]);
+        $owner = User::factory()->create(['role' => 'Owner', 'email_verified_at' => now(), 'deleted_at' => null]);
+
+        $this->actingAs($owner)->withUnencryptedCookie('i18next', 'ar')
+            ->post('/account', [
+                'name' => 'Staff', 'email' => 'staff@example.com', 'role' => 'Cashier',
+                'password' => 'password123', 'password_confirmation' => 'password123',
+            ])
+            ->assertForbidden()
+            ->assertSee('لقد وصلت إلى حد النسخة التجريبية', false);
+    }
 }

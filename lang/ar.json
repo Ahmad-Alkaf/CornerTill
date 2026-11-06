@@ -23,5 +23,13 @@
     "Successfully paused": "تم الإيقاف المؤقت بنجاح",
     "Successfully resumed": "تم الاستئناف بنجاح",
     "Successfully upgraded": "تمت الترقية بنجاح",
-    "Successfully downgraded": "تم تخفيض الخطة بنجاح"
+    "Successfully downgraded": "تم تخفيض الخطة بنجاح",
+    "Forbidden": "ممنوع",
+    "Not Found": "الصفحة غير موجودة",
+    "Page Expired": "انتهت صلاحية الصفحة",
+    "Payment Required": "الدفع مطلوب",
+    "Server Error": "خطأ في الخادم",
+    "Service Unavailable": "الخدمة غير متاحة",
+    "Too Many Requests": "طلبات كثيرة جدًا",
+    "Unauthorized": "غير مصرح"
 }
