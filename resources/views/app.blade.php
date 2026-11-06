@@ -47,7 +47,7 @@
     <!-- Styles -->
     @inertiaHead
 
-    <!-- Cashier Paddle (only when PAYMENTS_ENABLED=true) -->
+    {{-- Cashier Paddle (only when PAYMENTS_ENABLED=true) --}}
     @if (config('features.payments_enabled'))
         @paddleJS
     @endif
