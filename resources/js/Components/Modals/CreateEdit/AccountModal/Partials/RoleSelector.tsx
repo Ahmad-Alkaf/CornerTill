@@ -3,12 +3,14 @@ import React from "react";
 import { IUser } from "@/types";
 import SelectInput from "@/Components/Inputs/SelectInput";
 import { UseBetterForm } from "@/Utilities/useBetterForm";
+import { useTranslation } from "react-i18next";
 
 export default function RoleSelector<T extends { role: IUser["role"] }>({
   form,
 }: {
   form: UseBetterForm<T>;
 }) {
+  const { t } = useTranslation();
   return (
     <SelectInput
       label="Role"
@@ -29,9 +31,9 @@ export default function RoleSelector<T extends { role: IUser["role"] }>({
     >
       {ROLES.map((r) => (
         <Option key={r.name} value={r.name} className="flex flex-col gap-1">
-          {r.name}
+          {t(r.name)}
           <span className={"text-xs text-blue-gray-300 group-[]:hidden"}>
-            {r.desc}
+            {t(r.desc)}
           </span>
         </Option>
       ))}

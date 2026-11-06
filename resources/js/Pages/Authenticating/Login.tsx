@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useEffect, FormEventHandler } from "react";
 import Checkbox from "@/Components/Checkbox";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton";
@@ -15,6 +16,7 @@ export default function Login({
   status?: string;
   canResetPassword: boolean;
 }>) {
+  const { t } = useTranslation();
   const { data, setData, post, processing, errors, reset, isDirty } =
     useBetterForm({
       email: "",
@@ -77,7 +79,7 @@ export default function Login({
         </div>
 
           <Checkbox
-            label={<p className="text-sm text-gray-600">Remember me</p>}
+            label={<p className="text-sm text-gray-600">{t("Remember me")}</p>}
             errorMsg=""
             disabled={processing}
             name="remember"
@@ -91,12 +93,12 @@ export default function Login({
               href={route("password.request")}
               className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none "
             >
-              Forgot your password?
+              {t("Forgot your password?")}
             </Link>
           )}
 
           <PrimaryButton type="submit" className="ms-4" disabled={processing}>
-            Log in
+            {t("Log in")}
           </PrimaryButton>
         </div>
       </form>

@@ -74,7 +74,7 @@ export default function LocationContactSection({
           <PhoneInput form={form} />
           <div className="flex items-center gap-4">
             <PrimaryMaterialBtn type="submit" disabled={form.processing}>
-              Save
+              {t("Save")}
             </PrimaryMaterialBtn>
 
             <Transition

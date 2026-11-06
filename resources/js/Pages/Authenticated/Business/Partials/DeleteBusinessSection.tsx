@@ -110,7 +110,7 @@ export default function DeleteBusinessSection({
 
             <div className="mt-6 flex justify-end">
               <SecondaryMaterialBtn onClick={closeModal}>
-                Cancel
+                {t("Cancel")}
               </SecondaryMaterialBtn>
 
               <DangerButton

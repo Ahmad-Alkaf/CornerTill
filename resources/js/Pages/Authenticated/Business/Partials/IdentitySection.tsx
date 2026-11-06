@@ -60,7 +60,7 @@ export default function IdentitySection({ business }: { business: IBusiness }) {
 
           <div className="flex items-center gap-4">
             <PrimaryMaterialBtn type="submit" disabled={form.processing}>
-              Save
+              {t("Save")}
             </PrimaryMaterialBtn>
 
             <Transition

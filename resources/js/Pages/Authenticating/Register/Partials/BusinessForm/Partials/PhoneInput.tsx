@@ -95,7 +95,7 @@ export function PhoneInput<
           </MenuList>
         </Menu>
         <Input
-          label="Phone Number"
+          label={t("Phone Number")}
           color="teal"
           size="lg"
           type="number"

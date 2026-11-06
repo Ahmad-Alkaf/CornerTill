@@ -87,7 +87,7 @@ export default function UpdateProductStockModal({
 
         <div className="mt-4 flex flex-col gap-4 sm:flex-row-reverse">
           <PrimaryMaterialBtn type="submit" disabled={form.processing}>
-            Update
+            {t("Update")}
           </PrimaryMaterialBtn>
           <SecondaryMaterialBtn
             type="button"
@@ -98,7 +98,7 @@ export default function UpdateProductStockModal({
               form.clearErrors();
             }}
           >
-            Cancel
+            {t("Cancel")}
           </SecondaryMaterialBtn>
         </div>
       </form>

@@ -106,7 +106,7 @@ export default function ProductItem({
           </p>
           <div className="flex flex-col justify-center">
             {product.stock === 0 ? (
-              <p className="font-normal text-danger-400">Out of Stock</p>
+              <p className="font-normal text-danger-400">{t("Out of Stock")}</p>
             ) : bill_detail.quantity >= (product.stock || Infinity) ? (
               <p className="font-normal text-danger-400">
                 Stock {product.stock === null ? "N/A" : product.stock}

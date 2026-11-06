@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useRef, FormEventHandler } from "react";
 import Input from "@/Components/Inputs/Input";
 import { Transition } from "@headlessui/react";
@@ -9,6 +10,7 @@ export default function UpdatePasswordForm({
 }: {
   className?: string;
 }) {
+  const { t } = useTranslation();
   const passwordInput = useRef<HTMLInputElement>(null);
   const currentPasswordInput = useRef<HTMLInputElement>(null);
 
@@ -50,10 +52,10 @@ export default function UpdatePasswordForm({
   return (
     <section className={className}>
       <header>
-        <h2 className="text-lg font-medium text-gray-900">Update Password</h2>
+        <h2 className="text-lg font-medium text-gray-900">{t("Update Password")}</h2>
 
         <p className="mt-1 text-normal text-gray-600">
-          Ensure your account is using a long, random password to stay secure.
+          {t("Ensure your account is using a long, random password to stay secure.")}
         </p>
       </header>
 
@@ -110,7 +112,7 @@ export default function UpdatePasswordForm({
 
         <div className="flex items-center gap-4">
           <PrimaryMaterialBtn type="submit" disabled={processing}>
-            Save
+            {t("Save")}
           </PrimaryMaterialBtn>
 
           <Transition
@@ -120,7 +122,7 @@ export default function UpdatePasswordForm({
             leave="transition ease-in-out"
             leaveTo="opacity-0"
           >
-            <p className="text-sm text-green-500">Saved</p>
+            <p className="text-sm text-green-500">{t("Saved")}</p>
           </Transition>
         </div>
       </form>

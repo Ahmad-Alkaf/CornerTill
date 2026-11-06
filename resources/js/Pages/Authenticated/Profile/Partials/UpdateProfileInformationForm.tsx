@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton";
 import Input from "@/Components/Inputs/Input";
 import { Link, usePage } from "@inertiajs/react";
@@ -17,6 +18,7 @@ export default function UpdateProfileInformation({
   status?: string;
   className?: string;
 }) {
+  const { t } = useTranslation();
   const user = usePage<AuthPageProps>().props.auth.user;
 
   const {
@@ -45,11 +47,11 @@ export default function UpdateProfileInformation({
     <section className={className}>
       <header>
         <h2 className="text-lg font-medium text-gray-900">
-          Profile Information
+          {t("Profile Information")}
         </h2>
 
         <p className="text-normal mt-1 text-gray-600">
-          Update your account's profile information and email address.
+          {t("Update your account's profile information and email address.")}
         </p>
       </header>
 
@@ -97,25 +99,25 @@ export default function UpdateProfileInformation({
                 as="button"
                 className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none"
               >
-                Click here to re-send the verification email.
+                {t("Click here to re-send the verification email.")}
               </Link>
             </p>
 
             {status === "verification-link-sent" && (
               <div className="mt-2 text-sm font-medium text-green-600">
-                A new verification link has been sent to your email address.
+                {t("A new verification link has been sent to your email address.")}
               </div>
             )}
           </div>
         )}
 
         <div>
-          <KeyValue className="ms-1" k="Role" v={user.role} />
+          <KeyValue className="ms-1" k="Role" v={t(user.role)} />
         </div>
 
         <div className="flex items-center gap-4">
           <PrimaryMaterialBtn type="submit" disabled={processing}>
-            Save
+            {t("Save")}
           </PrimaryMaterialBtn>
 
           <Transition
@@ -125,7 +127,7 @@ export default function UpdateProfileInformation({
             leave="transition ease-in-out"
             leaveTo="opacity-0"
           >
-            <p className="text-sm text-green-500">Saved</p>
+            <p className="text-sm text-green-500">{t("Saved")}</p>
           </Transition>
         </div>
       </form>

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import GuestFormLayout from "@/Layouts/GuestLayout/GuestFormLayout";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton";
 import Input from "@/Components/Inputs/Input";
@@ -10,6 +11,7 @@ export default function ForgotPassword({
   status,
   auth,
 }: AuthPageProps<{ status?: string }>) {
+  const { t } = useTranslation();
   const { data, setData, post, processing, errors, isDirty } = useBetterForm({
     email: "",
   });
@@ -25,9 +27,7 @@ export default function ForgotPassword({
       <Head title="Forgot Password" />
 
       <div className="mb-4 text-sm text-gray-600">
-        Forgot your password? No problem. Just let us know your email address
-        and we will email you a password reset link that will allow you to
-        choose a new one.
+        {t("Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.")}
       </div>
 
       {status && (
@@ -52,7 +52,7 @@ export default function ForgotPassword({
 
         <div className="mt-4 flex items-center justify-end">
           <PrimaryButton type="submit" className="ms-4" disabled={processing}>
-            Email Password Reset Link
+            {t("Email Password Reset Link")}
           </PrimaryButton>
         </div>
       </form>

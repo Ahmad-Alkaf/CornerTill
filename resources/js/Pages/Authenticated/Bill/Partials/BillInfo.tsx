@@ -156,7 +156,7 @@ export default function BillInfo({ bill }: { bill: IBill }) {
           <section className="flex justify-center">
             <QRCode value={location.href} size={150} />
           </section>
-          <p className="text-center text-xl font-semibold">Thank you</p>
+          <p className="text-center text-xl font-semibold">{t("Thank you")}</p>
           <footer>
             <Link href="/">
               <KeyValue

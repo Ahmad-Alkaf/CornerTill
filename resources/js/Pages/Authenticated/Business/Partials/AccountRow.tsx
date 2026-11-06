@@ -19,7 +19,7 @@ export default function AccountRow({
     <tr className="even:bg-blue-gray-50/50">
       <TD>{account.name}</TD>
       <TD>{account.email}</TD>
-      <TD>{account.role}</TD>
+      <TD>{t(account.role)}</TD>
       <TD>
         {account.deleted_at ? (
           <span
