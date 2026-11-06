@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Business;
 use App\Models\Bill;
 use App\Models\User;
 
@@ -12,7 +13,7 @@ class BillPolicy
         $progress = $user->business->progressOrFail();
         if ($progress['bills']['reached'] < $progress['bills']['max'])
             return true;
-        else abort(403, 'You have reached the maximum number of bills that you can create with your current plan. To create more bills, you can upgrade your plan, delete some existing bills, or contact our support team for assistance (support@kaflabs.com).');
+        else abort(403, Business::limitReachedMessage('bills'));
     }
 
     public function show(?User $user, Bill $bill)

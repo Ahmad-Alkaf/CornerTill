@@ -95,6 +95,17 @@ class Business extends Model
     }
 
     /**
+     * Message for HTTP 403 when a business reached a resource limit.
+     * @param $resource is 'accounts'|'products'|'bills'
+     */
+    public static function limitReachedMessage(string $resource): string
+    {
+        if (!config('features.payments_enabled'))
+            return 'You reached the beta limit. Contact support@kaflabs.com for more.';
+        return 'You have reached the maximum number of ' . $resource . ' that you can create with your current plan. To create more ' . $resource . ', you can upgrade your plan, delete some existing ' . $resource . ', or contact our support team for assistance (support@kaflabs.com).';
+    }
+
+    /**
      * Get progress status, or abort with 403 and (you have to subscribe) message
      */
     public function progressOrFail(string $subscribedTo = null): array
