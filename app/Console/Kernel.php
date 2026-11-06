@@ -32,7 +32,9 @@ class Kernel extends ConsoleKernel
             $products = DB::table('products')->count();
             $bills = DB::table('bills')->count();
             Log::warning('Daily Schedule: Email Me Database Tables Counts: businesses(' . $businesses . '), users(' . $users . '), products(' . $products . '), bills(' . $bills . ').');
-            Mail::to('ahmad.alkaf.ahk@gmail.com')->send(new DatabaseTablesCounts($businesses,$users,$products,$bills));
+            // ADMIN_REPORT_EMAIL; no address = no email.
+            if ($to = config('mail.admin_report_address'))
+                Mail::to($to)->send(new DatabaseTablesCounts($businesses,$users,$products,$bills));
         })->daily()->name('Email Me Database Tables Counts');
     }
 
