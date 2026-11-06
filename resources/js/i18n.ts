@@ -19,8 +19,13 @@ i18n
   });
 
 // Keep <html lang> in step with the selected language.
-i18n.on("languageChanged", (lng) => {
+// <html dir> stays "ltr" on purpose: the pages set dir={i18n.dir()} on each
+// section, and some layouts (dashboard cards, checkout cart) break when the
+// whole document is rtl.
+function applyLanguageToHtml(lng: string) {
   document.documentElement.lang = i18n.resolvedLanguage ?? lng;
-});
+}
+i18n.on("languageChanged", applyLanguageToHtml);
+if (i18n.resolvedLanguage) applyLanguageToHtml(i18n.resolvedLanguage);
 
 export default i18n;

@@ -115,7 +115,7 @@ A disabled provider hides its button, and its routes return 404.
 
 # Language
 
-The app detects the browser language. Arabic browsers get Arabic; all other browsers get English (the default). The selected language is kept in `localStorage` and a cookie. Translations are in `public/locales/<lang>/translation.json`.
+The app detects the browser language. Arabic browsers get Arabic; all other browsers get English (the default). The EN/AR switch in the guest header and the app header changes the language. The selected language is kept in `localStorage` (`i18nextLng`) and a cookie (`i18next`). Pages set `dir` (rtl for Arabic) on each section; `<html dir>` stays `ltr`. Translations are in `public/locales/<lang>/translation.json`.
 
 # Deploy on Coolify
 

@@ -7,6 +7,7 @@ import ResponsiveNavLink from "./Partials/ResponsiveNavLink";
 import { ROUTES } from "../..";
 import { AuthPageProps, IUser } from "@/types";
 import { useTranslation } from "react-i18next";
+import LanguageSwitch from "@/Components/LanguageSwitch";
 
 export default function HeaderNav({ user }: { user: IUser }) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -42,6 +43,7 @@ export default function HeaderNav({ user }: { user: IUser }) {
           </div>
 
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
+            <LanguageSwitch />
             <div className="relative ml-3">
               <Dropdown>
                 <Dropdown.Trigger>
@@ -86,7 +88,8 @@ export default function HeaderNav({ user }: { user: IUser }) {
             </div>
           </div>
 
-          <div className="-mr-2 flex items-center sm:hidden">
+          <div className="-mr-2 flex items-center gap-2 sm:hidden">
+            <LanguageSwitch />
             <button
               onClick={() =>
                 setShowingNavigationDropdown((previousState) => !previousState)
