@@ -23,7 +23,7 @@ export default function Features() {
     heightFix();
   }, []);
 
-  const { t,i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <section
       id="features"
@@ -34,7 +34,7 @@ export default function Features() {
         className="pointer-events-none absolute inset-0 top-10 "
         aria-hidden="true"
       ></div>
-      <div className="absolute left-0 right-0 m-auto h-24 w-px -translate-y-1/4 transform bg-gray-300 p-px"></div>
+      <div className="absolute start-0 end-0 m-auto h-24 w-px -translate-y-1/4 transform bg-gray-300 p-px"></div>
 
       <div className="relative mx-auto mt-16 max-w-6xl px-4 sm:px-6">
         <div className="pt-12 xl:pt-20">
@@ -47,13 +47,13 @@ export default function Features() {
           </div>
 
           {/* Section content */}
-          <div dir={i18n.dir()} className="xl:grid xl:grid-cols-12 xl:gap-6">
+          <div className="xl:grid xl:grid-cols-12 xl:gap-6">
             {/* Content */}
             <div
               className="mx-auto max-w-xl xl:col-span-7 xl:mt-6 xl:w-full xl:max-w-none"
               data-aos="fade-right"
             >
-              <div className="mb-8 xl:pr-16">
+              <div className="mb-8 xl:pe-16">
                 <h3 className={ "text-center text-2xl font-semibold xl:ltr:text-left xl:rtl:text-right" }>
                   { t( "Simple yet powerful suite of tools" ) }
                 </h3>
@@ -80,7 +80,7 @@ export default function Features() {
                       { t( "Efficiently organize product information like names, descriptions, SKUs (Stock Keeping Units), and prices. Stay on top of your inventory with accurate and easily updated product details." ) }
                     </div>
                   </div>
-                  <div className="ml-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
+                  <div className="ms-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
                     <FaShop />
                   </div>
                 </button>
@@ -103,7 +103,7 @@ export default function Features() {
                       { t( "Quickly and easily process customer orders with features like barcode, payment methods, change calculation, and customizable list. Generate bills with accurate and detailed information." ) }
                     </div>
                   </div>
-                  <div className="ml-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
+                  <div className="ms-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
                     <FaReceipt />
                   </div>
                 </button>
@@ -126,7 +126,7 @@ export default function Features() {
                       { t( "Gain valuable insights with a clear and simple dashboard that shows your sales, bills, staff performance, and inventory status. Find out which products are selling well, and which ones are out of stock." ) }
                     </div>
                   </div>
-                  <div className="ml-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
+                  <div className="ms-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white shadow">
                     <FaChartSimple />
                   </div>
                 </button>
@@ -137,7 +137,7 @@ export default function Features() {
             <div className="mx-auto mb-16 justify-items-center align-bottom xl:order-1 xl:col-span-5 xl:mb-0">
               <div className="self-end align-bottom transition-all md:mb-52">
                 <div
-                  className="relative flex flex-col text-center xl:mt-48 xl:text-right"
+                  className="relative flex flex-col text-center xl:mt-48 xl:text-end"
                   data-aos="zoom-y-out"
                   ref={tabs}
                 >

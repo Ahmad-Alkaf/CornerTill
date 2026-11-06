@@ -11,7 +11,7 @@ export default function HintMessage({
   return (
     <p
       {...props}
-      className={"ml-2 mt-2 text-xs text-blue-gray-400 " + className}
+      className={"ms-2 mt-2 text-xs text-blue-gray-400 " + className}
     >
       {message ? t(message) : children}
     </p>

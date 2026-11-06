@@ -60,7 +60,7 @@ export default function InventoryHeader({
   return (
     <div className="block justify-between py-2 md:flex">
       <div className="flex items-center gap-3">
-        <h2 className="mb-1 mr-4 text-xl font-semibold leading-tight text-gray-800">
+        <h2 className="mb-1 me-4 text-xl font-semibold leading-tight text-gray-800">
           {filter.stock === "out" ? (
             <>
               <span className="text-danger-600">{t("Out of Stock")}</span>{" "}
@@ -142,7 +142,7 @@ export default function InventoryHeader({
             className="inline-flex  h-9"
             onClick={() => requestCreateProduct()}
           >
-            <FaPlus className="mr-2" />
+            <FaPlus className="me-2" />
             <span>{ t( "Add New Product" ) }</span>
           </PrimaryMaterialBtn>
         )}
@@ -164,7 +164,7 @@ export function TotalResult({
 
   const { t } = useTranslation();
   return (
-    <p className={"m-0 mr-3 inline p-0 text-center text-gray-600 " + className}>
+    <p className={"m-0 me-3 inline p-0 text-center text-gray-600 " + className}>
       {t( text )}:&nbsp;
       <span className="text-gray-900">{number}</span>
     </p>

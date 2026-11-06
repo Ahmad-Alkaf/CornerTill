@@ -20,27 +20,27 @@ export default function VerifyEmail({
     post(route("verification.send"));
   };
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <AuthenticatedLayout header={null} user={auth.user}>
       <FormLayout>
         <Head title="Email Verification" />
 
-        <div dir={i18n.dir()} className="mb-4 text-sm text-gray-600">
+        <div className="mb-4 text-sm text-gray-600">
           {t(
             "Thanks for signing up! Before getting started, you have to verify your email address by clicking on the link we just emailed to you. If you didn't receive the email, we will gladly send you another.",
           )}
         </div>
 
         {status === "verification-link-sent" && (
-          <div dir={i18n.dir()} className="mb-4 text-sm font-medium text-green-600">
+          <div className="mb-4 text-sm font-medium text-green-600">
             {t(
               "A new verification link has been sent to the email address you provided during registration.",
             )}
           </div>
         )}
 
-        <form dir={i18n.dir()} onSubmit={submit}>
+        <form onSubmit={submit}>
           <div className="mt-4 flex items-center justify-between">
             <PrimaryButton type="submit" disabled={processing}>
               {t("Resend Verification Email")}

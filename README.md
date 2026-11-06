@@ -115,7 +115,9 @@ A disabled provider hides its button, and its routes return 404.
 
 # Language
 
-The app detects the browser language. Arabic browsers get Arabic; all other browsers get English (the default). The EN/AR switch in the guest header and the app header changes the language. The selected language is kept in `localStorage` (`i18nextLng`) and a cookie (`i18next`). Pages set `dir` (rtl for Arabic) on each section; `<html dir>` stays `ltr`. Translations are in `public/locales/<lang>/translation.json`.
+The app detects the browser language. Arabic browsers get Arabic; all other browsers get English (the default). The EN/AR switch in the guest header and the app header changes the language. The selected language is kept in `localStorage` (`i18nextLng`) and a cookie (`i18next`). Arabic uses a full right-to-left layout: `<html dir="rtl">`. Use logical Tailwind classes (`ms-`, `me-`, `ps-`, `pe-`, `start-`, `end-`, `text-start`, `rounded-s-`, ...) and `rtl:space-x-reverse`, not `ml-`/`mr-`/`left-`/`right-`. Exception: classes on Material Tailwind components go through its tailwind-merge 1.8, which does not know logical classes; there use physical classes with `ltr:`/`rtl:` variants. Wrap user text (names, descriptions) in `<bdi>`.
+
+Server messages (validation, flash, error pages) follow the same language: the `SetLocale` middleware reads the `i18next` cookie, then `Accept-Language`. Arabic texts are in `lang/ar/*.php` and `lang/ar.json`. Translations are in `public/locales/<lang>/translation.json`.
 
 # Deploy on Coolify
 

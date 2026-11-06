@@ -16,10 +16,9 @@ export function StatisticsChart({
   description,
   footer,
 }: StatisticsChartProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <Card
-      dir={i18n.dir()}
       className="rounded-none shadow sm:rounded-lg"
       placeholder={undefined}
       onPointerEnterCapture={undefined}
@@ -34,7 +33,10 @@ export function StatisticsChart({
         onPointerEnterCapture={undefined}
         onPointerLeaveCapture={undefined}
       >
-        <Chart {...chart} />
+        {/* Chart axes stay left-to-right in both languages. */}
+        <div dir="ltr">
+          <Chart {...chart} />
+        </div>
       </CardHeader>
       <CardBody
         className="px-6 pt-0"

@@ -115,7 +115,7 @@ export default function DeleteBusinessSection({
 
               <DangerButton
                 type="submit"
-                className="ml-3"
+                className="ms-3"
                 disabled={processing}
               >
                 { t( "Delete Business" ) }

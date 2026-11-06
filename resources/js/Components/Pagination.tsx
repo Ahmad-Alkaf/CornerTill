@@ -24,12 +24,12 @@ export default function Pagination({
             <IconButton
               disabled={!paginateItems.prev_page_url}
               variant="outlined"
-              className="rounded-r-none border-r-0"
+              className="ltr:rounded-r-none ltr:border-r-0 rtl:rounded-l-none rtl:border-l-0"
               placeholder={undefined}
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
             >
-              <FaArrowLeft strokeWidth={2} className="h-4 w-4" />
+              <FaArrowLeft strokeWidth={2} className="h-4 w-4 rtl:rotate-180" />
             </IconButton>
           </BetterLink>
 
@@ -40,7 +40,7 @@ export default function Pagination({
                 <IconButton
                   variant="outlined"
                   className={
-                    "rounded-none border-r-0 text-base " +
+                    "rounded-none ltr:border-r-0 rtl:border-l-0 text-base " +
                     (v.active ? "bg-primary-800 text-gray-100" : "")
                   }
                   placeholder={undefined}
@@ -60,12 +60,12 @@ export default function Pagination({
             <IconButton
               disabled={!paginateItems.next_page_url}
               variant="outlined"
-              className="rounded-l-none"
+              className="ltr:rounded-l-none rtl:rounded-r-none"
               placeholder={undefined}
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
             >
-              <FaArrowRight strokeWidth={2} className="h-4 w-4" />
+              <FaArrowRight strokeWidth={2} className="h-4 w-4 rtl:rotate-180" />
             </IconButton>
           </BetterLink>
         </div>

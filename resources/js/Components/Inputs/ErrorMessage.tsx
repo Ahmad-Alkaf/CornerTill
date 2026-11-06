@@ -12,7 +12,7 @@ export default function ErrorMessage({
     message && (
       <p
         {...props}
-        className={"ml-2 mt-2 text-xs text-danger-600 " + className}
+        className={"ms-2 mt-2 text-xs text-danger-600 " + className}
       >
         {message && t(message)}
       </p>

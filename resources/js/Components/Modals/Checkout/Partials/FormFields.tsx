@@ -71,7 +71,7 @@ export default function FormFields({
           hint={
             <span
               style={{ visibility: !isDigitalPayment ? "visible" : "hidden" }}
-              className="ml-1 text-lg text-gray-700"
+              className="ms-1 text-lg text-gray-700"
             >
               {t("Remaining")}:&nbsp;
               <Num className="font-semibold text-gray-900" amount={remaining} />

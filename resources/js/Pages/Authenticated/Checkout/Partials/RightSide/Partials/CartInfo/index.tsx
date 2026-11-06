@@ -13,7 +13,7 @@ export default function CartInfo({
   return (
     // margin bottom is the checkout button height
     <section className="relative mb-[50px] mt-1 h-full overflow-y-auto rounded-t-lg bg-white shadow-sm">
-      <table className="mb-3 w-full table-auto text-left">
+      <table className="mb-3 w-full table-auto ltr:text-left rtl:text-right">
         <thead className="sticky">
           <tr className="bg-blue-gray-50 text-gray-800">
             <th className="w-14"></th>

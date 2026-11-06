@@ -81,7 +81,7 @@ export default function ProductItem({
             }}
             className="inline-block overflow-hidden"
           >
-            {product.name}
+            <bdi>{product.name}</bdi>
           </span>
         </h3>
 

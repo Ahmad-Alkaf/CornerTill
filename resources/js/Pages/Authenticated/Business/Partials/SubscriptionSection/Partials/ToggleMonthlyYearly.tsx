@@ -20,7 +20,7 @@ export default function ToggleMonthlyYearly({
         >
           <span
             className={`shadow-indigo-950/10 absolute inset-0 w-1/2 transform rounded-full bg-secondary-400 shadow-sm transition-transform duration-200 ease-in-out  ${
-              period !== "Annually" ? "translate-x-0" : "translate-x-full"
+              period !== "Annually" ? "translate-x-0" : "translate-x-full rtl:-translate-x-full"
             }`}
           ></span>
         </span>

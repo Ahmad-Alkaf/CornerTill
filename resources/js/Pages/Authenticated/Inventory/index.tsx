@@ -34,7 +34,7 @@ export default function Inventory({
     { open: true; product: IProduct } | { open: false; product?: IProduct }
   >({ open: false });
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <>
       <Head title={ t( "Inventory"   )}/>
@@ -66,7 +66,7 @@ export default function Inventory({
         <div className="flex min-h-[75vh] flex-col justify-between">
           <div className="flex flex-wrap justify-center py-6">
             {products.length === 0 && (
-              <div dir={i18n.dir()} className="my-20 flex gap-4 opacity-50">
+              <div className="my-20 flex gap-4 opacity-50">
                 <BsSearch className="mt-1" />
                 <p>{ t( "No products found!" ) }</p>
               </div>

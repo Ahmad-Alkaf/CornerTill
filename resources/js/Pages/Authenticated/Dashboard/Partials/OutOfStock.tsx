@@ -23,7 +23,7 @@ export default function OutOfStock({
     { open: true; product: IProduct } | { open: false; product?: IProduct }
   >({ open: false });
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <>
       <CreateEditProductModal
@@ -43,7 +43,7 @@ export default function OutOfStock({
         onPointerLeaveCapture={undefined}
       >
         <div className="p-6">
-          <header dir={i18n.dir()}>
+          <header>
             <Typography
               variant="h6"
               color="blue-gray"
@@ -63,7 +63,7 @@ export default function OutOfStock({
           <section>
             {paginate.total > 0 ? (
               <div className="relative flex overflow-hidden">
-                <div className="pointer-events-none absolute right-0 z-[1] flex h-full w-52 justify-end bg-gradient-to-l from-white to-transparent">
+                <div className="pointer-events-none absolute end-0 z-[1] flex h-full w-52 justify-end bg-gradient-to-l rtl:bg-gradient-to-r from-white to-transparent">
                   {paginate.total > 5 && (
                     <div className="mb-2 self-center">
                       <Tooltip content="Viw all out of stock products">
@@ -72,7 +72,7 @@ export default function OutOfStock({
                             className="inline-block self-center rounded-[50%] p-2 align-middle text-gray-700 transition duration-200 ease-in-out hover:bg-black hover:bg-opacity-10 hover:text-gray-900 focus:outline-none"
                             href={route("product.index", { stock: "out" })}
                           >
-                            <FaChevronRight className="text-lg" />
+                            <FaChevronRight className="text-lg rtl:rotate-180" />
                           </BetterLink>
                         </span>
                       </Tooltip>

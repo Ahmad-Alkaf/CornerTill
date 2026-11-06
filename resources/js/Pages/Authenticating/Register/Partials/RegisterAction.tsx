@@ -8,11 +8,11 @@ export default function RegisterAction({
 }: {
   processing: boolean;
 }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <>
       <div className="mx-2 mt-2">
-        <p dir={i18n.dir()} className="text-xs text-gray-600">
+        <p className="text-xs text-gray-600">
           {t("By proceeding, you agree to our")}{" "}
           <A href={route("termsAndConditions")}>{t("Terms & Conditions")}</A>{" "}
           {t("and confirm you have read our")}{" "}
@@ -31,7 +31,7 @@ export default function RegisterAction({
             {t("Already registered?")}
           </Link>
 
-          <PrimaryButton type="submit" className="ml-4" disabled={processing}>
+          <PrimaryButton type="submit" className="ms-4" disabled={processing}>
             {t("Register")}
           </PrimaryButton>
         </div>

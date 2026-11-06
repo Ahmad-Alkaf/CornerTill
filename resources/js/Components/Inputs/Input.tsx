@@ -74,7 +74,7 @@ export default forwardRef<HTMLInputElement, InputProps>(function Input(
         size={size}
         error={error}
         autoComplete={autoComplete}
-        className={`${className} file:mr-2 file:cursor-pointer file:rounded-md file:border-none
+        className={`${className} file:me-2 file:cursor-pointer file:rounded-md file:border-none
         file:bg-white file:text-center file:text-sm
         file:font-semibold file:uppercase  file:text-blue-gray-700
         file:transition file:duration-200 file:ease-in-out placeholder:italic

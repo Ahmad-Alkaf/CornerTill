@@ -23,7 +23,7 @@ export default function Items({
 }) {
   const products = paginateProducts.data;
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <section className={className}>
       <div className="flex flex-wrap justify-center md:justify-start">
@@ -45,7 +45,7 @@ export default function Items({
           />
         ))}
         {products.length === 0 && (
-          <div dir={i18n.dir()} className="my-20 mx-auto flex gap-4 opacity-50">
+          <div className="my-20 mx-auto flex gap-4 opacity-50">
             <BsSearch className="mt-1" />
             <p>{ t( "No products found!" ) }</p>
           </div>

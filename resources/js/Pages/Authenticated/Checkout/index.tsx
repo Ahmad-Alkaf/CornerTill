@@ -130,15 +130,19 @@ export default function Checkout({
     removeBillDetail,
   };
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  // The cart panel is at the end side: its resize handle is on the side
+  // that faces the products (west in LTR, east in RTL).
+  const handle = i18n.dir() === "rtl" ? "e" : "w";
   return (
     <AuthenticatedLayout user={auth.user} header={null}>
       <Head title={ t( "Checkout"   )}/>
 
       <div className="w-full flex-row-reverse md:flex">
         <ResizableBox
+          key={handle}
           width={Number(localStorage.getItem("resizable-width")) || 420}
-          resizeHandles={["w"]}
+          resizeHandles={[handle]}
           minConstraints={[320, Infinity]}
           maxConstraints={[
             window.innerWidth -
@@ -154,11 +158,11 @@ export default function Checkout({
           }
           draggableOpts={{ axis: "x", grid: [1, 0] }}
         >
-          {/* left padding/margin pixels is for the size of the resize handler */}
-          <div className="grow md:ml-[10px]">
+          {/* start margin pixels are for the size of the resize handler */}
+          <div className="grow md:ms-[10px]">
             <RightSide
               billOperations={billOperations}
-              className="ml-0 min-w-full"
+              className="ms-0 min-w-full"
             />
           </div>
         </ResizableBox>

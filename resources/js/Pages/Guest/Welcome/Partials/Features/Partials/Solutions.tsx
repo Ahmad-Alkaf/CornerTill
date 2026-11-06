@@ -32,13 +32,13 @@ export default function Solutions() {
     return () => clearInterval(interval);
   }, []);
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
-    <div dir={i18n.dir()} className={ "mb-6 justify-center text-xl text-gray-600 "+ (i18n.dir()=='ltr'? "md:-ml-20":"md:-mr-20" ) }>
+    <div className="mb-6 justify-center text-xl text-gray-600 md:-ms-20">
       {/*The reason for the complexity is when using class 'text-center' with a changing width sentence (hence: dynamic list of businesses) will make the whole sentence re-align to center every time which is a bad thing */}
       <span>{t("Whatever is your use case,{{nbsp}}", { nbsp: "\u00A0" })}</span>
       <div className="block md:inline ">
-        <div className="-ml-10 inline md:ml-0">
+        <div className="-ms-10 inline md:ms-0">
           <AppName />
           {t("is built for")}
           &nbsp;
@@ -57,7 +57,7 @@ export default function Solutions() {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 -translate-y-8"
               unmount={true}
-              className="absolute hidden text-left text-secondary-600 md:inline"
+              className="absolute hidden text-start text-secondary-600 md:inline"
             >
               {t(b)}
             </Transition>

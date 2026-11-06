@@ -25,7 +25,7 @@ export default function ProductOptions({
 
   const { t } = useTranslation();
   return (
-    <div className="absolute right-2 top-2 hidden group-hover:block">
+    <div className="absolute end-2 top-2 hidden group-hover:block">
       <Dropdown>
         <Dropdown.Trigger>
           <span className="inline-flex">
@@ -103,7 +103,7 @@ export default function ProductOptions({
               e.stopPropagation();
               setOpenConfirmDeleteModal(true);
             }}
-            className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:bg-white"
+            className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:bg-white"
           >
             <div className="flex items-center gap-3 text-danger-600">
               <FaTrashAlt className="text-base" />{" "}

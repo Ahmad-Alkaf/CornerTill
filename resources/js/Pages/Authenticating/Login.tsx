@@ -95,7 +95,7 @@ export default function Login({
             </Link>
           )}
 
-          <PrimaryButton type="submit" className="ml-4" disabled={processing}>
+          <PrimaryButton type="submit" className="ms-4" disabled={processing}>
             Log in
           </PrimaryButton>
         </div>

@@ -18,12 +18,12 @@ export default function Footer({ className = "" }: { className?: string }) {
             className
           }
         >
-          {/* <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left">
+          {/* <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-start">
             Contact us&nbsp;
             <SupportEmailLink />
           </div> */}
 
-          <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:ml-0 sm:text-right">
+          <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:ms-0 sm:text-end">
             &copy; {new Date().getFullYear()} {" "}{t( "Laptop POS, All Rights Reserved." )}
           </div>
           <div className="text-sm ">

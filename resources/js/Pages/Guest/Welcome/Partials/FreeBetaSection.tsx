@@ -13,7 +13,7 @@ import {
  * Shown in place of the pricing cards when PAYMENTS_ENABLED=false.
  */
 export default function FreeBetaSection() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { betaMaxRes } = usePage<{ betaMaxRes: BetaMaxResources }>().props;
   const benefits = [
     <NumberOfAccountsBenefit numberOfAccounts={betaMaxRes.accounts} />,
@@ -23,7 +23,7 @@ export default function FreeBetaSection() {
   ];
 
   return (
-    <section dir={i18n.dir()} id="pricing" className="bg-gray-100">
+    <section id="pricing" className="bg-gray-100">
       <div className="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16">
         <header className="mx-auto mb-10 max-w-screen-md text-center">
           <p className="mb-3 text-lg font-light tracking-wide text-primary-600">
@@ -38,9 +38,9 @@ export default function FreeBetaSection() {
         </header>
         <div className="mx-auto flex max-w-lg flex-col rounded-lg border border-gray-100 bg-white p-6 text-center text-gray-900 shadow xl:p-8">
           <h3 className="mb-4 text-2xl font-semibold">{t("Free during beta")}</h3>
-          <ul role="list" className="mb-8 space-y-4 text-left">
+          <ul role="list" className="mb-8 space-y-4 text-start">
             {benefits.map((b, i) => (
-              <li key={i} className="flex items-center space-x-3">
+              <li key={i} className="flex items-center space-x-3 rtl:space-x-reverse">
                 {b}
               </li>
             ))}

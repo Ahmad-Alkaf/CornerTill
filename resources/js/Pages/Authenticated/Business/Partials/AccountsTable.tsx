@@ -39,7 +39,7 @@ export default function AccountsTable({
             { t( "Add, remove, or edit an account in your business." ) }
           </p>
           <PrimaryMaterialBtn
-            className="!mx-2 flex gap-2 xl:!mr-10 "
+            className="!mx-2 flex gap-2 xl:!me-10 "
             onClick={() =>
               setModalAction({ open: true, state: "create", data: null })
             }
@@ -54,10 +54,10 @@ export default function AccountsTable({
         <div>
           <div className="mx-auto w-full overflow-x-auto overflow-y-hidden pb-28 xl:px-10 ">
             <div className="min-w-fit rounded-md border">
-              <table className="w-full table-auto  text-left">
+              <table className="w-full table-auto  ltr:text-left rtl:text-right">
                 <thead>
                   <tr>
-                    <TH className="rounded-tl-md">
+                    <TH className="rounded-ss-md">
                       { t( "Name" ) }
                     </TH>
                     <TH>{ t( "Email" ) }</TH>
@@ -66,7 +66,7 @@ export default function AccountsTable({
                       { t( "State" ) }
                     </TH>
                     <TH title={ t( "Created date"  )}>{ t( "Date" ) }</TH>
-                    <TH title={ t( "Account options"   )}className="rounded-tr-md ">
+                    <TH title={ t( "Account options"   )}className="rounded-se-md ">
                       {/* Options button */}
                     </TH>
                   </tr>

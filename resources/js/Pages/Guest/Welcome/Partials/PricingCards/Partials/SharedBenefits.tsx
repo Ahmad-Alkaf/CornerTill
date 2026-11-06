@@ -20,7 +20,7 @@ export function NumberOfAccountsBenefit({
   return (
     <span>
       <FaUser className="inline text-primary-800" />
-      <div className="ltr:ml-2 rtl:mr-2 inline align-middle">
+      <div className="ms-2 inline align-middle">
         <Num amount={numberOfAccounts} /> {t("Accounts")}
       </div>
     </span>
@@ -36,7 +36,7 @@ export function NumberOfProductsBenefit({
   return (
     <span>
       <FaWarehouse className="inline text-primary-800" />
-      <div className="ltr:ml-2 rtl:mr-2 inline align-middle">
+      <div className="ms-2 inline align-middle">
         <Num compact amount={numberOfProducts} /> {t("Products")}
       </div>
     </span>
@@ -52,7 +52,7 @@ export function NumberOfInvoicesBenefit({
   return (
     <span>
       <FaReceipt className="inline text-primary-800" />
-      <div className="ltr:ml-2 rtl:mr-2 inline align-middle">
+      <div className="ms-2 inline align-middle">
         <Num compact amount={numberOfInvoices} /> {t("Invoices per month")}
       </div>
     </span>
@@ -64,7 +64,7 @@ export function NoSetupFeesBenefit() {
   return (
     <span>
       <FaCheck className="inline text-primary-800" />
-      <div className="ltr:ml-2 rtl:mr-2 inline align-middle">
+      <div className="ms-2 inline align-middle">
         {t("No setup, or hidden fees")}
       </div>
     </span>
@@ -76,7 +76,7 @@ export function AccessPeriodBenefit() {
   return (
     <span>
       <FaInfinity className="inline text-primary-800" />
-      <div className="ltr:ml-2 rtl:mr-2 inline align-middle">
+      <div className="ms-2 inline align-middle">
         {t("Full lifetime access")}
       </div>
     </span>
@@ -88,7 +88,7 @@ export function ResponsiveBenefit() {
   return (
     <span>
       <FaTabletAlt className="inline text-primary-800" />
-      <div className="ltr:ml-2 rtl:mr-2 inline align-middle">
+      <div className="ms-2 inline align-middle">
         {t("Responsive for any device access")}
       </div>
     </span>
@@ -100,7 +100,7 @@ export function SupportTeamBenefit() {
   return (
     <span>
       <FaHeadset className="inline text-primary-800" />
-      <div className="ltr:ml-2 rtl:mr-2 inline align-middle">
+      <div className="ms-2 inline align-middle">
         {t("Support team is always available")}
       </div>
     </span>

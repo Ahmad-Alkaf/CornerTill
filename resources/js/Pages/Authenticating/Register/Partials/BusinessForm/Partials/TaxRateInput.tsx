@@ -18,7 +18,7 @@ export default function TaxRateInput({
   hideError: InputProps["hideError"];
   currency?: string; //when registering the <Num showCurrency /> component can't figure out the currency
 }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <Input
       id="taxPercent"
@@ -35,7 +35,7 @@ export default function TaxRateInput({
       errorMsg={errorMsg}
       hideError={hideError}
       hint={
-        <span className="text-left" dir={i18n.dir()}>
+        <span className="text-start">
           <span className="font-semibold text-blue-gray-600">
             <Num amount={value} />%
           </span>{" "}

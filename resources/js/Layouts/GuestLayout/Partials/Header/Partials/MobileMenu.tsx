@@ -66,7 +66,7 @@ export default function MobileMenu() {
           show={mobileNavOpen}
           as="nav"
           id="mobile-nav"
-          className="absolute left-0 top-full z-20 h-screen w-full overflow-auto bg-gray-50 pb-16 backdrop-blur-sm"
+          className="absolute start-0 top-full z-20 h-screen w-full overflow-auto bg-gray-50 pb-16 backdrop-blur-sm"
           enter="transition ease-out duration-200 transform"
           enterFrom="opacity-0 -translate-y-2"
           enterTo="opacity-100 translate-y-0"
@@ -91,7 +91,7 @@ export default function MobileMenu() {
                 onClick={() => setMobileNavOpen(false)}
               >
                 <span>{t("Register")}&nbsp;</span>
-                <FaArrowRight className="transition group-hover:translate-x-2" />
+                <FaArrowRight className="transition group-hover:translate-x-2 rtl:rotate-180 rtl:group-hover:-translate-x-2" />
               </PrimaryLink>
             </li>
           </ul>

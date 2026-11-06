@@ -26,7 +26,7 @@ export default function HeaderNav({ user }: { user: IUser }) {
               </Link>
             </div>
 
-            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+            <div className="hidden space-x-8 rtl:space-x-reverse sm:-my-px sm:ms-10 sm:flex">
               {/* only owner can see dashboard page */}
               {ROUTES.filter(
                 (v) => v.link !== "dashboard" || user.role === "Owner",
@@ -42,9 +42,9 @@ export default function HeaderNav({ user }: { user: IUser }) {
             </div>
           </div>
 
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
+          <div className="hidden sm:ms-6 sm:flex sm:items-center">
             <LanguageSwitch />
-            <div className="relative ml-3">
+            <div className="relative ms-3">
               <Dropdown>
                 <Dropdown.Trigger>
                   <span className="inline-flex rounded-md">
@@ -52,7 +52,7 @@ export default function HeaderNav({ user }: { user: IUser }) {
                       {user.name}
 
                       <svg
-                        className="-mr-0.5 ml-2 h-4 w-4"
+                        className="-me-0.5 ms-2 h-4 w-4"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
@@ -88,7 +88,7 @@ export default function HeaderNav({ user }: { user: IUser }) {
             </div>
           </div>
 
-          <div className="-mr-2 flex items-center gap-2 sm:hidden">
+          <div className="-me-2 flex items-center gap-2 sm:hidden">
             <LanguageSwitch />
             <button
               onClick={() =>

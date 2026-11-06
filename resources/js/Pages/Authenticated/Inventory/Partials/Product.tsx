@@ -56,7 +56,7 @@ export default function Product({
       </div>
       <div className="flex w-full flex-grow flex-col px-4  py-4 ">
         <h3 className="flex-grow text-lg font-semibold text-gray-600">
-          {product.name}
+          <bdi>{product.name}</bdi>
         </h3>
 
         <div className="mt-2 flex justify-between gap-2">

@@ -32,7 +32,7 @@ export default function RowItem({
           />
         )}
         <RemoveBtn
-          className="hidden h-10 max-h-14 max-w-14 text-right group-hover:block "
+          className="hidden h-10 max-h-14 max-w-14 text-end group-hover:block "
           onClick={() => removeBillDetail(bill_detail.product_id)}
         />
       </td>
@@ -45,7 +45,7 @@ export default function RowItem({
           }}
           className="mx-1 inline-block overflow-hidden"
         >
-          {bill_detail.product.name}
+          <bdi>{bill_detail.product.name}</bdi>
         </span>
       </td>
       <td className="h-10">

@@ -18,11 +18,11 @@ export default function RegisterMethod() {
       : {};
   const anySocial = social.google || social.github || social.x;
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <GuestFormLayout>
       <Head title="Register Method" />
-      <div dir={i18n.dir()} className="p-4">
+      <div className="p-4">
         <h2 className="mb-1 text-2xl font-bold text-primary-900 dark:text-white">
           {t("Signing up for")} <AppName className="!font-extrabold" />{" "}
           {t("is fast and free.")}
@@ -33,10 +33,10 @@ export default function RegisterMethod() {
             href={route("register.OAuth", ["google", subParam])}
             className="group block h-12 items-center rounded-full border-2 !border-gray-300 bg-white px-6 py-2 text-center text-xs font-semibold normal-case tracking-wider text-white transition duration-200 ease-in-out hover:!border-primary-800  hover:bg-white focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 active:scale-95 disabled:opacity-25 disabled:active:scale-100"
           >
-            <div className="relative mt-0.5 flex items-center justify-center space-x-4">
+            <div className="relative mt-0.5 flex items-center justify-center space-x-4 rtl:space-x-reverse">
               <img
                 src="/assets/google-icon.png"
-                className="absolute left-0 w-5"
+                className="absolute start-0 w-5"
                 alt="google logo"
               />
               <span className="block w-max text-sm font-semibold tracking-wide text-gray-700 transition duration-300 group-hover:text-primary-800 dark:text-white sm:text-base">
@@ -51,8 +51,8 @@ export default function RegisterMethod() {
             href={route("register.OAuth", ["x", subParam])}
             className="group block h-12 items-center rounded-full border-2 !border-gray-300 bg-white px-6 py-2 text-center text-xs font-semibold normal-case tracking-wider text-white transition duration-200 ease-in-out hover:!border-primary-800  hover:bg-white focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 active:scale-95 disabled:opacity-25 disabled:active:scale-100"
           >
-            <div className="relative mt-0.5 flex items-center justify-center space-x-4">
-              <FaXTwitter className="absolute left-0 h-5 w-5 text-black transition duration-300 group-hover:text-primary-800 " />
+            <div className="relative mt-0.5 flex items-center justify-center space-x-4 rtl:space-x-reverse">
+              <FaXTwitter className="absolute start-0 h-5 w-5 text-black transition duration-300 group-hover:text-primary-800 " />
               <span className="block w-max text-sm font-semibold tracking-wide text-gray-700 transition duration-300 group-hover:text-primary-800 dark:text-white sm:text-base">
                 {t("Register with X")}
               </span>
@@ -64,8 +64,8 @@ export default function RegisterMethod() {
             href={route("register.OAuth", ["github", subParam])}
             className="group block h-12 items-center rounded-full border-2 !border-gray-300 bg-white px-6 py-2 text-center text-xs font-semibold normal-case tracking-wider text-white transition duration-200 ease-in-out hover:!border-primary-800  hover:bg-white focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 active:scale-95 disabled:opacity-25 disabled:active:scale-100"
           >
-            <div className="relative mt-0.5 flex items-center justify-center space-x-4">
-              <FaGithub className="absolute left-0 h-5 w-5 text-black transition duration-300 group-hover:text-primary-800 " />
+            <div className="relative mt-0.5 flex items-center justify-center space-x-4 rtl:space-x-reverse">
+              <FaGithub className="absolute start-0 h-5 w-5 text-black transition duration-300 group-hover:text-primary-800 " />
               <span className="block w-max text-sm font-semibold tracking-wide text-gray-700 transition duration-300 group-hover:text-primary-800 dark:text-white sm:text-base">
                 {t("Register with Github")}
               </span>
@@ -79,8 +79,8 @@ export default function RegisterMethod() {
             href={route("register", subParam)}
             className="group h-12 !rounded-full border-2 !border-gray-300 bg-white px-6 normal-case  hover:!border-primary-800 hover:bg-white"
           >
-            <div className="relative mt-0.5 flex items-center justify-center space-x-4">
-              <FaEnvelope className="absolute left-0 h-5 w-5 text-gray-800 transition duration-300 group-hover:text-primary-800" />
+            <div className="relative mt-0.5 flex items-center justify-center space-x-4 rtl:space-x-reverse">
+              <FaEnvelope className="absolute start-0 h-5 w-5 text-gray-800 transition duration-300 group-hover:text-primary-800" />
               <span className="block w-max text-sm font-semibold tracking-wide text-gray-700 transition duration-300 group-hover:text-primary-800 dark:text-white sm:text-base">
                 {t("Continue with email")}
               </span>

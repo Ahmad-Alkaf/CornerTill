@@ -45,7 +45,7 @@ export default function Plan({
       <p className="font-light text-gray-500">{t(desc)}</p>
       <div className="my-8 ">
         <div className="flex items-baseline justify-center">
-          <span className="mr-2 text-5xl font-extrabold">
+          <span className="me-2 text-5xl font-extrabold">
             <Num
               prefix="$"
               amount={period === "Annually" ? annualPrice : monthlyPrice}
@@ -62,7 +62,7 @@ export default function Plan({
             </span>{" "}
             <span className="text-sm">{t("/month")}</span>{" "}
             <Tooltip content={t("Discount")}>
-              <span className="ml-1 rounded-full bg-danger-50 p-1 px-2 text-sm text-danger-400">
+              <span className="ms-1 rounded-full bg-danger-50 p-1 px-2 text-sm text-danger-400">
                 <Num
                   fixed={1}
                   amount={(100 * (annualPrice / 12)) / monthlyPrice - 100} //discount percentage
@@ -74,7 +74,7 @@ export default function Plan({
         )}
       </div>
       {/* <!-- List --> */}
-      <ul role="list" className="mb-8 space-y-4 text-left">
+      <ul role="list" className="mb-8 space-y-4 text-start">
         {benefits}
       </ul>
 

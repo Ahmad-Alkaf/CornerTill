@@ -19,7 +19,7 @@ export default function Bills({
 }>) {
   const bills: IBill[] = paginateBills.data;
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <AuthenticatedLayout
       user={auth.user}
@@ -38,10 +38,10 @@ export default function Bills({
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
           >
-            <table className="table-auto text-left">
+            <table className="table-auto ltr:text-left rtl:text-right">
               <thead>
                 <tr>
-                  <TH className="rounded-tl-md">{t("ID")}</TH>
+                  <TH className="rounded-ss-md">{t("ID")}</TH>
                   <TH>{t("Created By")}</TH>
                   <TH title={t("Created Before")}>{t("Date")}</TH>
                   <TH title={t("Sub total price (tax is NOT included)")}>
@@ -55,7 +55,7 @@ export default function Bills({
                   <TH>{t("Total Quantity")}</TH>
                   <TH
                     title={t("Bill options")}
-                    className="max-w-fit rounded-tr-md"
+                    className="max-w-fit rounded-se-md"
                   >
                     {/* Options button */}
                   </TH>
@@ -68,7 +68,7 @@ export default function Bills({
               </tbody>
             </table>
             {bills.length === 0 && (
-              <div dir={i18n.dir()} className="my-12 flex justify-center gap-4 opacity-50">
+              <div className="my-12 flex justify-center gap-4 opacity-50">
                 <BsSearch className="mt-1" />
                 <p>{t("No bills found!")}</p>
               </div>

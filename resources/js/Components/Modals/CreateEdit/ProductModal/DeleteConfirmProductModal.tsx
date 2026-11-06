@@ -25,7 +25,7 @@ export default function DeleteConfirmProductModal({
       paragraph={
         <span>
           {t("You are about to delete the product")}{" "}
-          <strong>{product.name}</strong>
+          <strong><bdi>{product.name}</bdi></strong>
         </span>
       }
       buttons={[

@@ -105,7 +105,7 @@ export default function BillDetailRow({
             }}
             className="mx-1 inline-block overflow-hidden text-blue-gray-800"
           >
-            {transaction.product.name}
+            <bdi>{transaction.product.name}</bdi>
           </span>
         </td>
       </tr>

@@ -27,11 +27,11 @@ export default function BusinessLogoInput<
         }
         disabled={form.processing}
       >
-        <p className="absolute -top-2 left-3 bg-white px-1 text-xs text-blue-gray-400">
+        <p className="absolute -top-2 start-3 bg-white px-1 text-xs text-blue-gray-400">
           { t( "Logo" ) }
         </p>
         <div
-          className="pointer-events-none absolute bottom-0 left-0 right-0  top-0 rounded-md
+          className="pointer-events-none absolute bottom-0 start-0 end-0  top-0 rounded-md
         bg-[radial-gradient(#000,#00000030,#00000010,transparent)] opacity-0 transition duration-200 group-hover:opacity-100"
         >
           <p className="flex drop-shadow-lg h-full w-full items-center justify-center gap-2 text-center text-lg text-gray-100">
@@ -58,7 +58,7 @@ export default function BusinessLogoInput<
       </button>
 
       {(form.errors.logo || form.errors.logoFile) && (
-        <p className="ml-2 mt-2 text-xs text-danger-600 ">
+        <p className="ms-2 mt-2 text-xs text-danger-600 ">
           {form.errors.logo || form.errors.logoFile}
         </p>
       )}

@@ -13,11 +13,11 @@ export default function DesktopMenu() {
         </li>
         <li>
           <PrimaryLink
-            className="group ml-5 flex normal-case"
+            className="group ms-5 flex normal-case"
             href={route("register.method")}
           >
             <span>{t("Register")}&nbsp;</span>
-            <FaArrowRight className="transition group-hover:translate-x-1" />
+            <FaArrowRight className="transition group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
           </PrimaryLink>
         </li>
       </ul>

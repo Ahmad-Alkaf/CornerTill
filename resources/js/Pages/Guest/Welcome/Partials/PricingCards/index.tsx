@@ -11,9 +11,9 @@ import { useTranslation } from "react-i18next";
 export default function PricingCards() {
   const [period, setPeriod] = useState<PlanPeriod>("Monthly");
 
-  const { t,i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
-    <section dir={i18n.dir()} id="pricing" className="bg-gray-100">
+    <section id="pricing" className="bg-gray-100">
       <div className="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16">
         <header className="mx-auto mb-10 max-w-screen-md text-center">
           <p className="mb-3 text-lg font-light tracking-wide text-primary-600">

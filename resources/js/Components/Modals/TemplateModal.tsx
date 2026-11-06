@@ -66,11 +66,11 @@ export default function TemplateModal({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative w-full transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              <Dialog.Panel className="relative w-full transform overflow-hidden rounded-lg text-start shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white">
                   <div className="flex flex-col p-3 pb-2 pt-4 sm:flex-row">
                     {icon || ""}
-                    <div className="mb-2 self-center text-center sm:text-left">
+                    <div className="mb-2 self-center text-center sm:text-start">
                       <Dialog.Title
                         as="h3"
                         className="mx-3 font-semibold leading-6 text-gray-900"
@@ -88,7 +88,7 @@ export default function TemplateModal({
                       <span key={i}>
                         {b.type === "danger" && (
                           <DangerButton
-                            className="w-full shadow sm:ml-3 sm:w-auto"
+                            className="w-full shadow sm:ms-3 sm:w-auto"
                             {...b.props}
                             onClick={(e) => {
                               closeModal(b.text);
@@ -101,7 +101,7 @@ export default function TemplateModal({
 
                         {b.type === "primary" && (
                           <PrimaryMaterialBtn
-                            className="w-full sm:ml-3 sm:w-auto"
+                            className="w-full sm:ms-3 sm:w-auto"
                             {...b.props}
                             onClick={(e) => {
                               closeModal(b.text);
@@ -113,7 +113,7 @@ export default function TemplateModal({
                         )}
                         {b.type === "secondary" && (
                           <SecondaryMaterialBtn
-                            className="w-full sm:ml-3 sm:w-auto"
+                            className="w-full sm:ms-3 sm:w-auto"
                             {...b.props}
                             onClick={(e) => {
                               closeModal(b.text);

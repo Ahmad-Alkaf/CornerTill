@@ -136,6 +136,27 @@ Written first to be overwrite by tailwind or any other classes*/
   border-left: 25rem solid transparent;
 }
 
+/* RTL: Material Tailwind puts the input icon at the right (right-3) and
+   pads the input on the right (!pr-9). In Arabic, move both to the left. */
+[dir="rtl"] .relative > .grid.place-items-center.absolute.right-3 {
+  right: auto;
+  left: 0.75rem;
+}
+[dir="rtl"] input.\!pr-9 {
+  padding-right: 0.75rem !important;
+  padding-left: 2.25rem !important;
+}
+/* RTL: in the Material Tailwind Select, the arrow (right-2) moves to the
+   left and the selected value (left-3) moves to the right. */
+[dir="rtl"] button[role="combobox"] > .grid.place-items-center.absolute.right-2 {
+  right: auto;
+  left: 0.5rem;
+}
+[dir="rtl"] button[role="combobox"] > span.absolute.left-3 {
+  left: auto;
+  right: 0.75rem;
+}
+
 /*Checkout rightSide resizable handler style*/
 .react-resizable {
   position: relative;
@@ -164,10 +185,17 @@ Written first to be overwrite by tailwind or any other classes*/
 .react-resizable-handle:active {
   background-color: #9e9e9eb6;
 }
-.react-resizable-handle-w {
+.react-resizable-handle-w,
+.react-resizable-handle-e {
   cursor: col-resize;
-  left: 0;
   transition: background-color 100ms ease-in-out;
+}
+.react-resizable-handle-w {
+  left: 0;
+}
+/* RTL: the cart panel is on the left, so the handle is on its right side. */
+.react-resizable-handle-e {
+  right: 0;
 }
 
 /* Remove arrow from Input element of type number by using remove-arrow class*/

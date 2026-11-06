@@ -52,8 +52,8 @@ export function PhoneInput<
               variant="text"
               color="blue-gray"
               className="flex h-11 items-center gap-2
-        rounded-r-none border border-r-0
-        border-blue-gray-200 bg-blue-gray-500/10 pl-3 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1"
+        ltr:rounded-r-none rtl:rounded-l-none border ltr:border-r-0 rtl:border-l-0
+        border-blue-gray-200 bg-blue-gray-500/10 ltr:pl-3 rtl:pr-3 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1"
             >
               <img
                 src={country.flags.svg}
@@ -88,7 +88,7 @@ export function PhoneInput<
                     className="h-5 w-7 rounded object-cover"
                   />
                   {t(c.name)}{" "}
-                  <span className="ml-auto">{c.countryCallingCode}</span>
+                  <span className="ms-auto">{c.countryCallingCode}</span>
                 </MenuItem>
               );
             })}
@@ -99,7 +99,7 @@ export function PhoneInput<
           color="teal"
           size="lg"
           type="number"
-          className="remove-arrow w-full rounded-l-none focus:rounded-l-none focus:ring-0"
+          className="remove-arrow w-full ltr:rounded-l-none rtl:rounded-r-none ltr:focus:rounded-l-none rtl:focus:rounded-r-none focus:ring-0"
           value={form.data.phone}
           error={!!form.errors.phone && !form.isDirty("phone")}
           onChange={(v) => form.setData("phone", v.target.value)}
@@ -111,7 +111,7 @@ export function PhoneInput<
         />
       </div>
       {(form.errors.phone || form.errors.countryCallingCode) && (
-        <p className="ml-2 mt-2 text-xs text-danger-600 ">
+        <p className="ms-2 mt-2 text-xs text-danger-600 ">
           {form.errors.phone || form.errors.countryCallingCode}
         </p>
       )}

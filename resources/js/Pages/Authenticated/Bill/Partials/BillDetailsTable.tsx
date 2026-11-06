@@ -7,7 +7,7 @@ export default function BillDetailsTable({ bill }: { bill: IBill }) {
   const { t } = useTranslation();
   return (
     <div className="relative h-full overflow-y-auto rounded-md shadow-sm">
-      <table className="w-full table-auto text-left">
+      <table className="w-full table-auto ltr:text-left rtl:text-right">
         <thead>
           <tr className="bg-blue-gray-50 text-gray-800">
             <th>

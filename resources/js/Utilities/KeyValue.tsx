@@ -24,7 +24,8 @@ export default function KeyValue({
       <span className={"text-blue-gray-500 " + keyClassName}>{t(key)}</span>
       {!noColon && ":"}&nbsp;
       <span className={"text-gray-800 " + valueClassName} title={t(title)}>
-        {value ?? t("N/A")}
+        {/* <bdi>: user text (names, addresses) keeps its own direction in RTL pages */}
+        {typeof value === "string" ? <bdi>{value}</bdi> : value ?? t("N/A")}
       </span>
     </p>
   );

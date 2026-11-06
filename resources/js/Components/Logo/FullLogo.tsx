@@ -23,7 +23,7 @@ export default function FullLogo({
       <Logo className={logoSize} />
       <h1 className={"px-1 font-extrabold text-primary-950 " + textSize}>
         {t("Laptop")}&nbsp;
-        <span className="-ml-1 font-black text-primary-600">{t("POS")}</span>
+        <span className="-ms-1 font-black text-primary-600">{t("POS")}</span>
       </h1>
     </Link>
   );

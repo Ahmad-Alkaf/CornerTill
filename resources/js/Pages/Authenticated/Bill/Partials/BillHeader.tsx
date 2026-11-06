@@ -23,7 +23,7 @@ export default function BillHeader({ bill }: { bill: IBill }) {
       </h2>
       <div className="text-md my-auto">
         <PrimaryMaterialBtn onClick={() => print()} className="inline-flex h-9">
-          <BsPrinterFill className="mr-2 text-base" />
+          <BsPrinterFill className="me-2 text-base" />
           <span>{t("Print")}</span>
         </PrimaryMaterialBtn>
       </div>

@@ -9,7 +9,7 @@ export default function ResponsiveNavLink({
   return (
     <Link
       {...props}
-      className={`flex w-full items-start border-l-4 py-2 pl-3 pr-4 ${
+      className={`flex w-full items-start border-s-4 py-2 ps-3 pe-4 ${
         active
           ? "border-primary-600 bg-primary-50 text-primary-800 focus:border-primary-700 focus:bg-primary-100 focus:text-primary-600"
           : "border-transparent text-gray-600 hover:border-primary-200 hover:bg-primary-50 hover:text-primary-600 focus:border-primary-700 focus:bg-primary-100 focus:text-primary-900"

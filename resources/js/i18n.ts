@@ -18,12 +18,13 @@ i18n
     },
   });
 
-// Keep <html lang> in step with the selected language.
-// <html dir> stays "ltr" on purpose: the pages set dir={i18n.dir()} on each
-// section, and some layouts (dashboard cards, checkout cart) break when the
-// whole document is rtl.
+// Keep <html lang> and dir (rtl for Arabic) in step with the selected
+// language. The layouts use logical Tailwind classes (ms-, pe-, start-, ...),
+// so the whole page follows <html dir>.
 function applyLanguageToHtml(lng: string) {
-  document.documentElement.lang = i18n.resolvedLanguage ?? lng;
+  const lang = i18n.resolvedLanguage ?? lng;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = i18n.dir(lang);
 }
 i18n.on("languageChanged", applyLanguageToHtml);
 if (i18n.resolvedLanguage) applyLanguageToHtml(i18n.resolvedLanguage);

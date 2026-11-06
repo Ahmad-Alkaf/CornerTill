@@ -110,7 +110,7 @@ export default function UpdateProfileInformation({
         )}
 
         <div>
-          <KeyValue className="ml-1" k="Role" v={user.role} />
+          <KeyValue className="ms-1" k="Role" v={user.role} />
         </div>
 
         <div className="flex items-center gap-4">

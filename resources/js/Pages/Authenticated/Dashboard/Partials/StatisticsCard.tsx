@@ -44,7 +44,7 @@ export function StatisticsCard({
         className={!tooltip ? "hidden" : ""}
       >
         <CardBody
-          className="p-4 pb-2 text-right"
+          className="p-4 pb-2 text-end"
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}

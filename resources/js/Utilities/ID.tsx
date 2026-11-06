@@ -11,6 +11,7 @@ export default function ID({ id }: { id: string }) {
   const { t } = useTranslation();
   return (
     <span
+      dir="ltr" // keep "#" before the id in Arabic (RTL) pages
       title={"#" + id}
       className="flex-nowrap whitespace-nowrap font-semibold italic tracking-wide"
     >

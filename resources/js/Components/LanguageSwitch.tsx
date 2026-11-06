@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 /**
  * EN/AR switch. i18next saves the choice in the same localStorage key and
  * cookie that the language detector reads (see resources/js/i18n.ts), and
- * i18n.ts updates <html lang>. The pages set dir (rtl for Arabic) per section.
+ * i18n.ts updates <html lang> and dir (rtl for Arabic).
  */
 export default function LanguageSwitch({ className = "" }: { className?: string }) {
   const { i18n } = useTranslation();

@@ -38,7 +38,7 @@ export default function BillsHeader({ totalResult }: { totalResult: number }) {
   return (
     <div className="block justify-between py-2 md:flex">
       <div className="flex items-center gap-3">
-        <h2 className="mr-4 text-xl font-semibold leading-tight text-gray-800">
+        <h2 className="me-4 text-xl font-semibold leading-tight text-gray-800">
           {t("Bills")}
         </h2>
 

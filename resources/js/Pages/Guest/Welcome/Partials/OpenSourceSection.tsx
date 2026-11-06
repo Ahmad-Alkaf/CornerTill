@@ -5,13 +5,13 @@ import { FaCodeBranch } from "react-icons/fa6";
 
 export default function OpenSourceSection() {
 
-  const { t,i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <section id="public-source" className="overflow-hidden bg-[#475569] py-24">
 
       <div className="container mx-auto pb-24">
         <div className="flex flex-wrap justify-center">
-          <div dir={i18n.dir()} className="ml-auto mr-auto w-full px-12 lg:mt-28 lg:w-5/12 lg:px-4">
+          <div className="ms-auto me-auto w-full px-12 lg:mt-28 lg:w-5/12 lg:px-4">
             <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white p-3 text-center text-blue-gray-700 shadow-lg">
               <FaCodeBranch className="text-xl"/>
             </div>
@@ -40,9 +40,9 @@ export default function OpenSourceSection() {
               </PrimaryButton>
             </a>
           </div>
-          <div className="relative ml-auto mr-auto mt-32 w-full px-4 lg:w-4/12">
+          <div className="relative ms-auto me-auto mt-32 w-full px-4 lg:w-4/12">
             <FaGithub
-              className="fab fa-github right-[-50%] md:right-[-80%] md:text-[47rem] text-[27rem] text-black"
+              className="fab fa-github end-[-50%] md:end-[-80%] md:text-[47rem] text-[27rem] text-black"
               style={{
                 position: "absolute",
                 top: "-170px",
