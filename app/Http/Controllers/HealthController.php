@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use PDO;
 use Throwable;
 
 /**
@@ -17,7 +18,7 @@ class HealthController extends Controller
     public function __invoke(): JsonResponse
     {
         try {
-            DB::connection()->select('SELECT 1');
+            $this->checkDatabase();
         } catch (Throwable $e) {
             Log::error('Health check: database unreachable', ['error' => $e->getMessage()]);
 
@@ -29,5 +30,31 @@ class HealthController extends Controller
         return response()
             ->json(['status' => 'ok', 'database' => 'ok'])
             ->header('Cache-Control', 'no-store');
+    }
+
+    /**
+     * Open a new connection and run SELECT 1, with a short time limit
+     * (DB_HEALTH_TIMEOUT). The limits apply to this request only: this
+     * route has no middleware, so no other code opened a connection yet.
+     */
+    private function checkDatabase(): void
+    {
+        $timeout = max(1, (int) config('database.health_timeout', 2));
+        $name = config('database.default');
+
+        // Connect timeout.
+        config(["database.connections.$name.options" => array_replace(
+            (array) config("database.connections.$name.options", []),
+            [PDO::ATTR_TIMEOUT => $timeout]
+        )]);
+        // Read timeout: a server that accepts TCP but does not answer would
+        // otherwise block for hours (mysqlnd.net_read_timeout default).
+        ini_set('mysqlnd.net_read_timeout', (string) $timeout);
+        ini_set('default_socket_timeout', (string) $timeout);
+
+        DB::purge($name);
+        // getPdo() + query skips the query-level reconnect of Laravel,
+        // so the worst case is two connect attempts, not four.
+        DB::connection($name)->getPdo()->query('SELECT 1');
     }
 }

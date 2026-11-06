@@ -17,6 +17,9 @@ return [
 
     'default' => env('DB_CONNECTION', 'mysql'),
 
+    // Seconds. Connect and read timeout of the database check in /api/health.
+    'health_timeout' => (int) env('DB_HEALTH_TIMEOUT', 2),
+
     /*
     |--------------------------------------------------------------------------
     | Database Connections
