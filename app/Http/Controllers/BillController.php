@@ -113,6 +113,6 @@ class BillController extends Controller
         Gate::authorize('delete', $bill);
 
         $bill->delete();
-        return redirect()->back()->with('success', 'Successfully deleted');
+        return redirect()->back()->with('success', __('Successfully deleted'));
     }
 }

@@ -48,7 +48,7 @@ class ProductPolicy
         ) {
             $count = $product->bill_details()->count();
             if ($count != 0) {
-                throw ValidationException::withMessages(['serverError' => 'This product (' . $product->name . ') is used by ' . $count . ' bills. Please make sure no bill is using this product before deleting.']);
+                throw ValidationException::withMessages(['serverError' => __('This product (:name) is used by :count bills. Please make sure no bill is using this product before deleting.', ['name' => $product->name, 'count' => $count])]);
             }
             return true;
         } else

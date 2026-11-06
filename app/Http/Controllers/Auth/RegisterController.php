@@ -67,6 +67,6 @@ class RegisterController extends Controller
         )
             return redirect(route('subscription.subscribe', ['period' => $request->period, 'plan' => $request->plan]));
 
-        return redirect(RouteServiceProvider::HOME)->with('message', 'Welcome ' . $user->name);
+        return redirect(RouteServiceProvider::HOME)->with('message', __('Welcome :name', ['name' => $user->name]));
     }
 }

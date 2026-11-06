@@ -101,8 +101,8 @@ class Business extends Model
     public static function limitReachedMessage(string $resource): string
     {
         if (!config('features.payments_enabled'))
-            return 'You reached the beta limit. Contact support@kaflabs.com for more.';
-        return 'You have reached the maximum number of ' . $resource . ' that you can create with your current plan. To create more ' . $resource . ', you can upgrade your plan, delete some existing ' . $resource . ', or contact our support team for assistance (support@kaflabs.com).';
+            return __('You reached the beta limit. Contact support@kaflabs.com for more.');
+        return __('You have reached the maximum number of :resource that you can create with your current plan. To create more :resource, you can upgrade your plan, delete some existing :resource, or contact our support team for assistance (support@kaflabs.com).', ['resource' => __($resource)]);
     }
 
     /**
@@ -113,7 +113,7 @@ class Business extends Model
         if (($p = $this->progress($subscribedTo)) != null) {
             return $p;
         }
-        abort(403, 'You need to have an active subscription to perform this action!');
+        abort(403, __('You need to have an active subscription to perform this action!'));
     }
 
     /**

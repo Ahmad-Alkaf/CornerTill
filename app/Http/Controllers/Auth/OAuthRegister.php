@@ -41,7 +41,7 @@ class OAuthRegister extends Controller
             try {
                 $userInfo = Socialite::driver($provider)->stateless()->user();
             } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'Whoops, something went wrong!');
+                return redirect()->back()->with('error', __('Whoops, something went wrong!'));
             }
 
             if (isset($userInfo->name))

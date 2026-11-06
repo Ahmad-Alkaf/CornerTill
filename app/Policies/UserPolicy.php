@@ -55,7 +55,7 @@ class UserPolicy
             $productsCount = $account->products()->count();
             $billsCount = $account->bills()->count();
             if ($productsCount != 0 || $billsCount != 0) {
-                throw ValidationException::withMessages(['serverError' => 'This account has created ' . $productsCount . ' products and ' . $billsCount . ' bills. You cannot delete this account unless you delete all the products and bills that belong to it. We do not recommend permanent deletion.']);
+                throw ValidationException::withMessages(['serverError' => __('This account has created :products products and :bills bills. You cannot delete this account unless you delete all the products and bills that belong to it. We do not recommend permanent deletion.', ['products' => $productsCount, 'bills' => $billsCount])]);
             } else
                 return true;
         } else

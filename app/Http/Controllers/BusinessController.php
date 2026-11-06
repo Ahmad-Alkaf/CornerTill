@@ -185,7 +185,7 @@ class BusinessController extends Controller
         $business->update($updatedBusiness);
         $business->save();
 
-        return redirect()->back()->with('success', 'Successfully updated');
+        return redirect()->back()->with('success', __('Successfully updated'));
     }
 
     /**
@@ -210,7 +210,7 @@ class BusinessController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/')->with('success', 'Successfully deleted');
+        return Redirect::to('/')->with('success', __('Successfully deleted'));
     }
 
 

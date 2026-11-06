@@ -30,7 +30,7 @@ class BusinessPolicy
         if ($user->business_id == $business->id && $user->role == 'Owner') {
             $usersCount = $user->business->users()->count();
             if ($usersCount > 1) {
-                throw ValidationException::withMessages(['serverError' => 'You have to delete all accounts within your business. There are ' . $usersCount - 1 . ' accounts remaining.']);
+                throw ValidationException::withMessages(['serverError' => __('You have to delete all accounts within your business. There are :count accounts remaining.', ['count' => $usersCount - 1])]);
             }
             return true;
         }

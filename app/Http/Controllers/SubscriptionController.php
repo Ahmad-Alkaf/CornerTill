@@ -48,28 +48,28 @@ class SubscriptionController extends Controller
     {
         $request->user()->business->subscription()->pause();
 
-        return redirect()->back()->with('success', 'Successfully paused');
+        return redirect()->back()->with('success', __('Successfully paused'));
     }
 
     public function pauseNow(Request $request)
     {
         $request->user()->business->subscription()->pauseNow();
-        return redirect()->back()->with('success', 'Successfully paused');
+        return redirect()->back()->with('success', __('Successfully paused'));
     }
 
     public function resume(Request $request)
     {
         if (($sub = $request->user()->business->subscription())->onPausedGracePeriod() || $sub->paused())
             $sub->resume();
-        else abort(400, 'Your subscription has not paused in the first place to be resumed');
-        return redirect()->back()->with('success', 'Successfully resumed');
+        else abort(400, __('Your subscription has not paused in the first place to be resumed'));
+        return redirect()->back()->with('success', __('Successfully resumed'));
     }
 
     public function updatePaymentMethod(Request $request)
     {
         return $request->user()->business
             ->subscription()
-            ->redirectToUpdatePaymentMethod()->with('success', 'Successfully updated');
+            ->redirectToUpdatePaymentMethod()->with('success', __('Successfully updated'));
     }
 
     public function swapToAdvanced(Request $request, string $period)
@@ -83,7 +83,7 @@ class SubscriptionController extends Controller
         $request->user()->business
             ->subscription()
             ->swapAndInvoice($advancedPrices[$period === 'monthly' ? 0 : 1]);
-        return redirect()->back()->with('success', 'Successfully upgraded');
+        return redirect()->back()->with('success', __('Successfully upgraded'));
     }
 
     public function swapToEnhanced(Request $request, string $period)
@@ -98,7 +98,7 @@ class SubscriptionController extends Controller
         $request->user()->business
             ->subscription()
             ->swapAndInvoice($enhancedPrices[$period === 'monthly' ? 0 : 1]);
-        return redirect()->back()->with('success', 'Successfully updated');
+        return redirect()->back()->with('success', __('Successfully updated'));
     }
 
     public function swapToBasic(Request $request, string $period)
@@ -112,6 +112,6 @@ class SubscriptionController extends Controller
         $request->user()->business
             ->subscription()
             ->swapAndInvoice($basicPrices[$period === 'monthly' ? 0 : 1]);
-        return redirect()->back()->with('success', 'Successfully downgraded');
+        return redirect()->back()->with('success', __('Successfully downgraded'));
     }
 }

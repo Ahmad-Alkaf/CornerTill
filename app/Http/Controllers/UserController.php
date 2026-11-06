@@ -42,7 +42,7 @@ class UserController extends Controller
         $newUser->save();
         Mail::to($newUser)->send(new InviteAccountToBusiness($request->user(), $newUser));
 
-        return redirect()->back()->with('success', 'Successfully created. An invitation link sent to ' . $newUser->email);
+        return redirect()->back()->with('success', __('Successfully created. An invitation link sent to :email', ['email' => $newUser->email]));
     }
 
     /**
@@ -58,7 +58,7 @@ class UserController extends Controller
             }
             $account->save();
             return redirect()->back()
-                ->with('success', 'Updated successfully');
+                ->with('success', __('Updated successfully'));
         } else { //update profile
             $request->user()->fill($request->validated());
             if ($request->user()->isDirty('email')) {
@@ -66,7 +66,7 @@ class UserController extends Controller
             }
             $request->user()->save();
             return redirect()->back()
-                ->with('success', 'Successfully updated');
+                ->with('success', __('Successfully updated'));
         }
     }
 
@@ -83,7 +83,7 @@ class UserController extends Controller
         // $request->session()->invalidate();
         // $request->session()->regenerateToken();
 
-        return redirect()->back()->with('success', 'Successfully soft-deleted');
+        return redirect()->back()->with('success', __('Successfully soft-deleted'));
     }
 
     /**Type hint won't work for trashed entity */
@@ -92,7 +92,7 @@ class UserController extends Controller
         $account = User::onlyTrashed()->findOrFail($accountId);
         Gate::authorize('restore', $account);
         $account->restore();
-        return redirect()->back()->with('success', 'Successfully restored');
+        return redirect()->back()->with('success', __('Successfully restored'));
     }
 
     public function forceDestroy(string $accountId): RedirectResponse
@@ -100,6 +100,6 @@ class UserController extends Controller
         $account = User::onlyTrashed()->findOrFail($accountId);
         Gate::authorize('forceDestroy', $account);
         $account->forceDelete();
-        return redirect()->back()->with('success', 'Successfully deleted');
+        return redirect()->back()->with('success', __('Successfully deleted'));
     }
 }

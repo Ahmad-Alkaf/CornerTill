@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        return redirect()->intended(RouteServiceProvider::HOME)->with('message', 'Welcome ' . $request->user()->name);
+        return redirect()->intended(RouteServiceProvider::HOME)->with('message', __('Welcome :name', ['name' => $request->user()->name]));
     }
 
     /**
@@ -47,6 +47,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('message','See you again 👋');
+        return redirect('/')->with('message', __('See you again 👋'));
     }
 }
