@@ -1,1 +1,0 @@
-import{j as t}from"./app-1ab1ca84.js";import{G as m}from"./index-1e0fbbe0.js";import{A as u}from"./index-d44f842e.js";import{F as a}from"./Footer-910b1714.js";function x({user:o,children:r,header:s}){return o===null?t.jsx(m,{children:r}):t.jsxs(u,{user:o,header:s,children:[r,t.jsx(a,{})]})}export{x as G};
