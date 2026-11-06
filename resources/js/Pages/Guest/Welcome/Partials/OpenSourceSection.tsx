@@ -22,19 +22,19 @@ export default function OpenSourceSection() {
               { t( "We value transparency and openness, and that is why our system is Public Source. You can access its code below and see how it's working.  You can also report issues, request features, or contribute to our system." ) }
             </p>
             <p className="mb-4 mt-0 text-lg font-light leading-relaxed text-blue-gray-300">
-              { t( "Public Source is free to use for any purpose, as long as you follow the terms of" ) }
+              { t( "The source code is free to use for noncommercial purposes under the terms of" ) }
               {" "}
               <a
                 target="_blank"
-                href="https://www.gnu.org/licenses/gpl-3.0.en.html"
+                href="https://polyformproject.org/licenses/noncommercial/1.0.0/"
                 className="text-blue-gray-400 hover:underline"
               >
-                GNU.
+                PolyForm Noncommercial 1.0.0.
               </a>
               {" "}
               { t( "If you like our system, please give us a star on GitHub." ) }
             </p>
-            <a target="_blank" href="https://github.com/Laravel-AAA/Laptop-POS">
+            <a target="_blank" href="https://github.com/Ahmad-Alkaf/Laptop-POS">
               <PrimaryButton className="github-star mt-4 inline-block rounded !bg-blue-gray-900 px-6 py-4 text-sm font-bold shadow hover:!bg-black hover:shadow-lg">
                 { t( "Source Code" ) }
               </PrimaryButton>
