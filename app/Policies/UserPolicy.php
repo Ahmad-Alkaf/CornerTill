@@ -16,7 +16,7 @@ class UserPolicy
         $progress = $user->business->progressOrFail();
         if ($progress['accounts']['reached'] < $progress['accounts']['max'])
             return true;
-        else abort(403, 'You have reached the maximum number of accounts that you can create with your current plan. To create more accounts, you can upgrade your plan, delete some existing accounts, or contact our support team for assistance (support@laptop-pos.com).');
+        else abort(403, 'You have reached the maximum number of accounts that you can create with your current plan. To create more accounts, you can upgrade your plan, delete some existing accounts, or contact our support team for assistance (support@kaflabs.com).');
     }
 
     /**
@@ -44,7 +44,7 @@ class UserPolicy
             $progress = $user->business->progressOrFail('enhanced');
             if ($progress['accounts']['reached'] < $progress['accounts']['max'])
                 return true;
-            else abort(403, 'You have reached the maximum number of accounts that you can create with your current plan. To create more accounts, you can upgrade your plan, delete some existing accounts, or contact our support team for assistance (support@laptop-pos.com).');
+            else abort(403, 'You have reached the maximum number of accounts that you can create with your current plan. To create more accounts, you can upgrade your plan, delete some existing accounts, or contact our support team for assistance (support@kaflabs.com).');
         } else return false;
     }
 
