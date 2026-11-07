@@ -21,6 +21,11 @@ export default withMT({
         sans: ['Figtree', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        // CornerTill logo colors.
+        'brand': {
+          ink: '#1E2330',
+          accent: '#E4572E',
+        },
         'primary': {
           50: '#f0fdfa',
           100: '#ccfbf1',

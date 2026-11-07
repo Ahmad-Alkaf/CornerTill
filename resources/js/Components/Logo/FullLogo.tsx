@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/react";
 import React from "react";
 import Logo from "./Logo";
-import { useTranslation } from "react-i18next";
+import AppName from "./AppName";
 
 export default function FullLogo({
   size = "lg",
@@ -9,21 +9,19 @@ export default function FullLogo({
   size?: "lg" | "xl"; //add other sizes when you need it
 }) {
   const logoSize = {
-    lg: "w-16",
-    xl: "w-20",
+    lg: "h-10 w-10",
+    xl: "h-12 w-12",
   }[size];
   const textSize = {
     lg: "text-2xl",
-    xl: "text-2xl",
+    xl: "text-3xl",
   }[size];
 
-  const { t } = useTranslation();
   return (
-    <Link href="/" className="flex shrink-0 items-center self-stretch">
+    <Link href="/" className="flex shrink-0 items-center gap-2 self-stretch">
       <Logo className={logoSize} />
-      <h1 className={"px-1 font-extrabold text-primary-950 " + textSize}>
-        {t("Laptop")}&nbsp;
-        <span className="-ms-1 font-black text-primary-600">{t("POS")}</span>
+      <h1 className={"px-1 tracking-tight " + textSize}>
+        <AppName className="!font-extrabold" />
       </h1>
     </Link>
   );

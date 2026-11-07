@@ -6,16 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     @php
-        $favicon = '/favicon.ico';
-        $title = 'Laptop POS';
+        $title = 'CornerTill';
         $description = 'Simplify your sales process and boost your productivity.';
         $url = config('app.url', 'http://localhost:8000');
-        $mediumLogo = '/assets/logo/laptop-pos-logo-medium.png';
+        $mediumLogo = '/assets/logo/cornertill-logo.png';
 
     @endphp
 
     <!-- General -->
-    <link rel="icon" type="image/x-icon" href="{{ $favicon }}">
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
     <title inertia>{{ config('app.name', $title) }}</title>
     <meta name="title" content="{{ $title }}">
     <meta name="description" content="{{ $description }}">

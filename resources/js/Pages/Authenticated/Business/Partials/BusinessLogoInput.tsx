@@ -13,7 +13,7 @@ export default function BusinessLogoInput<
       ? form.data.logo
       : form.data.logo
       ? "/businesses-logo/" + form.data.logo
-      : "/assets/logo/laptop-pos-logo.svg",
+      : "/assets/logo/cornertill-mark.svg",
   );
     const { t } = useTranslation();
 

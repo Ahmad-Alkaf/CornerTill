@@ -13,7 +13,7 @@ export default function Logo({
     src = businessLogo.startsWith("http")
       ? businessLogo
       : "/businesses-logo/" + businessLogo;
-  } else src = "/assets/logo/laptop-pos-logo.svg";
+  } else src = "/assets/logo/cornertill-mark.svg";
 
   const { t } = useTranslation();
   return <img className={className} src={src} alt={t("Application Logo")} />;
