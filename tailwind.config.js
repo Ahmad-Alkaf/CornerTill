@@ -23,8 +23,8 @@ export default withMT({
       colors: {
         // CornerTill logo colors.
         'brand': {
-          ink: '#1E2330',
-          accent: '#E4572E',
+          ink: '#042f2e', // primary-950
+          accent: '#0d9488', // primary-600 (DEFAULT)
         },
         'primary': {
           50: '#f0fdfa',
