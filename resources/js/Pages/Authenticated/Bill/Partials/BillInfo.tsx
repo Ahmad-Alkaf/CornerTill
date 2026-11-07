@@ -162,7 +162,7 @@ export default function BillInfo({ bill }: { bill: IBill }) {
               <KeyValue
                 className="border-t pt-1 text-center text-xs"
                 k="Developed by"
-                v="Laptop-POS.com"
+                v="cornertill.com"
                 noColon
               />
             </Link>

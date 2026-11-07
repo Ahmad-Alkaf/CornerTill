@@ -26,7 +26,7 @@ class RegistrationTest extends TestCase
             'password' => 'asdfasdf',
             'password_confirmation' => 'asdfasdf',
             'business' => [
-                'name' => 'Laptop POS',
+                'name' => 'Corner Shop',
                 'logo' => null,
                 'country' => 'Saudi Arabia',
                 'city' => 'Makkah',

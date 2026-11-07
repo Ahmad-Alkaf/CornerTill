@@ -100,7 +100,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'noreply@kaflabs.com'),
-        'name' => env('MAIL_FROM_NAME', 'Laptop POS'),
+        'name' => env('MAIL_FROM_NAME', 'CornerTill'),
     ],
 
     /*

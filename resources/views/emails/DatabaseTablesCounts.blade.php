@@ -7,5 +7,5 @@ Products: **{{ $products }}**<br>
 Bills: **{{ $bills }}**<br>
 
 Yours,<br>
-Laptop POS
+CornerTill
 @endcomponent

@@ -34,7 +34,7 @@ function Content() {
         <P>
           {t("At")} <AppName />,{" "}
           {t(
-            "accessible from www.laptop-pos.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Laptop POS and how we use it.",
+            "accessible from www.cornertill.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by CornerTill and how we use it.",
           )}
         </P>
 

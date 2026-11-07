@@ -1,4 +1,5 @@
 {
+    "name": "cornertill",
     "private": true,
     "license": "PolyForm-Noncommercial-1.0.0",
     "type": "module",

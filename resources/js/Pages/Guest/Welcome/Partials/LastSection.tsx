@@ -28,7 +28,7 @@ export default function LastSection() {
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
         >
-          {t("Try Laptop POS for free. No credit card required.")}
+          {t("Try CornerTill for free. No credit card required.")}
         </Typography>
       </div>
       <div className="mt-10 w-full  self-center lg:mt-0">

@@ -1,4 +1,4 @@
-# Laptop POS - Laravel 10 image for Coolify.
+# CornerTill - Laravel 10 image for Coolify.
 #
 # One image, three roles (CONTAINER_ROLE):
 #   all (default) - nginx + PHP-FPM + queue worker + scheduler under supervisord.
@@ -50,8 +50,8 @@ ENV APP_ENV=production \
     QUEUE_CONNECTION=database \
     CONTAINER_ROLE=all
 
-COPY docker/php.ini /usr/local/etc/php/conf.d/zz-laptop-pos.ini
-COPY docker/php-fpm.conf /usr/local/etc/php-fpm.d/zz-laptop-pos.conf
+COPY docker/php.ini /usr/local/etc/php/conf.d/zz-cornertill.ini
+COPY docker/php-fpm.conf /usr/local/etc/php-fpm.d/zz-cornertill.conf
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/supervisord.conf /etc/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/docker-entrypoint

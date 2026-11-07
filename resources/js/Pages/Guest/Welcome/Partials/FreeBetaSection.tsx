@@ -30,7 +30,7 @@ export default function FreeBetaSection() {
             {t("Free during beta")}
           </p>
           <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900">
-            {t("Use Laptop POS free during the beta")}
+            {t("Use CornerTill free during the beta")}
           </h2>
           <p className="mb-5 font-light text-gray-500 sm:text-xl">
             {t("No payment is necessary. No credit card required.")}

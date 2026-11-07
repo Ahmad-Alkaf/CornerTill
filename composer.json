@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "kaflabs/cornertill",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "CornerTill: a simple point of sale (POS) web app for small shops.",
     "keywords": ["laravel", "framework"],
     "license": "PolyForm-Noncommercial-1.0.0",
     "require": {

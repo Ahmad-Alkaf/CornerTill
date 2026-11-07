@@ -14,7 +14,7 @@ class DatabaseTablesCountsMailTest extends TestCase
     {
         $mail = new DatabaseTablesCounts(11, 22, 33, 44);
 
-        $mail->assertHasSubject('Laptop POS: Database Tables Counts');
+        $mail->assertHasSubject('CornerTill: Database Tables Counts');
         $mail->assertSeeInHtml('11');
         $mail->assertSeeInHtml('44');
     }

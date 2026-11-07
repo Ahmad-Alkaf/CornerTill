@@ -37,7 +37,7 @@ function Content() {
           {t(
             "These terms and conditions outline the rules and regulations for the use of",
           )}{" "}
-          <AppName /> {t("'s Website, located at laptop-pos.com.")}
+          <AppName /> {t("'s Website, located at cornertill.com.")}
         </P>
 
         <P>

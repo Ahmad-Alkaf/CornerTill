@@ -407,7 +407,7 @@ function Content() {
         <H4>{t("Copyright notice")}</H4>
         <P>
           {t(
-            "If you believe that any Products available through the Services infringe a copyright claimed by you, please contact Paddle at support@laptop-pos.com.",
+            "If you believe that any Products available through the Services infringe a copyright claimed by you, please contact Paddle at support@kaflabs.com.",
           )}
         </P>
       </section>

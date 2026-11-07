@@ -6,11 +6,12 @@ import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { Suspense } from "react";
 //&#8239; is narrow space character
-const appName = import.meta.env.VITE_APP_NAME || "Laptop&#8239;POS";
+const appName = import.meta.env.VITE_APP_NAME || "CornerTill";
 
 createInertiaApp({
   // Page titles (<Head title="...">) in the selected language.
-  title: (title) => (title ? `${i18n.t(title)}&#8239;-&#8239;${appName}` : appName),
+  title: (title) =>
+    title ? `${i18n.t(title)}&#8239;-&#8239;${i18n.t(appName)}` : i18n.t(appName),
   resolve: (name) =>
     resolvePageComponent(
       `./Pages/${name}.tsx`,

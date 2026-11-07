@@ -24,7 +24,7 @@ export default function Footer({ className = "" }: { className?: string }) {
           </div> */}
 
           <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:ms-0 sm:text-end">
-            &copy; {new Date().getFullYear()} {" "}{t( "Laptop POS, All Rights Reserved." )}
+            &copy; {new Date().getFullYear()} {" "}{t( "CornerTill, All Rights Reserved." )}
           </div>
           <div className="text-sm ">
             <Tooltip content="Contact us">

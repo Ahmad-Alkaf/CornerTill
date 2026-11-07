@@ -31,7 +31,7 @@ export default function CurrentPlanAction({
       </Dropdown.Trigger>
 
       <Dropdown.Content width="w-full">
-        {/* Looks like it just redirect me back to laptop-pos!
+        {/* Looks like it just redirect me back to cornertill!
          * It MUST NOT be inertia's Link */}
         <a
           target="_blank"

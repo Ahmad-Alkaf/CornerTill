@@ -27,7 +27,7 @@ class DatabaseTablesCounts extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Laptop POS: Database Tables Counts',
+            subject: 'CornerTill: Database Tables Counts',
         );
     }
 

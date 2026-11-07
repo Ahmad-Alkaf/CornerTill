@@ -34,7 +34,7 @@ export default function OpenSourceSection() {
               {" "}
               { t( "If you like our system, please give us a star on GitHub." ) }
             </p>
-            <a target="_blank" href="https://github.com/Ahmad-Alkaf/Laptop-POS">
+            <a target="_blank" href="https://github.com/Ahmad-Alkaf/CornerTill">
               <PrimaryButton className="github-star mt-4 inline-block rounded !bg-blue-gray-900 px-6 py-4 text-sm font-bold shadow hover:!bg-black hover:shadow-lg">
                 { t( "Source Code" ) }
               </PrimaryButton>

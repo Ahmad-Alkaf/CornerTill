@@ -18,7 +18,7 @@ export default function FreeBetaSection({
         <header className="max-w-xl">
           <h2 className="text-lg font-medium text-gray-900">{t("Plan")}</h2>
           <p className="text-normal mb-4 text-gray-600">
-            {t("Laptop POS is free during beta. No payment is necessary.")}
+            {t("CornerTill is free during beta. No payment is necessary.")}
           </p>
           <KeyValue
             k={t("Plan")}

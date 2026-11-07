@@ -1,6 +1,10 @@
-# Laptop Point of Sale
+<img src="public/assets/logo/cornertill-logo.svg" alt="CornerTill" width="320">
 
-This is a simple Point of Sale (POS) application.
+# CornerTill
+
+CornerTill (Arabic: كورنر تِل) is a simple point of sale (POS) web app for small shops: inventory, checkout, bills, and a dashboard. Formerly named Laptop POS. Website: https://cornertill.com (a KafLabs product).
+
+The screenshots below show the old name; the UI is the same.
 
 # Main Pages 
 
@@ -30,11 +34,11 @@ This is a simple Point of Sale (POS) application.
 
 Clone the repo to your local computer:
 ```shell
-git clone https://github.com/Ahmad-Alkaf/Laptop-POS
+git clone https://github.com/Ahmad-Alkaf/CornerTill
 ```
 Navigate to the cloned project folder:
 ```shell
-cd laptop-pos
+cd CornerTill
 ```
 Install the dependencies:
 ```shell
@@ -121,6 +125,8 @@ Server messages (validation, flash, error pages) follow the same language: the `
 
 # Deploy on Coolify
 
+Domain: **https://cornertill.com** (apex) is the canonical host. Add `www.cornertill.com` too and redirect it to the apex with HTTP 301.
+
 Build pack: **Dockerfile** (the repository `Dockerfile`). The image builds the Composer and Vite assets. No build-time variable is necessary.
 
 - **Port:** `8080`.
@@ -134,13 +140,13 @@ Required environment variables:
 | Variable | Value |
 |---|---|
 | `APP_KEY` | Output of `php artisan key:generate --show`. The container does not start without it. |
-| `APP_URL` | `https://laptop-pos.com` |
+| `APP_URL` | `https://cornertill.com` |
 | `APP_ENV`, `APP_DEBUG` | `production`, `false` (image defaults) |
 | `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` | The dedicated MySQL database |
 | `QUEUE_CONNECTION` | `database` (image default; the `jobs` table comes from the migrations) |
 | `FILESYSTEM_DISK` | `local` (image default; uploads on the volume) or `s3`. Do not leave it empty: `config/filesystems.php` then selects the S3 disks. |
 | `MAIL_MAILER`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_ENCRYPTION` | SMTP account |
-| `MAIL_FROM_ADDRESS`, `MAIL_FROM_NAME` | `noreply@kaflabs.com`, `Laptop POS` |
+| `MAIL_FROM_ADDRESS`, `MAIL_FROM_NAME` | `noreply@kaflabs.com`, `CornerTill` |
 | `ADMIN_REPORT_EMAIL` | Receiver of the daily database table counts email (scheduled task). Empty: no email; the counts go only to the log. |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | OAuth apps, or turn the provider off with its `SOCIAL_*_ENABLED` switch |
 | `PAYMENTS_ENABLED` | `false` for the free beta |
@@ -150,9 +156,9 @@ Logs go to the container output (`LOG_CHANNEL=stderr`).
 Local test of the image:
 
 ```shell
-docker build -t laptop-pos .
+docker build -t cornertill .
 docker run --rm -p 8080:8080 -e APP_KEY=base64:... -e DB_HOST=... -e DB_DATABASE=... \
-  -e DB_USERNAME=... -e DB_PASSWORD=... -v laptop-pos-storage:/var/www/html/storage laptop-pos
+  -e DB_USERNAME=... -e DB_PASSWORD=... -v cornertill-storage:/var/www/html/storage cornertill
 curl -i http://localhost:8080/api/health
 ```
 

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Laptop POS container start. See the Dockerfile header for CONTAINER_ROLE.
+# CornerTill container start. See the Dockerfile header for CONTAINER_ROLE.
 set -eu
 cd /var/www/html
 

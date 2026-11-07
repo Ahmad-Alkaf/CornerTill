@@ -40,7 +40,7 @@ class AuthServiceProvider extends ServiceProvider
             return (new MailMessage)
                 ->subject('Verify Email Address')
                 ->greeting('Hello **' . $user->name . '** 👋')
-                ->line('Please verify that your email address is **' . $user->email . '**, and that you entered it when signing up for **Laptop POS**.')
+                ->line('Please verify that your email address is **' . $user->email . '**, and that you entered it when signing up for **CornerTill**.')
                 ->action('Verify Email Address', $url)
                 ->line(Lang::get('If you did not create an account, no further action is required.'));
         });
