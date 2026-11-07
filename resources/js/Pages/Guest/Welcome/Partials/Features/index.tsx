@@ -164,7 +164,7 @@ export default function Features() {
                       />
                       <img
                         className="absolute w-[209px] md:w-[372px]"
-                        src="/assets/screenshots/2023-11-26 09_43_52-Inventory - Laptop POS - Brave.png"
+                        src="/assets/screenshots/cornertill-inventory.png"
                         alt="Inventory page with food products"
                         style={{ top: "5.58%", left: "13.8%" }}
                         loading="lazy"
@@ -194,7 +194,7 @@ export default function Features() {
                       />
                       <img
                         className="absolute w-[209px] md:w-[372px]"
-                        src="/assets/screenshots/2023-11-26 10_05_34-Checkout - Laptop POS - Brave.png"
+                        src="/assets/screenshots/cornertill-checkout.png"
                         alt="Inventory page with food products"
                         style={{ top: "5.58%", left: "13.8%" }}
                         loading="lazy"
@@ -224,7 +224,7 @@ export default function Features() {
                       />
                       <img
                         className="absolute w-[209px] md:w-[372px]"
-                        src="/assets/screenshots/2023-11-26 10_43_36-Dashboard - Laptop POS - Brave.png"
+                        src="/assets/screenshots/cornertill-dashboard.png"
                         alt="Inventory page with food products"
                         style={{ top: "5.58%", left: "13.8%" }}
                         loading="lazy"

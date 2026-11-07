@@ -4,21 +4,21 @@
 
 CornerTill (Arabic: كورنر تِل) is a simple point of sale (POS) web app for small shops: inventory, checkout, bills, and a dashboard. Formerly named Laptop POS. Website: https://cornertill.com (a KafLabs product).
 
-The screenshots below show the old name; the UI is the same.
+The screenshots use the demo data of `database/seeders/ScreenshotDemoSeeder.php`.
 
 # Main Pages 
 
 ### Inventory Page
 
-![Inventory page](public/assets/screenshots/2023-11-26%2009_43_52-Inventory - Laptop POS%20-%20Brave.png)
+![Inventory page](public/assets/screenshots/cornertill-inventory.png)
 
 ### Checkout Page
 
-![Checkout page](public/assets/screenshots/2023-11-26%2010_05_34-Checkout - Laptop POS%20-%20Brave.png)
+![Checkout page](public/assets/screenshots/cornertill-checkout.png)
 
 ### Dashboard Page
 
-![Dashboard page](public/assets/screenshots/2023-11-26%2010_43_36-Dashboard - Laptop POS%20-%20Brave.png)
+![Dashboard page](public/assets/screenshots/cornertill-dashboard.png)
 
 
 # Workflow
