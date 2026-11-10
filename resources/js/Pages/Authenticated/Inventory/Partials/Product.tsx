@@ -21,11 +21,10 @@ export default function Product({
 
   const taxPercent = usePage<AuthPageProps>().props.auth.business.taxPercent;
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <div
       role="button"
-      dir={i18n.dir()}
       onClick={(e) => {
         e.stopPropagation();
         requestShow();

@@ -14,9 +14,9 @@ export default function ViewProductInfo({ product }: { product: IProduct }) {
 
   const [showMore, setShowMore] = useState<boolean>(false);
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
-    <div dir={i18n.dir()} className="space-y-3 rtl:text-start">
+    <div className="space-y-3 rtl:text-start">
       <div className="rounded-md border border-blue-gray-100">
         {product.img ? (
           <img
