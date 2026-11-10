@@ -24,7 +24,7 @@ export default function PricingCards() {
             { t( "Designed for businesses like yours" ) }
           </h2>
           <p className="mb-5 font-light text-gray-500 dark:text-gray-400 sm:text-xl">
-            { t( "If you need more resources for your POS system, please contact us and we will be happy to assist you with a custom plan." ) }
+            { t( "If you need more resources for your POS system, please contact us and we will be happy to assist you with a custom plan" ) }
             {" "}
             <SupportEmailLink />
           </p>
