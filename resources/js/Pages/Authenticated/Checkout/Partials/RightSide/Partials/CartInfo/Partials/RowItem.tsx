@@ -1,7 +1,7 @@
 import { BillOperations } from "@/Pages/Authenticated/Checkout";
 import Num from "@/Utilities/Num";
-import { AuthPageProps, ICreateBillDetail } from "@/types";
-import { usePage } from "@inertiajs/react";
+import { ICreateBillDetail } from "@/types";
+import useSaleTaxPercent from "@/Utilities/useSaleTaxPercent";
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { BsDash, BsPlusLg } from "react-icons/bs";
@@ -9,12 +9,12 @@ import { FaTrash } from "react-icons/fa";
 
 export default function RowItem({
   bill_detail,
-  billOperations: { increaseQty, decreaseQty, removeBillDetail },
+  billOperations: { increaseQty, decreaseQty, removeBillDetail, form },
 }: {
   bill_detail: ICreateBillDetail;
   billOperations: BillOperations;
 }) {
-  const taxPercent = usePage<AuthPageProps>().props.auth.business.taxPercent;
+  const taxPercent = useSaleTaxPercent(form.data);
 
   const { t } = useTranslation();
   return (

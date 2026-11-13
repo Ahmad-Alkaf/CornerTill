@@ -22,6 +22,9 @@ class BillDetailFactory extends Factory
             'quantity' => fake()->biasedNumberBetween(0, 5, 'sqrt'),
 
             'product_id' => Product::factory(),
+            // Values of the sale: the product values at the time of the sale.
+            'price' => fn (array $attributes) => Product::find($attributes['product_id'])?->price,
+            'productName' => fn (array $attributes) => Product::find($attributes['product_id'])?->name,
             'bill_id' => Bill::factory(),
 
             'created_at' => fake()->dateTimeBetween('-1 year', 'now'),

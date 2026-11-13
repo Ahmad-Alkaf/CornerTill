@@ -31,5 +31,6 @@
     "Server Error": "خطأ في الخادم",
     "Service Unavailable": "الخدمة غير متاحة",
     "Too Many Requests": "طلبات كثيرة جدًا",
-    "Unauthorized": "غير مصرح"
+    "Unauthorized": "غير مصرح",
+    "A product in this bill does not exist. Remove it from the bill and try again.": "أحد المنتجات في هذه الفاتورة غير موجود. احذفه من الفاتورة ثم حاول مرة أخرى."
 }

@@ -50,6 +50,12 @@ export default function Checkout({
     data: (previousData: ICreateBill | IBill) => ICreateBill | IBill,
   ) => form.setAllData(data);
 
+  /** An edited bill keeps the price and name of each product of its sale (the
+   * server does the same), also when the cashier removes a line and adds it again. */
+  const productOfSale = (product: IProduct): IProduct =>
+    bill?.bill_details.find((t) => t.product_id === product.id)?.product ??
+    product;
+
   /** @param product is used to change the qty of the correspond bill_detail */
   function changeQty(product: IProduct, qty: number) {
     setBill((b) => {
@@ -62,7 +68,7 @@ export default function Checkout({
         else
           updatedBill.bill_details = [
             ...updatedBill.bill_details,
-            { product, product_id: product.id, quantity: qty },
+            { product: productOfSale(product), product_id: product.id, quantity: qty },
           ];
       } else if (bill_detail)
         updatedBill.bill_details = updatedBill.bill_details.filter(
@@ -105,7 +111,7 @@ export default function Checkout({
       else
         updatedBill.bill_details = [
           ...updatedBill.bill_details,
-          { product, product_id: product.id, quantity: 1 },
+          { product: productOfSale(product), product_id: product.id, quantity: 1 },
         ];
       return updatedBill;
     });

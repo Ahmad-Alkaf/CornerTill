@@ -81,7 +81,7 @@ class ScreenshotDemoSeeder extends Seeder
                 'createdBy_id' => $this->ali, 'business_id' => $this->businessId,
                 'created_at' => $now->copy()->subDays(30)->addMinutes($i), 'updated_at' => $now,
             ]);
-            $this->products[] = ['id' => $id, 'unit' => $price * (1 + self::TAX)];
+            $this->products[] = ['id' => $id, 'name' => $name, 'price' => $price, 'unit' => $price * (1 + self::TAX)];
         }
 
         $today = $now->copy()->startOfDay();
@@ -213,10 +213,12 @@ class ScreenshotDemoSeeder extends Seeder
         $this->bills[] = [
             'id' => $billId, 'cashReceived' => $cash ? ceil($real / 10) * 10 : null,
             'createdBy_id' => $creator, 'business_id' => $this->businessId, 'created_at' => $at, 'updated_at' => $at,
+            'taxPercent' => self::TAX, 'currency' => '$',
         ];
         foreach ($lines as $p => $qty)
             $this->details[] = [
                 'id' => (string) Str::ulid(), 'quantity' => $qty, 'product_id' => $this->products[$p]['id'],
+                'price' => $this->products[$p]['price'], 'productName' => $this->products[$p]['name'],
                 'bill_id' => $billId, 'created_at' => $at, 'updated_at' => $at,
             ];
         return $real;

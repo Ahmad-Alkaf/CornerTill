@@ -3,8 +3,8 @@ import Input from "@/Components/Inputs/Input";
 import TotalInfo from "@/Pages/Authenticated/Checkout/Partials/RightSide/Partials/TotalInfo";
 import Num from "@/Utilities/Num";
 import { UseBetterForm } from "@/Utilities/useBetterForm";
-import { AuthPageProps, IBill, ICreateBill } from "@/types";
-import { usePage } from "@inertiajs/react";
+import { IBill, ICreateBill } from "@/types";
+import useSaleTaxPercent from "@/Utilities/useSaleTaxPercent";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -15,7 +15,7 @@ export default function FormFields({
 }) {
   const [isDigitalPayment, setDigitalPayment] = useState<boolean>(false);
   const [remaining, setRemaining] = useState<number>(0);
-  const taxPercent = usePage<AuthPageProps>().props.auth.business.taxPercent;
+  const taxPercent = useSaleTaxPercent(form.data);
 
   function subTotal(): number {
     return form.data.bill_details.reduce(

@@ -60,6 +60,9 @@ class Bill extends Model
         'bill_details',
         'createdBy_id',
         'business_id',
+        // Values of the sale. They do not change when the business changes.
+        'taxPercent',
+        'currency',
     ];
 
     /**
@@ -69,6 +72,7 @@ class Bill extends Model
      */
     protected $casts = [
         'cashReceived' => 'float',
+        'taxPercent' => 'float',
     ];
 
 

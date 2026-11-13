@@ -76,12 +76,10 @@ class DashboardController extends Controller
 
     private function calcSales()
     {
-        $tax = request()->user()->business->taxPercent + 1;
-
+        // The values stored with each sale, not the current tax rate and prices.
         $res = request()->user()->business->bills()
-            ->selectRaw("DAY(bills.created_at) AS day, SUM(COALESCE(products.price, 0) * bill_details.quantity * $tax) AS daily_sales")
+            ->selectRaw("DAY(bills.created_at) AS day, SUM(COALESCE(bill_details.price, 0) * bill_details.quantity * (1 + bills.taxPercent)) AS daily_sales")
             ->join('bill_details', 'bills.id', '=', 'bill_details.bill_id')
-            ->join('products', 'products.id', '=', 'bill_details.product_id')
             ->whereBetween('bills.created_at', [Carbon::now()->subDays(2), Carbon::now()])
             ->groupBy('day')
             ->orderByDesc('day')
@@ -133,12 +131,10 @@ class DashboardController extends Controller
 
     private function calcMonthlySales(): array
     {
-        $tax = request()->user()->business->taxPercent + 1;
-
+        // The values stored with each sale, not the current tax rate and prices.
         $res = request()->user()->business->bills()
-            ->selectRaw("MONTH(bills.created_at) AS month, SUM(COALESCE(products.price, 0) * bill_details.quantity * $tax) AS month_sales")
+            ->selectRaw("MONTH(bills.created_at) AS month, SUM(COALESCE(bill_details.price, 0) * bill_details.quantity * (1 + bills.taxPercent)) AS month_sales")
             ->join('bill_details', 'bills.id', '=', 'bill_details.bill_id')
-            ->join('products', 'products.id', '=', 'bill_details.product_id')
             ->whereBetween('bills.created_at', [Carbon::now()->subYear()->addDay(), Carbon::now()])
             ->groupByRaw('month')
             ->get();

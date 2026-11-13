@@ -12,15 +12,14 @@ type PropsProduct = {
 };
 export default function Product({ bill }: PropsProduct) {
   const auth = usePage<AuthPageProps>().props.auth;
-  const taxPercent = auth.business.taxPercent;
+  //The values of the sale, not the current tax rate, prices, and currency.
+  const taxPercent = bill.taxPercent;
+  const currency = bill.currency ?? undefined;
   const loggedInId = auth.user.id;
 
   const subTotalPrice = useMemo(
     () =>
-      bill.bill_details.reduce(
-        (v, t) => v + (t.product.price ?? 0) * t.quantity,
-        0,
-      ),
+      bill.bill_details.reduce((v, t) => v + (t.price ?? 0) * t.quantity, 0),
     [bill.bill_details],
   );
   const totalPrice = subTotalPrice * (1 + taxPercent);
@@ -57,16 +56,23 @@ export default function Product({ bill }: PropsProduct) {
         <Num
           className="text-secondary-700"
           showCurrency
+          currency={currency}
           amount={subTotalPrice}
         />
       </TD>
       <TD>
-        <Num className="text-primary-700" showCurrency amount={totalPrice} />
+        <Num
+          className="text-primary-700"
+          showCurrency
+          currency={currency}
+          amount={totalPrice}
+        />
       </TD>
       <TD>
         <Num
           className={bill.cashReceived === null ? "text-primary-700" : ""}
           showCurrency
+          currency={currency}
           amount={bill.cashReceived}
           noAmount={t("Digital Payment")}
         />
@@ -75,6 +81,7 @@ export default function Product({ bill }: PropsProduct) {
         <Num
           className="text-indigo-700"
           showCurrency
+          currency={currency}
           amount={bill.cashReceived ? bill.cashReceived - totalPrice : null}
           noAmount=""
         />

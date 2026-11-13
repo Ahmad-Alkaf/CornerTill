@@ -16,14 +16,14 @@ export default function BillInfo({ bill }: { bill: IBill }) {
 
   const subTotalPrice = useMemo(
     () =>
-      bill.bill_details.reduce(
-        (v, t) => v + (t.product.price ?? 0) * t.quantity,
-        0,
-      ),
+      bill.bill_details.reduce((v, t) => v + (t.price ?? 0) * t.quantity, 0),
     [bill.bill_details],
   );
 
-  const totalPrice = subTotalPrice * (1 + bill.business.taxPercent);
+  //The values of the sale, not the current values of the business.
+  const taxPercent = bill.taxPercent;
+  const currency = bill.currency ?? bill.business.currency;
+  const totalPrice = subTotalPrice * (1 + taxPercent);
 
   const { t } = useTranslation();
 
@@ -81,30 +81,30 @@ export default function BillInfo({ bill }: { bill: IBill }) {
           <BillDetailsTable bill={bill} />
 
           <section>
-            {bill.business.taxPercent !== 0 && (
+            {taxPercent !== 0 && (
               <KeyValue
                 k="Total without VAT"
                 v={
                   <Num
                     amount={subTotalPrice}
                     showCurrency
-                    currency={bill.business.currency}
+                    currency={currency}
                   />
                 }
                 valueClassName="!text-secondary-700"
               />
             )}
 
-            {bill.business.taxPercent !== 0 && (
+            {taxPercent !== 0 && (
               <KeyValue
                 k={`${t("VAT")} (%${Number(
-                  (bill.business.taxPercent * 100).toFixed(2),
+                  (taxPercent * 100).toFixed(2),
                 )})`}
                 v={
                   <Num
-                    amount={subTotalPrice * bill.business.taxPercent}
+                    amount={subTotalPrice * taxPercent}
                     showCurrency
-                    currency={bill.business.currency}
+                    currency={currency}
                   />
                 }
                 valueClassName="!text-danger-700"
@@ -115,7 +115,7 @@ export default function BillInfo({ bill }: { bill: IBill }) {
               v={
                 <Num
                   amount={totalPrice}
-                  currency={bill.business.currency}
+                  currency={currency}
                   showCurrency
                 />
               }
@@ -129,7 +129,7 @@ export default function BillInfo({ bill }: { bill: IBill }) {
                 <Num
                   amount={bill.cashReceived}
                   noAmount={t("Digital Payment")}
-                  currency={bill.business.currency}
+                  currency={currency}
                   showCurrency
                 />
               }
@@ -145,7 +145,7 @@ export default function BillInfo({ bill }: { bill: IBill }) {
                         : bill.cashReceived - totalPrice
                     }
                     noAmount="Digital Payment"
-                    currency={bill.business.currency}
+                    currency={currency}
                     showCurrency
                   />
                 }
