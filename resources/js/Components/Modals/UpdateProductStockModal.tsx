@@ -21,7 +21,14 @@ export default function UpdateProductStockModal({
   const [increase, setIncrease] = useState<number>(0);
   const form = useBetterForm<{ stock: number }>({ stock: product?.stock ?? 0 });
 
-  useEffect(() => setIncrease(0), [product]);
+  //The modal stays mounted: each time it opens, start from the current stock of
+  //its product. Without this, "Update" with no change sent the stock of the first
+  //render (0) and set the stock of the product to 0.
+  useEffect(() => {
+    if (!modalAction.open) return;
+    setIncrease(0);
+    form.setData("stock", product?.stock ?? 0);
+  }, [modalAction.open, product]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
