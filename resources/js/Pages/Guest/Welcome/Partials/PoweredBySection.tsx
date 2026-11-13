@@ -133,12 +133,14 @@ export default function PoweredBySection() {
         </div>
       </div>
 
+      {/* The divider goes 1px into the next (same colour) section. Without
+          this overlap, a fractional section height leaves a light hairline. */}
       <div
-        className="absolute bottom-0 start-0 end-0 top-auto -mt-20 w-full"
+        className="pointer-events-none absolute -bottom-px start-0 end-0 top-auto w-full"
         style={{ height: "80px" }}
       >
         <svg
-          className="absolute bottom-0 overflow-hidden"
+          className="absolute bottom-0 block w-full overflow-hidden"
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
           version="1.1"
