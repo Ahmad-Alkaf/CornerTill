@@ -122,7 +122,7 @@ export default function PrivacyPolicy({ auth }: PageProps) {
         </P>
         <P>
           {t(
-            "To count visits and to measure how fast pages load, CornerTill uses Cloudflare Web Analytics. Cloudflare adds a small script to each page. For each page view, Cloudflare records the page address (without the query string), the referring page, the page-load timings, and the country, browser, operating system, and device type of the visitor.",
+            "To count visits and to measure how fast pages load, CornerTill uses Cloudflare Web Analytics. Cloudflare adds a small script to each page. For each page view, Cloudflare records the page address (Cloudflare states that it does not currently record the query string), the referring page, the page-load timings, and the country, browser, operating system, and device type of the visitor.",
           )}
         </P>
         <P>
