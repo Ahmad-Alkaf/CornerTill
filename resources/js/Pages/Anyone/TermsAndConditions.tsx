@@ -13,7 +13,7 @@ import LegalPage, { ExtLink, LegalSection } from "./Partials/LegalPage";
 
 /**
  * CornerTill supplement to the KafLabs Terms of Service.
- * Each statement here must be true for the code (beta limits, bill deletion,
+ * Each statement here must be true for the code (beta limits, deletion of a business,
  * no e-invoicing integration, no payments). When one of them changes, change
  * this page and LEGAL_LAST_UPDATED (Utilities/Constant.ts).
  */
@@ -57,10 +57,9 @@ export default function TermsAndConditions({ auth }: PageProps) {
           )}
         </P>
         <P>
-          <Trans
-            i18nKey="CornerTill is not an archive. Once a year, it deletes the bills that were last changed more than 12 months before (see the <privacy>Privacy Policy</privacy>). If the law requires you to keep sales records for a longer time, keep your own copies."
-            components={{ privacy }}
-          />
+          {t(
+            "If the law requires you to keep sales records for a period of time, also keep your own copies: CornerTill has no export tool yet.",
+          )}
         </P>
       </LegalSection>
 
@@ -140,7 +139,13 @@ export default function TermsAndConditions({ auth }: PageProps) {
         </P>
         <P>
           <Trans
-            i18nKey="To get a copy of your records, or to have all data of a deleted business removed permanently, email <mail>support@kaflabs.com</mail>."
+            i18nKey="When the Owner deletes the business, no account of the business can sign in any more. CornerTill keeps the data of the business for 30 days. In this time, email <mail>support@kaflabs.com</mail> to restore the business. After 30 days, CornerTill deletes all data of the business permanently, and we cannot restore it."
+            components={{ mail: support }}
+          />
+        </P>
+        <P>
+          <Trans
+            i18nKey="To get a copy of your records, email <mail>support@kaflabs.com</mail>."
             components={{ mail: support }}
           />
         </P>
