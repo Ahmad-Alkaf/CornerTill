@@ -76,7 +76,7 @@ export default function PoweredBySection() {
                     </h6>
                     <p className="text-blueGray-500 mb-4">
                       {t(
-                        "We protect our system and your data with security features such as encryption, firewalls, and access management.",
+                        "Connections use HTTPS encryption, passwords are stored only as hashes, and each staff role can do only what it needs.",
                       )}
                     </p>
                   </div>
@@ -89,7 +89,7 @@ export default function PoweredBySection() {
                     <h6 className="mb-1 text-xl font-semibold">{t("Fast")}</h6>
                     <p className="text-blueGray-500 mb-4">
                       {t(
-                        "High-performance computing, networking, and database services that allow us to process large amounts of data and deliver results in real-time.",
+                        "Pages load quickly, and the checkout screen is made for quick sales at the counter.",
                       )}
                     </p>
                   </div>
@@ -106,7 +106,7 @@ export default function PoweredBySection() {
                     </h6>
                     <p className="text-blueGray-500 mb-4">
                       {t(
-                        "Our system is always available and resilient to failures, with 99.99% uptime.",
+                        "Your records are kept on our servers, not in one browser, so you can continue on another device.",
                       )}
                     </p>
                   </div>
@@ -121,8 +121,7 @@ export default function PoweredBySection() {
                     </h6>
                     <p className="text-blueGray-500 mb-4">
                       {t(
-                        "Tools such as auto-scaling and elastic load balancing, enable us to scale without compromising perfor{{shy}}mance, availability, or security",
-                        { shy: "\u00AD" /* &shy; break a long word*/ },
+                        "Start with one account, then add staff accounts and products as your shop grows.",
                       )}
                     </p>
                   </div>

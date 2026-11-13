@@ -255,14 +255,10 @@
     "Cloud servers": "خوادم سحابية",
     "Our system runs on cloud servers, so you can open it from any device with a browser.": "يعمل نظامنا على خوادم سحابية، لذلك يمكنك فتحه من أي جهاز به متصفح.",
     "Secure": "محمي",
-    "We protect our system and your data with security features such as encryption, firewalls, and access management.": "نحمي نظامنا وبياناتك باستخدام ميزات أمان مثل التشفير وجدران الحماية وإدارة الوصول.",
-    "High-performance computing, networking, and database services that allow us to process large amounts of data and deliver results in real-time.": "خدمات حوسبة وشبكات وقواعد بيانات عالية الأداء تسمح لنا بمعالجة كميات كبيرة من البيانات وتقديم النتائج في الوقت الفعلي.",
     "Reliable": "موثوق",
-    "Our system is always available and resilient to failures, with 99.99% uptime.": "نظامنا متاح دائمًا ومقاوم للفشل، مع وقت تشغيل يصل إلى 99.99%.",
     "Scalable": "قابلة للتطوير",
     "Get{{space}}Started": "البدء",
     "Fast": "سريع",
-    "Tools such as auto-scaling and elastic load balancing, enable us to scale without compromising perfor{{shy}}mance, availability, or security": "تمكننا أدوات مثل القياس التلقائي وموازنة التحميل المرنة من التوسع دون المساس بالأداء أو التوفر أو الأمان",
     "Free Trial": "تجربة مجانية",
     "No credit card required": "بلا بطاقة إئتمان",
     "Unlimited access to all features": "الوصول غير محدود إلى كافة الميزات",
@@ -771,5 +767,9 @@
     "CornerTill has no paid plans now, and we do not charge you. Before any paid plan starts, we will publish its prices, payment terms, and refund policy. You will then choose whether to pay.": "لا توجد في كورنر تِل خطط مدفوعة حاليًا، ولا نطلب منك أي رسوم. وقبل بدء أي خطة مدفوعة، سننشر أسعارها وشروط الدفع وسياسة الاسترداد، ثم تختار أنت ما إذا كنت تريد الدفع.",
     "Liability, changes, and other points": "المسؤولية والتغييرات والمسائل الأخرى",
     "The disclaimers, the limits of liability, and all other points of the KafLabs Terms of Service apply to CornerTill. When we change these terms, we change the “Last updated” date at the top.": "تسري على كورنر تِل إخلاءات المسؤولية وحدود المسؤولية وجميع المسائل الأخرى الواردة في شروط الخدمة لدى KafLabs. وعندما نغيّر هذه الشروط، نغيّر تاريخ «آخر تحديث» في أعلاها.",
-    "For questions about these terms, email <mail>legal@kaflabs.com</mail>.": "للأسئلة المتعلقة بهذه الشروط، راسلنا على <mail>legal@kaflabs.com</mail>."
+    "For questions about these terms, email <mail>legal@kaflabs.com</mail>.": "للأسئلة المتعلقة بهذه الشروط، راسلنا على <mail>legal@kaflabs.com</mail>.",
+    "Connections use HTTPS encryption, passwords are stored only as hashes, and each staff role can do only what it needs.": "تستخدم الاتصالات تشفير HTTPS، وتُخزَّن كلمات المرور كقيم مُجزّأة فقط، ولا يتاح لكل دور من أدوار الموظفين إلا ما يحتاجه.",
+    "Pages load quickly, and the checkout screen is made for quick sales at the counter.": "تُحمَّل الصفحات بسرعة، وشاشة الدفع مصمّمة لإتمام المبيعات بسرعة عند نقطة البيع.",
+    "Your records are kept on our servers, not in one browser, so you can continue on another device.": "تُحفظ سجلاتك على خوادمنا لا في متصفح واحد، لذا يمكنك المتابعة من جهاز آخر.",
+    "Start with one account, then add staff accounts and products as your shop grows.": "ابدأ بحساب واحد، ثم أضف حسابات الموظفين والمنتجات مع نمو متجرك."
 }
