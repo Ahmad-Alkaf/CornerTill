@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\URL;
 use Laravel\Socialite\Facades\Socialite;
 
 class OAuthRegister extends Controller
@@ -44,31 +43,26 @@ class OAuthRegister extends Controller
                 return redirect()->back()->with('error', __('Whoops, something went wrong!'));
             }
 
-            if (isset($userInfo->name))
-                $name = $userInfo->name;
-            else
-                $name = $userInfo->nickname;
+            // The name and email stay on the server, in the session (not in the URL:
+            // a URL goes into server logs and the browser history).
+            // RegisterController marks the email as confirmed only when the form
+            // sends this same email.
+            session()->put(RegisterController::OAUTH_SESSION_KEY, [
+                'name' => $userInfo->name ?? $userInfo->nickname ?? null,
+                'email' => $userInfo->email ?? null,
+                'expires_at' => now()->addHour()->getTimestamp(),
+            ]);
 
-            $emailParam = [];
-            if (isset($userInfo->email))
-                $emailParam['email'] =  $userInfo->email;
-            $url = URL::temporarySignedRoute('register', now()->addDay(), $emailParam);
-
-            //append other unsigned params
-            $otherParams = [];
-            if (isset($name))
-                $otherParams['name'] =  $name;
-            $state = request()->input('state');
-            parse_str($state, $result);
+            // The plan and period (not personal data) stay in the URL.
+            $query = [];
+            parse_str((string) request()->input('state'), $result);
             //empty() treats null and empty string as the same falsy value
-            if (isset($result) && !empty($result['plan']) && !empty($result['period'])) {
-                $otherParams['plan'] = $result['plan'];
-                $otherParams['period'] = $result['period'];
+            if (!empty($result['plan']) && !empty($result['period']) && is_string($result['plan']) && is_string($result['period'])) {
+                $query['plan'] = $result['plan'];
+                $query['period'] = $result['period'];
             }
 
-            if (isset($otherParams['name']))
-                $url = $url . '&' . http_build_query($otherParams);
-            return redirect($url);
+            return redirect()->route('register', $query);
         }
 
         abort(404);
