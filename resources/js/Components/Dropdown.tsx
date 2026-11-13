@@ -8,6 +8,7 @@ import {
   SetStateAction,
   ButtonHTMLAttributes,
 } from "react";
+import { createPortal } from "react-dom";
 import { InertiaLinkProps } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
 import BetterLink from "./Buttons/BetterLink";
@@ -58,16 +59,21 @@ const Trigger = ({
         {children}
       </button>
 
-      {open && (
-        <div
-          role="button"
-          className="div-style fixed inset-0 z-40 h-[100vh] w-full cursor-default"
-          onClick={(e) => {
-            e.stopPropagation();
-            setOpen(false);
-          }}
-        ></div>
-      )}
+      {/* The overlay that closes the menu on an outside click is rendered in
+      <body>: inside a parent with a CSS `transform` (for example the hover lift
+      of a product card), `fixed inset-0` covers only that parent. */}
+      {open &&
+        createPortal(
+          <div
+            role="button"
+            className="div-style fixed inset-0 z-40 h-[100vh] w-full cursor-default"
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen(false);
+            }}
+          ></div>,
+          document.body,
+        )}
     </>
   );
 };
