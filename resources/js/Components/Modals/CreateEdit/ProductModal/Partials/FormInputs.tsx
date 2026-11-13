@@ -70,7 +70,7 @@ export default function FormInputs({
             modalAction.state === "edit" && (
               <span>
                 {t(
-                  "If you change the price of this product, it may affect the bills that have already been issued with the old price. This could result in incorrect calculations, such as the total price of a bill. Please make sure you have no bills that have this product.",
+                  "A new price applies only to new bills. The bills that were already issued keep the old price.",
                 )}
               </span>
             )

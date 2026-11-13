@@ -108,7 +108,7 @@
     "Change": "غير",
     "We recommend an image with white background": "نوصي بصورة ذات خلفية بيضاء",
     "Product Name": "اسم المنتج",
-    "If you change the price of this product, it may affect the bills that have already been issued with the old price. This could result in incorrect calculations, such as the total price of a bill. Please make sure you have no bills that have this product.": "إذا قمت بتغيير سعر هذا المنتج، فقد يؤثر ذلك على الفواتير التي تم إصدارها بالفعل بالسعر القديم. قد يؤدي ذلك إلى حسابات غير صحيحة، مثل السعر الإجمالي للفاتورة. يرجى التأكد من عدم وجود فواتير لديك لهذا المنتج.",
+    "A new price applies only to new bills. The bills that were already issued keep the old price.": "يُطبَّق السعر الجديد على الفواتير الجديدة فقط. وتحتفظ الفواتير التي صدرت من قبل بالسعر القديم.",
     "Tax is included.": "تضمين الضريبة.",
     "without tax": "بدون ضريبة",
     "Stock": "المخزون",
