@@ -25,7 +25,10 @@ export default function ProductOptions({
 
   const { t } = useTranslation();
   return (
-    <div className="absolute end-2 top-2 hidden group-hover:block">
+    // `invisible`, not `hidden`: with `display: none` (when the mouse leaves the
+    // card, for example to a modal) the leave transition of the menu never ends,
+    // so the menu stays open.
+    <div className="invisible absolute end-2 top-2 group-hover:visible">
       <Dropdown>
         <Dropdown.Trigger>
           <span className="inline-flex">
@@ -40,10 +43,12 @@ export default function ProductOptions({
           </span>
         </Dropdown.Trigger>
 
+        {/* No stopPropagation in the buttons: the click goes up to
+        Dropdown.Content, which closes the menu and stops the click before the
+        product card (that opens the product). */}
         <Dropdown.Content>
           <Dropdown.Button
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               requestShow();
             }}
           >
@@ -61,8 +66,7 @@ export default function ProductOptions({
                 user.role == "Maintainer"
               )
             }
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               requestChangeStock();
             }}
           >
@@ -80,8 +84,7 @@ export default function ProductOptions({
                 user.role == "Maintainer"
               )
             }
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               requestEdit();
             }}
           >
@@ -99,8 +102,7 @@ export default function ProductOptions({
                 user.role == "Maintainer"
               )
             }
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               setOpenConfirmDeleteModal(true);
             }}
             className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:bg-white"

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Business;
 use App\Models\BillDetail;
 use App\Models\User;
+use App\Support\Currency;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -42,6 +43,19 @@ class Bill extends Model
 {
     use HasFactory, HasUlids;
 
+    protected static function booted(): void
+    {
+        // The stored currency follows the same rule as Business::saving: an old
+        // Saudi riyal symbol becomes the Saudi riyal sign (the same currency).
+        static::saving(function (Bill $bill) {
+            if ($bill->currency !== null && $bill->isDirty('currency'))
+                $bill->currency = Currency::normalize(
+                    $bill->currency,
+                    Business::withTrashed()->whereKey($bill->business_id)->value('country'),
+                );
+        });
+    }
+
     /**
      * The table associated with the model.
      *
@@ -60,6 +74,9 @@ class Bill extends Model
         'bill_details',
         'createdBy_id',
         'business_id',
+        // Values of the sale. They do not change when the business changes.
+        'taxPercent',
+        'currency',
     ];
 
     /**
@@ -69,6 +86,7 @@ class Bill extends Model
      */
     protected $casts = [
         'cashReceived' => 'float',
+        'taxPercent' => 'float',
     ];
 
 

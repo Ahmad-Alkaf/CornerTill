@@ -1,7 +1,11 @@
 import LI from "@/Components/Typography/LI";
 import P from "@/Components/Typography/P";
 import UL from "@/Components/Typography/UL";
-import { KAFLABS_PRIVACY_URL, PRIVACY_EMAIL } from "@/Utilities/Constant";
+import {
+  KAFLABS_PRIVACY_URL,
+  PRIVACY_EMAIL,
+  SUPPORT_EMAIL,
+} from "@/Utilities/Constant";
 import { PageProps } from "@/types";
 import { Trans, useTranslation } from "react-i18next";
 import LegalPage, { ExtLink, LegalSection } from "./Partials/LegalPage";
@@ -19,6 +23,7 @@ export default function PrivacyPolicy({ auth }: PageProps) {
   const { t } = useTranslation();
   const b = <strong className="font-semibold text-gray-900" />;
   const mail = <ExtLink href={`mailto:${PRIVACY_EMAIL}`} />;
+  const support = <ExtLink href={`mailto:${SUPPORT_EMAIL}`} />;
 
   return (
     <LegalPage
@@ -70,7 +75,7 @@ export default function PrivacyPolicy({ auth }: PageProps) {
           </LI>
           <LI>
             <Trans
-              i18nKey="<b>Your records:</b> products (name, price, stock, barcode, description, and image) and bills (the products, the quantities, the cash received, and the time of each sale). CornerTill also records which account created each product and bill."
+              i18nKey="<b>Your records:</b> products (name, price, stock, barcode, description, and image) and bills (the products with their names and prices, the quantities, the tax rate, the currency, the cash received, and the time of each sale). CornerTill also records which account created each product and bill."
               components={{ b }}
             />
           </LI>
@@ -186,7 +191,7 @@ export default function PrivacyPolicy({ auth }: PageProps) {
       <LegalSection n={6} title={t("Receipt links")}>
         <P>
           {t(
-            "Each printed receipt has a QR code with a link to its bill. The link contains a long random ID. Anyone who has the link can open the bill for 180 days after the sale. The bill page shows the business details, the products, the amounts, and the name of the staff member who made the sale. After 180 days, only signed-in accounts of the business can open the bill.",
+            "Each printed receipt has a QR code with a link to its bill. The link contains a long random ID. Anyone who has the link can open the bill for 180 days after the sale. The bill page shows the business details, the products, the amounts, and the name of the staff member who made the sale. After 180 days, only signed-in accounts of the business can open the bill. The link stops working when the bill is changed or deleted, or when the business is deleted.",
           )}
         </P>
       </LegalSection>
@@ -239,12 +244,7 @@ export default function PrivacyPolicy({ auth }: PageProps) {
         <UL>
           <LI>
             {t(
-              "Account, business, and product data stay while the business uses CornerTill.",
-            )}
-          </LI>
-          <LI>
-            {t(
-              "Once a year, CornerTill automatically deletes the bills that were last changed more than 12 months before.",
+              "Account, business, product, and bill data stay while the business uses CornerTill. CornerTill does not delete old bills automatically.",
             )}
           </LI>
           <LI>
@@ -254,14 +254,14 @@ export default function PrivacyPolicy({ auth }: PageProps) {
           </LI>
           <LI>
             {t(
-              "When an Owner deletes the business, CornerTill deletes the business logo at once, signs the Owner out, and marks the business and the Owner account as deleted. The products, product images, bills, and staff accounts of the business stay in our database.",
+              "When an Owner deletes the business, CornerTill signs the Owner out, and no account of the business can sign in any more. CornerTill keeps all data of the business for 30 days, so that the Owner can ask us to restore the business. After 30 days, CornerTill automatically and permanently deletes all data of the business: the business details and logo, the products and product images, the bills, and all accounts of the business.",
             )}
           </LI>
         </UL>
         <P>
           <Trans
-            i18nKey="To have all data of a deleted business removed permanently, email <mail>privacy@kaflabs.com</mail>."
-            components={{ mail }}
+            i18nKey="To restore a deleted business in these 30 days, email <mail>support@kaflabs.com</mail>."
+            components={{ mail: support }}
           />
         </P>
       </LegalSection>

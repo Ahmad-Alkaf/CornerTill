@@ -41,6 +41,9 @@ export default function CheckoutModal({
     form.post(route(`bill.store`), {
       preserveState: false,
       preserveScroll: false,
+      //Replace this history entry: Back after a sale (or a bill update) must not
+      //bring back the paid cart, which could be submitted again.
+      replace: true,
       onSuccess: (e) => {
         requestClose();
         form.clearErrors();

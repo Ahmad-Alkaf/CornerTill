@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Business;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
@@ -173,23 +175,37 @@ class BusinessController extends Controller
         Gate::authorize('update', $business);
 
         $updatedBusiness = $request->validated();
-        //1- if logo is null OR there is new logo THEN delete the old logo.
-        if (isset($business->logo) && ($request->hasFile('logoFile') || !isset($updatedBusiness['logo']))) {
-            $this->deleteFile($business->logo);
-        }
-        //2- if there is new logo store it.
+        // The logo changes only when the request uploads a new file (logoFile) or
+        // explicitly removes it (logo: null). The other forms of the business page
+        // (Location & Contact, Financial) do not send `logo`: they keep the logo.
+        // A logo name sent by the client is never stored, so a request cannot
+        // point the logo to (and later delete) another file.
+        $removeLogo = array_key_exists('logo', $updatedBusiness) && $updatedBusiness['logo'] === null;
+        unset($updatedBusiness['logo'], $updatedBusiness['logoFile']);
         if ($request->hasFile('logoFile')) {
             $updatedBusiness['logo'] = $this->storeFile($request);
+        } else if ($removeLogo) {
+            $updatedBusiness['logo'] = null;
         }
 
+        $oldLogo = $business->logo;
         $business->update($updatedBusiness);
-        $business->save();
+
+        // Delete the old file only after the new value is saved.
+        if (isset($oldLogo) && $oldLogo !== $business->logo) {
+            $this->deleteFile($oldLogo);
+        }
 
         return redirect()->back()->with('success', __('Successfully updated'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft-delete the business and its accounts. Nothing else is deleted now (also
+     * not the logo file), so a mistaken delete can be restored for
+     * config('constants.deletedBusinessRetentionDays') days:
+     * `php artisan business:restore {id}`. After that, the daily job
+     * `business:purge-deleted` deletes all data of the business permanently.
+     * No account of a deleted business can sign in (ActiveBusinessUserProvider).
      */
     public function destroy(Request $request, Business $business)
     {
@@ -198,15 +214,17 @@ class BusinessController extends Controller
         ]);
         Gate::authorize('destroy', $business);
 
-        if (isset($business->logo)) {
-            $this->deleteFile($business->logo);
-            $business->update(['logo' => null]);
-        }
+        DB::transaction(function () use ($business) {
+            // One time for the business and its accounts: business:restore restores
+            // the accounts with this time, not the accounts that the Owner removed before.
+            $deletedAt = now();
+            // The policy leaves only the Owner, but delete every active account of the business.
+            User::where('business_id', $business->id)->update(['deleted_at' => $deletedAt]);
+            $business->deleted_at = $deletedAt;
+            $business->save();
+        });
 
-        $user = $request->user();
         Auth::logout();
-        $user->delete();
-        $business->delete();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

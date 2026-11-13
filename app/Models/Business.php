@@ -23,6 +23,24 @@ class Business extends Model
         });
     }
 
+    /**
+     * The day after which `business:purge-deleted` deletes a deleted business
+     * permanently. Null when the business is not deleted.
+     */
+    public function permanentDeletionDate(): ?\Illuminate\Support\Carbon
+    {
+        return $this->deleted_at?->copy()->addDays((int) config('constants.deletedBusinessRetentionDays'));
+    }
+
+    /** The message for an account of a deleted business that tries to sign in. */
+    public function deletedMessage(): string
+    {
+        return __('This business was deleted on :date. All its data will be deleted permanently after :purgeDate. To restore the business before that date, contact support@kaflabs.com.', [
+            'date' => $this->deleted_at->format('Y-m-d'),
+            'purgeDate' => $this->permanentDeletionDate()->format('Y-m-d'),
+        ]);
+    }
+
     public function onTrial()
     {
         return isset($this->customer) && isset($this->customer->trial_ends_at) && $this->customer->trial_ends_at->gt(now());

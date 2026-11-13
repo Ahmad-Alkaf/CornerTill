@@ -57,7 +57,7 @@ export default function OutOfStock({
               href={route("product.index", { stock: "out" })}
               className="font-normal"
             >
-              {t("Viw all out of stock products")}
+              {t("View all out of stock products")}
             </A>
           </header>
           <section>
@@ -66,7 +66,7 @@ export default function OutOfStock({
                 <div className="pointer-events-none absolute end-0 z-[1] flex h-full w-52 justify-end bg-gradient-to-l rtl:bg-gradient-to-r from-white to-transparent">
                   {paginate.total > 5 && (
                     <div className="mb-2 self-center">
-                      <Tooltip content="Viw all out of stock products">
+                      <Tooltip content={t("View all out of stock products")}>
                         <span className="pointer-events-auto">
                           <BetterLink
                             className="inline-block self-center rounded-[50%] p-2 align-middle text-gray-700 transition duration-200 ease-in-out hover:bg-black hover:bg-opacity-10 hover:text-gray-900 focus:outline-none"

@@ -23,6 +23,9 @@ class BillFactory extends Factory
 
             'createdBy_id' => User::factory(),
             'business_id' => Business::factory(),
+            // Values of the sale: the business values at the time of the sale.
+            'taxPercent' => fn (array $attributes) => Business::withTrashed()->find($attributes['business_id'])?->taxPercent ?? 0,
+            'currency' => fn (array $attributes) => Business::withTrashed()->find($attributes['business_id'])?->currency,
 
             'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
             'updated_at' => function (array $attributes) {

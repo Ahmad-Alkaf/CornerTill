@@ -61,7 +61,9 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
+            // App\Auth\ActiveBusinessUserProvider (AuthServiceProvider): an
+            // account of a deleted business cannot sign in.
+            'driver' => 'eloquent-active-business',
             'model' => App\Models\User::class,
         ],
 

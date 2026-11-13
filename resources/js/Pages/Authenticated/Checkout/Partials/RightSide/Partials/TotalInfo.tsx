@@ -1,10 +1,10 @@
 import Num from "@/Utilities/Num";
-import { AuthPageProps, ICreateBill,  } from "@/types";
-import { usePage } from "@inertiajs/react";
+import { ICreateBill } from "@/types";
+import useSaleTaxPercent from "@/Utilities/useSaleTaxPercent";
 import { useTranslation } from "react-i18next";
 
 export default function TotalInfo({ bill }: { bill: ICreateBill }) {
-  const taxPercent = usePage<AuthPageProps>().props.auth.business.taxPercent;
+  const taxPercent = useSaleTaxPercent(bill);
 
   /**Total without Taxes */
   function subTotal() {

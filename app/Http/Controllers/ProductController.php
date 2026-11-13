@@ -67,17 +67,25 @@ class ProductController extends Controller
     {
         Gate::authorize('update', $product);
         $newProduct = $request->validated();
-        //1- if img is null OR there is new image THEN delete the old image.
-        if (
-            isset($product->img) && ($request->hasFile('imageFile') || !isset($newProduct['img']))
-        ) {
-            $this->deleteImg($product->img);
-        }
-        //2- if there is new image store it.
+        // The image changes only when the request uploads a new file (imageFile) or
+        // explicitly removes it (img: null). The "Update Stock" form sends only
+        // `stock`: it keeps the image. An image name sent by the client is never
+        // stored, so a request cannot point the image to (and later delete) another file.
+        $removeImg = array_key_exists('img', $newProduct) && $newProduct['img'] === null;
+        unset($newProduct['img'], $newProduct['imageFile']);
         if ($request->hasFile('imageFile')) {
             $newProduct['img'] = $this->storeImg($request);
+        } else if ($removeImg) {
+            $newProduct['img'] = null;
         }
+
+        $oldImg = $product->img;
         $product->update($newProduct);
+
+        // Delete the old file only after the new value is saved.
+        if (isset($oldImg) && $oldImg !== $product->img) {
+            $this->deleteImg($oldImg);
+        }
 
         return redirect()->back()->with('success', __('Successfully updated'));
     }

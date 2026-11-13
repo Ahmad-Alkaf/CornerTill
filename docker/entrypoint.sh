@@ -47,6 +47,9 @@ if [ "$role" = "all" ] || [ "$role" = "web" ]; then
       sleep 2
     done
   fi
+  # Bills that the old code wrote without the stored sale values (also during a
+  # rolling deploy; the scheduler repeats it every hour). Safe to run many times.
+  php artisan bills:fill-sale-values || echo "bills:fill-sale-values failed; the scheduler tries again." >&2
 fi
 
 case "$role" in

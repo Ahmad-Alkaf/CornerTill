@@ -19,12 +19,24 @@ export default function UpdateProductStockModal({
 }) {
   const product = modalAction.product;
   const [increase, setIncrease] = useState<number>(0);
-  const form = useBetterForm<{ stock: number }>(
-    { stock: product?.stock ?? 0 },
-    product?.id,
-  );
+  /** The stock to send. A product without stock tracking (stock null) stays
+   * without it when nothing is added. */
+  const newStock = (add: number): number | null =>
+    (product?.stock ?? null) === null && add === 0
+      ? null
+      : (product?.stock ?? 0) + add;
+  const form = useBetterForm<{ stock: number | null }>({
+    stock: product?.stock ?? null,
+  });
 
-  useEffect(() => setIncrease(0), [product]);
+  //The modal stays mounted: each time it opens, start from the current stock of
+  //its product. Without this, "Update" with no change sent the stock of the first
+  //render (0) and set the stock of the product to 0.
+  useEffect(() => {
+    if (!modalAction.open) return;
+    setIncrease(0);
+    form.setData("stock", newStock(0));
+  }, [modalAction.open, product]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -60,10 +72,7 @@ export default function UpdateProductStockModal({
           className="mt-1 block w-full"
           disabled={form.processing}
           onChange={(e) => {
-            form.setData(
-              "stock",
-              (product?.stock ?? 0) + Number(e.target.value),
-            );
+            form.setData("stock", newStock(Number(e.target.value)));
             setIncrease(Number(e.target.value));
           }}
           errorMsg={form.errors.stock}

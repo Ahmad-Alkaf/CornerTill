@@ -18,11 +18,32 @@ use App\Http\Requests\Auth\RegisterRequest;
 class RegisterController extends Controller
 {
     /**
+     * Session key for the name and email from Google, GitHub, or X (OAuthRegister).
+     * They are kept in the session, not in the URL.
+     */
+    public const OAUTH_SESSION_KEY = 'oauthRegister';
+
+    /**
+     * The name and email from the social sign-in provider, if they did not expire.
+     *
+     * @return array{name: ?string, email: ?string}|null
+     */
+    private function oauthInfo(): ?array
+    {
+        $info = session(self::OAUTH_SESSION_KEY);
+        if (!is_array($info) || ($info['expires_at'] ?? 0) < now()->getTimestamp())
+            return null;
+        return ['name' => $info['name'] ?? null, 'email' => $info['email'] ?? null];
+    }
+
+    /**
      * Display the registration view.
      */
     public function create(): Response
     {
-        return Inertia::render('Authenticating/Register/Register');
+        return Inertia::render('Authenticating/Register/Register', [
+            'oauth' => $this->oauthInfo(),
+        ]);
     }
 
     /**
@@ -35,16 +56,17 @@ class RegisterController extends Controller
         $registerInfo = $request->validated();
         $user = new User($registerInfo);
 
-        DB::transaction(function () use ($registerInfo, $request, &$user) {
+        // The provider confirmed this email (OAuthRegister). The email is marked as
+        // confirmed only when the form sends exactly that email.
+        $oauthEmail = $this->oauthInfo()['email'] ?? null;
+        $emailConfirmed = is_string($oauthEmail) && $oauthEmail !== ''
+            && strcasecmp($oauthEmail, (string) $registerInfo['email']) === 0;
+
+        DB::transaction(function () use ($registerInfo, $emailConfirmed, &$user) {
             $business = new Business($registerInfo['business']);
             $business->save();
-            if (
-                $request->hasValidSignatureWhileIgnoring(['plan', 'period'])
-                && isset($request->email)
-            ) {
-                $user->email = $request->email;
+            if ($emailConfirmed)
                 $user->email_verified_at = now();
-            }
             $user->business_id = $business->id;
             $user->save();
 
@@ -55,6 +77,8 @@ class RegisterController extends Controller
                     'trial_ends_at' => now()->addDays(3),
                 ]);
         });
+
+        $request->session()->forget(self::OAUTH_SESSION_KEY);
 
         event(new Registered($user));
 

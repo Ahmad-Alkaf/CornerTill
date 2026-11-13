@@ -2,6 +2,7 @@ import { AuthPageProps, IBill } from "@/types";
 import BillOptions from "./BillOptions";
 import FromDate from "@/Utilities/FromDate";
 import Num from "@/Utilities/Num";
+import { saleUnitPrice } from "@/Utilities/saleValues";
 import ID from "@/Utilities/ID";
 import { PropsWithChildren, useMemo, useState } from "react";
 import { usePage } from "@inertiajs/react";
@@ -12,13 +13,15 @@ type PropsProduct = {
 };
 export default function Product({ bill }: PropsProduct) {
   const auth = usePage<AuthPageProps>().props.auth;
-  const taxPercent = auth.business.taxPercent;
+  //The values of the sale, not the current tax rate, prices, and currency.
+  const taxPercent = bill.taxPercent ?? auth.business.taxPercent;
+  const currency = bill.currency ?? undefined;
   const loggedInId = auth.user.id;
 
   const subTotalPrice = useMemo(
     () =>
       bill.bill_details.reduce(
-        (v, t) => v + (t.product.price ?? 0) * t.quantity,
+        (v, t) => v + (saleUnitPrice(t) ?? 0) * t.quantity,
         0,
       ),
     [bill.bill_details],
@@ -57,16 +60,23 @@ export default function Product({ bill }: PropsProduct) {
         <Num
           className="text-secondary-700"
           showCurrency
+          currency={currency}
           amount={subTotalPrice}
         />
       </TD>
       <TD>
-        <Num className="text-primary-700" showCurrency amount={totalPrice} />
+        <Num
+          className="text-primary-700"
+          showCurrency
+          currency={currency}
+          amount={totalPrice}
+        />
       </TD>
       <TD>
         <Num
           className={bill.cashReceived === null ? "text-primary-700" : ""}
           showCurrency
+          currency={currency}
           amount={bill.cashReceived}
           noAmount={t("Digital Payment")}
         />
@@ -75,6 +85,7 @@ export default function Product({ bill }: PropsProduct) {
         <Num
           className="text-indigo-700"
           showCurrency
+          currency={currency}
           amount={bill.cashReceived ? bill.cashReceived - totalPrice : null}
           noAmount=""
         />

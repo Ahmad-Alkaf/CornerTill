@@ -4,6 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Auth\ActiveBusinessUserProvider;
 use App\Models\Bill;
 use App\Models\Product;
 use App\Models\BillDetail;
@@ -15,6 +16,7 @@ use App\Policies\UserPolicy;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 
 class AuthServiceProvider extends ServiceProvider
@@ -36,6 +38,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Auth::provider('eloquent-active-business', function ($app, array $config) {
+            return new ActiveBusinessUserProvider($app['hash'], $config['model']);
+        });
+
         VerifyEmail::toMailUsing(function (User $user, string $url) {
             return (new MailMessage)
                 ->subject('Verify Email Address')

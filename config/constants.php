@@ -1,5 +1,11 @@
 <?php
 return [
+    // A deleted business is kept this number of days, so that the Owner can ask
+    // support to restore it (php artisan business:restore {id}). Then the daily
+    // job `business:purge-deleted` deletes all its data permanently.
+    // The privacy policy, the terms, and the delete-business text of the business
+    // page (DeleteBusinessSection.tsx) state this number: change them together.
+    'deletedBusinessRetentionDays' => 30,
     // Limits for every business during the free beta (PAYMENTS_ENABLED=false).
     // Default: the same numbers as the Basic plan.
     'betaResources' => [

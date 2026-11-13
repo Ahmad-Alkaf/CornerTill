@@ -41,7 +41,10 @@
 
     <!-- Scripts -->
     @routes
-    @viteReactRefresh
+    {{-- No @viteReactRefresh: vite.config.js has no React plugin, so its
+         /@react-refresh script does not exist (a 404 with `npm run dev`).
+         Production output is the same: the directive prints nothing without
+         a running dev server. --}}
     @vite(['resources/js/app.tsx', "resources/js/Pages/{$page['component']}.tsx"])
 
     <!-- Styles -->

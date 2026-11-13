@@ -54,6 +54,7 @@ class BillDetail extends Model
      */
     protected $casts = [
         'quantity' => 'integer',
+        'price' => 'float',
     ];
 
 
@@ -65,6 +66,9 @@ class BillDetail extends Model
     protected $fillable = [
         'quantity',
         'product_id',
+        // Values of the sale. They do not change when the product changes.
+        'price', // unit price, tax not included
+        'productName',
     ];
 
     public function product(): BelongsTo

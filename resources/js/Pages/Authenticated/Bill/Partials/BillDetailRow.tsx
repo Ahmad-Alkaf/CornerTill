@@ -1,4 +1,5 @@
 import Num from "@/Utilities/Num";
+import { saleProductName, saleUnitPrice } from "@/Utilities/saleValues";
 import { IBillDetail } from "@/types";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -11,6 +12,9 @@ export default function BillDetailRow({
   taxPercent: number;
 }) {
   const { t } = useTranslation();
+  //The values of the sale, not the current values of the product.
+  const price = saleUnitPrice(transaction);
+  const name = saleProductName(transaction);
   return (
     <>
       <tr className="h-10 max-h-10 border-x border-t">
@@ -23,7 +27,7 @@ export default function BillDetailRow({
                   ? transaction.product.img
                   : "/products-images/" + transaction.product.img
               }
-              alt={"Image of Product " + transaction.product.name}
+              alt={"Image of Product " + name}
             />
           )}
         </td>
@@ -44,7 +48,7 @@ export default function BillDetailRow({
             <Num
               className="font-semibold text-indigo-700"
               defaultNoAmount
-              amount={transaction.product.price}
+              amount={price}
             />
           </span>
         </td>
@@ -55,9 +59,7 @@ export default function BillDetailRow({
               className="font-semibold text-secondary-700"
               defaultNoAmount
               amount={
-                transaction.product.price === null
-                  ? null
-                  : transaction.product.price * transaction.quantity
+                price === null ? null : price * transaction.quantity
               }
             />
           </span>
@@ -69,11 +71,7 @@ export default function BillDetailRow({
               className="font-semibold text-danger-700"
               defaultNoAmount
               amount={
-                transaction.product.price == null
-                  ? null
-                  : transaction.product.price *
-                    transaction.quantity *
-                    taxPercent
+                price == null ? null : price * transaction.quantity * taxPercent
               }
             />
           </span>
@@ -85,18 +83,16 @@ export default function BillDetailRow({
               className="font-semibold text-primary-700"
               defaultNoAmount
               amount={
-                transaction.product.price == null
+                price == null
                   ? null
-                  : transaction.product.price *
-                    transaction.quantity *
-                    (1 + taxPercent)
+                  : price * transaction.quantity * (1 + taxPercent)
               }
             />
           </span>
         </td>
       </tr>
       <tr className="border-x border-b">
-        <td colSpan={4} title={transaction.product.name}>
+        <td colSpan={4} title={name}>
           <span
             style={{
               display: "-webkit-box",
@@ -105,7 +101,7 @@ export default function BillDetailRow({
             }}
             className="mx-1 inline-block overflow-hidden text-blue-gray-800"
           >
-            <bdi>{transaction.product.name}</bdi>
+            <bdi>{name}</bdi>
           </span>
         </td>
       </tr>

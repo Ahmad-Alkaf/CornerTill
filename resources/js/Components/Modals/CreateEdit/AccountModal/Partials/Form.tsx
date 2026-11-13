@@ -25,7 +25,6 @@ export default function Form({
           business_id,
         } as ICreateUser)
       : { ...modalAction.data },
-    modalAction.data ? modalAction.data.id.toString() : "create",
   );
 
   function handleSubmit(e: FormEvent) {

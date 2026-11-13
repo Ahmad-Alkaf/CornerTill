@@ -66,7 +66,7 @@ export default function FormImage({
               setEditImageState("change");
             }}
           >
-            Change&nbsp;Image
+            <span className="whitespace-nowrap">{t("Change Image")}</span>
           </SecondaryButton>
           <DangerButton
             disabled={form.processing}

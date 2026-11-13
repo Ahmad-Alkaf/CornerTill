@@ -1,5 +1,7 @@
 import {
   useState,
+  useEffect,
+  useRef,
   createContext,
   useContext,
   Fragment,
@@ -24,14 +26,32 @@ const DropDownContext = createContext<{
 
 const Dropdown = ({ children }: PropsWithChildren) => {
   const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const toggleOpen = () => {
     setOpen((previousState) => !previousState);
   };
 
+  // Close on a press outside the dropdown. This is a document listener, not a
+  // `fixed inset-0` overlay: inside a parent with a CSS `transform` (the hover
+  // lift of a product card) such an overlay covers only that parent, and an
+  // overlay over the page takes the hover away from a menu that shows on hover.
+  useEffect(() => {
+    if (!open) return;
+    const closeOnOutsidePress = (e: PointerEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node))
+        setOpen(false);
+    };
+    document.addEventListener("pointerdown", closeOnOutsidePress);
+    return () =>
+      document.removeEventListener("pointerdown", closeOnOutsidePress);
+  }, [open]);
+
   return (
     <DropDownContext.Provider value={{ open, setOpen, toggleOpen }}>
-      <div className="relative">{children}</div>
+      <div ref={rootRef} className="relative">
+        {children}
+      </div>
     </DropDownContext.Provider>
   );
 };
@@ -40,7 +60,7 @@ const Trigger = ({
   children,
   ...buttonProps
 }: PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>) => {
-  const { open, setOpen, toggleOpen } = useContext(DropDownContext);
+  const { toggleOpen } = useContext(DropDownContext);
 
   return (
     <>
@@ -57,17 +77,6 @@ const Trigger = ({
       >
         {children}
       </button>
-
-      {open && (
-        <div
-          role="button"
-          className="div-style fixed inset-0 z-40 h-[100vh] w-full cursor-default"
-          onClick={(e) => {
-            e.stopPropagation();
-            setOpen(false);
-          }}
-        ></div>
-      )}
     </>
   );
 };
