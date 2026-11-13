@@ -22,14 +22,18 @@ class OAuthRegisterTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        config(['features.social.google' => true, 'features.payments_enabled' => false]);
+        config([
+            'features.social.google' => true, 'features.payments_enabled' => false,
+            'services.google.client_id' => 'test-client-id', 'services.google.client_secret' => 'test-secret',
+            'services.google.redirect' => 'http://localhost/auth/google/callback',
+        ]);
     }
 
     private function mockGoogleUser(string $name, string $email): void
     {
         $user = (new SocialiteUser())->map(['name' => $name, 'email' => $email, 'nickname' => null]);
         $provider = Mockery::mock();
-        $provider->shouldReceive('stateless')->andReturnSelf();
+        $provider->shouldNotReceive('stateless'); // the OAuth state must be checked
         $provider->shouldReceive('user')->andReturn($user);
         Socialite::shouldReceive('driver')->with('google')->andReturn($provider);
     }
@@ -54,7 +58,8 @@ class OAuthRegisterTest extends TestCase
     {
         $this->mockGoogleUser('Sara Ali', 'sara@example.com');
 
-        $response = $this->get('/auth/google/callback?state=' . urlencode('plan=Basic&period=Monthly'));
+        $this->withSession(['oauthRegisterPlan' => ['plan' => 'Basic', 'period' => 'Monthly']]);
+        $response = $this->get('/auth/google/callback?state=x&code=y');
 
         $location = $response->headers->get('Location');
         $this->assertSame(route('register', ['plan' => 'Basic', 'period' => 'Monthly']), $location);
@@ -66,6 +71,28 @@ class OAuthRegisterTest extends TestCase
             ->component('Authenticating/Register/Register')
             ->where('oauth.name', 'Sara Ali')
             ->where('oauth.email', 'sara@example.com'));
+    }
+
+    public function test_the_redirect_keeps_the_plan_in_the_session_and_lets_socialite_set_the_state(): void
+    {
+        $response = $this->get('/auth/google/redirect?plan=Basic&period=Monthly');
+
+        $location = $response->headers->get('Location');
+        $this->assertStringContainsString('accounts.google.com', $location);
+        parse_str((string) parse_url($location, PHP_URL_QUERY), $query);
+        $this->assertSame(session('state'), $query['state']); // Socialite's own random state
+        $this->assertSame(['plan' => 'Basic', 'period' => 'Monthly'], session('oauthRegisterPlan'));
+    }
+
+    public function test_a_callback_with_a_wrong_state_is_refused(): void
+    {
+        // The real Socialite driver: an attacker's callback link has another state.
+        $this->withSession(['state' => 'state-of-this-browser'])
+            ->get('/auth/google/callback?state=attacker-state&code=attacker-code')
+            ->assertRedirect()
+            ->assertSessionHas('error');
+
+        $this->assertNull(session(RegisterController::OAUTH_SESSION_KEY));
     }
 
     public function test_the_provider_email_is_marked_as_confirmed(): void

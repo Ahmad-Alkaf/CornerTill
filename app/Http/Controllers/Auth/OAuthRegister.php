@@ -7,6 +7,9 @@ use Laravel\Socialite\Facades\Socialite;
 
 class OAuthRegister extends Controller
 {
+    /** The plan and period that the visitor chose before the provider's page. */
+    private const PLAN_SESSION_KEY = 'oauthRegisterPlan';
+
     /**
      * True when the provider is known and its switch is on
      * (SOCIAL_GOOGLE_ENABLED, SOCIAL_GITHUB_ENABLED, SOCIAL_X_ENABLED).
@@ -22,11 +25,14 @@ class OAuthRegister extends Controller
         if ($this->isEnabled($provider)) {
             if ($provider == 'x')
                 $provider = 'twitter-oauth-2';
-            if (($plan = request()->query('plan')) && ($period = request()->query('period')) && !empty($plan) && !empty($period))
-                $with = ['state' => 'plan=' . $plan . '&period=' . $period];
-            else $with = [];
-            // $query = request
-            return Socialite::driver($provider)->with($with)->redirect();
+            // The plan and period wait in the session. The OAuth `state` parameter
+            // belongs to Socialite: it checks it in callback() (CSRF protection).
+            $plan = request()->query('plan');
+            $period = request()->query('period');
+            if (is_string($plan) && $plan !== '' && is_string($period) && $period !== '')
+                session()->put(self::PLAN_SESSION_KEY, ['plan' => $plan, 'period' => $period]);
+            else session()->forget(self::PLAN_SESSION_KEY);
+            return Socialite::driver($provider)->redirect();
         }
         abort(404);
     }
@@ -37,8 +43,11 @@ class OAuthRegister extends Controller
             if ($provider == 'x')
                 $provider = 'twitter-oauth-2';
 
+            // Not stateless(): Socialite compares the `state` of the provider's answer
+            // with the session, so an attacker cannot make a victim finish the
+            // attacker's sign-in (and register with the attacker's confirmed email).
             try {
-                $userInfo = Socialite::driver($provider)->stateless()->user();
+                $userInfo = Socialite::driver($provider)->user();
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', __('Whoops, something went wrong!'));
             }
@@ -53,16 +62,10 @@ class OAuthRegister extends Controller
                 'expires_at' => now()->addHour()->getTimestamp(),
             ]);
 
-            // The plan and period (not personal data) stay in the URL.
-            $query = [];
-            parse_str((string) request()->input('state'), $result);
-            //empty() treats null and empty string as the same falsy value
-            if (!empty($result['plan']) && !empty($result['period']) && is_string($result['plan']) && is_string($result['period'])) {
-                $query['plan'] = $result['plan'];
-                $query['period'] = $result['period'];
-            }
+            // The plan and period (not personal data) go back into the URL.
+            $query = session()->pull(self::PLAN_SESSION_KEY);
 
-            return redirect()->route('register', $query);
+            return redirect()->route('register', is_array($query) ? $query : []);
         }
 
         abort(404);
