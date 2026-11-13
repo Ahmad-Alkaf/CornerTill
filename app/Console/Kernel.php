@@ -13,17 +13,24 @@ class Kernel extends ConsoleKernel
 {
     /**
      * Define the application's command schedule.
+     *
+     * This app uses the Laravel 10 structure (bootstrap/app.php binds this
+     * kernel), so the scheduler reads this method, not routes/console.php.
+     * In production, supervisord runs `php artisan schedule:work`
+     * (docker/supervisord.conf, CONTAINER_ROLE=all or scheduler).
+     *
+     * Bills are never deleted on a schedule: a business must keep its sales
+     * records for years (for example for VAT).
      */
     protected function schedule(Schedule $schedule): void
     {
-        //delete old bills
-        $schedule->call(function () {
-            $deletedCount = DB::table('bills')
-                ->where('updated_at', '<', now()->subYear())
-                ->orWhere('created_at', '<', now()->subYears(2))
-                ->delete();
-            Log::warning('Annual Schedule: Delete Old Bills: have deleted ' . $deletedCount . ' bills.');
-        })->yearly()->name('Delete Old Bills');
+        // Permanently delete the businesses that were deleted more than
+        // constants.deletedBusinessRetentionDays days ago (all their data).
+        $schedule->command('business:purge-deleted')->daily()->withoutOverlapping();
+
+        // Bills written by the old code during a rolling deploy get their sale
+        // values (the entrypoint also runs it after the migrations).
+        $schedule->command('bills:fill-sale-values')->hourly()->withoutOverlapping();
 
         //email me database table counts
         $schedule->call(function () {
@@ -32,8 +39,10 @@ class Kernel extends ConsoleKernel
             $products = DB::table('products')->count();
             $bills = DB::table('bills')->count();
             Log::warning('Daily Schedule: Email Me Database Tables Counts: businesses(' . $businesses . '), users(' . $users . '), products(' . $products . '), bills(' . $bills . ').');
-            Mail::to('ahmad.alkaf.ahk@gmail.com')->send(new DatabaseTablesCounts($businesses,$users,$products,$bills));
-        })->everyDay()->name('Email Me Database Tables Counts');
+            // ADMIN_REPORT_EMAIL; no address = no email.
+            if ($to = config('mail.admin_report_address'))
+                Mail::to($to)->send(new DatabaseTablesCounts($businesses,$users,$products,$bills));
+        })->daily()->name('Email Me Database Tables Counts');
     }
 
     /**

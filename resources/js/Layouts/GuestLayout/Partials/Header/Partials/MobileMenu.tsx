@@ -3,6 +3,7 @@ import { Transition } from "@headlessui/react";
 import PrimaryLink from "@/Components/Buttons/PrimaryLink";
 import { FaArrowRight } from "react-icons/fa";
 import TextLink from "@/Components/TextLink";
+import { useTranslation } from "react-i18next";
 
 export default function MobileMenu() {
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
@@ -36,6 +37,7 @@ export default function MobileMenu() {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
+  const { t } = useTranslation();
   return (
     <div className="flex md:hidden">
       {/* Hamburger button */}
@@ -64,7 +66,7 @@ export default function MobileMenu() {
           show={mobileNavOpen}
           as="nav"
           id="mobile-nav"
-          className="absolute left-0 top-full z-20 h-screen w-full overflow-auto bg-gray-50 pb-16 backdrop-blur-sm"
+          className="absolute start-0 top-full z-20 h-screen w-full overflow-auto bg-gray-50 pb-16 backdrop-blur-sm"
           enter="transition ease-out duration-200 transform"
           enterFrom="opacity-0 -translate-y-2"
           enterTo="opacity-100 translate-y-0"
@@ -79,17 +81,17 @@ export default function MobileMenu() {
                 className="justify-center"
                 onClick={() => setMobileNavOpen(false)}
               >
-                Login
+                {t("Login")}
               </TextLink>
             </li>
             <li>
               <PrimaryLink
                 href={route("register.method")}
-                className="flex justify-center normal-case group"
+                className="group flex justify-center normal-case"
                 onClick={() => setMobileNavOpen(false)}
               >
-                <span>Register&nbsp;</span>
-                <FaArrowRight className="group-hover:translate-x-2 transition"/>
+                <span>{t("Register")}&nbsp;</span>
+                <FaArrowRight className="transition group-hover:translate-x-2 rtl:rotate-180 rtl:group-hover:-translate-x-2" />
               </PrimaryLink>
             </li>
           </ul>

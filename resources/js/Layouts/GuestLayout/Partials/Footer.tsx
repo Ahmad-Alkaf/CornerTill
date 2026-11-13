@@ -1,49 +1,61 @@
 import SupportEmailLink from "@/Components/SupportEmailLink";
-import A from "@/Components/Typography/A";
+import { KAFLABS_URL } from "@/Utilities/Constant";
+import { Link } from "@inertiajs/react";
 import { Tooltip } from "@material-tailwind/react";
+import { Trans, useTranslation } from "react-i18next";
+
+const linkClass =
+  "text-gray-500 transition duration-200 hover:text-gray-700 hover:underline";
 
 export default function Footer({ className = "" }: { className?: string }) {
+  const { t } = useTranslation();
   return (
-    // {/* <hr className="mt-24 border-gray-300" /> */}
-
     <div className="print:hidden">
-      {/* <hr className="mt24 border-gray-300" /> */}
-      <div className="pb-20"></div>
+      {/* Space for the footer, which sits at the bottom of the page. */}
+      <div className="pb-32 sm:pb-24"></div>
       <div className="absolute bottom-0 w-full">
         <footer
           className={
-            "my-2 flex min-h-full w-full flex-wrap-reverse justify-center px-6 py-4 sm:items-center sm:justify-between " +
+            "my-2 flex min-h-full w-full flex-wrap-reverse items-center justify-center gap-x-6 gap-y-2 px-6 py-4 sm:justify-between " +
             className
           }
         >
-          {/* <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left">
-            Contact us&nbsp;
-            <SupportEmailLink />
-          </div> */}
-
-          <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:ml-0 sm:text-right">
-            &copy; {new Date().getFullYear()} Laptop POS, All Rights Reserved.
+          <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-start">
+            <p>
+              &copy; {new Date().getFullYear()} KafLabs.{" "}
+              {t("All rights reserved.")}
+            </p>
+            <p>
+              <Trans
+                i18nKey="CornerTill is a <kaflabs>KafLabs</kaflabs> product."
+                components={{
+                  kaflabs: (
+                    <a
+                      href={KAFLABS_URL}
+                      target="_blank"
+                      rel="noopener"
+                      className="underline underline-offset-2 transition duration-200 hover:text-gray-700"
+                    />
+                  ),
+                }}
+              />
+            </p>
           </div>
-          <div className="text-sm ">
-            <Tooltip content="Contact us">
+          <div className="text-center text-sm">
+            <Tooltip content={t("Contact us")}>
               <span className="!font-light text-gray-500">
                 <SupportEmailLink />
               </span>
             </Tooltip>
             {" · "}
-            <A
-              className="text-gray-500 hover:text-gray-700"
-              href={route("termsAndConditions")}
-            >
-              Terms
-            </A>{" "}
+            {/* CornerTill supplements on this domain; they link to the KafLabs master pages. */}
+            <Link className={linkClass} href={route("termsAndConditions")}>
+              {t("Terms")}
+            </Link>
             {" · "}
-            <A
-              className="text-gray-500 hover:text-gray-700"
-              href={route("privacyPolicy")}
-            >
-              Privacy Policy
-            </A>
+            <Link className={linkClass} href={route("privacyPolicy")}>
+              {t("Privacy Policy")}
+            </Link>
           </div>
         </footer>
       </div>

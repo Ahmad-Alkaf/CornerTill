@@ -6,6 +6,8 @@ import { IBusiness } from "@/types";
 import { FormEventHandler } from "react";
 import TaxRateInput from "@/Pages/Authenticating/Register/Partials/BusinessForm/Partials/TaxRateInput";
 import PrimaryMaterialBtn from "@/Components/Buttons/Material/PrimaryMaterialBtn";
+import { useTranslation } from "react-i18next";
+import { SAUDI_RIYAL_SIGN } from "@/Utilities/currency";
 
 export default function FinancialSection({
   business,
@@ -28,6 +30,8 @@ export default function FinancialSection({
       preserveScroll: true,
     });
   };
+
+  const { t } = useTranslation();
   return (
     <form
       onSubmit={submit}
@@ -36,10 +40,12 @@ export default function FinancialSection({
       <section className="max-w-xl">
         <header>
           <h2 className="text-lg font-medium text-gray-900">
-            Financial Details
+            {t("Financial Details")}
           </h2>
 
-          <p className="text-normal mt-1 text-gray-600">Currency and Tax</p>
+          <p className="text-normal mt-1 text-gray-600">
+            {t("Currency and Tax")}
+          </p>
         </header>
         <div className="mt-6 space-y-6">
           <Input
@@ -57,11 +63,21 @@ export default function FinancialSection({
             hideError={form.isDirty("currency")}
             hint={
               <span>
-                You can use any Unicode symbol ({" "}
-                <span className="font-semibold text-blue-gray-600">$</span>,{" "}
-                <span className="font-semibold text-blue-gray-600">£</span>,{" "}
-                <span className="font-semibold text-blue-gray-600">¥</span>,{" "}
-                <span className="font-semibold text-blue-gray-600">€</span>,
+                {t("You can use any Unicode symbol")}({" "}
+                {/* A click puts the symbol in the input (most keyboards cannot type the riyal sign). */}
+                {["$", "£", "¥", "€", SAUDI_RIYAL_SIGN].map((symbol) => (
+                  <span key={symbol}>
+                    <button
+                      type="button"
+                      className="font-semibold text-blue-gray-600 hover:text-primary-700"
+                      onClick={() => form.setData("currency", symbol)}
+                      disabled={form.processing}
+                    >
+                      {symbol}
+                    </button>
+                    ,{" "}
+                  </span>
+                ))}
                 ...etc)
               </span>
             }
@@ -93,7 +109,7 @@ export default function FinancialSection({
           />
           <div className="flex items-center gap-4">
             <PrimaryMaterialBtn type="submit" disabled={form.processing}>
-              Save
+              {t("Save")}
             </PrimaryMaterialBtn>
 
             <Transition
@@ -103,9 +119,9 @@ export default function FinancialSection({
               leaveTo="opacity-0"
               leave="transition ease-in-out"
             >
-              <p className="text-sm text-green-500">Saved</p>
+              <p className="text-sm text-green-500">{t("Saved")}</p>
             </Transition>
-          </div>{" "}
+          </div>
         </div>
       </section>
     </form>

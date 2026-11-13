@@ -20,7 +20,7 @@ export default function ItemOptions({
     <div
       style={{ zIndex: 1 }}
       onClick={(e) => e.stopPropagation()}
-      className="absolute left-0 top-2 hidden w-full group-hover:block"
+      className="absolute start-0 top-2 hidden w-full group-hover:block"
     >
       <div className="mx-2 flex justify-between">
         <ItemBtn

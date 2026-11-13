@@ -8,6 +8,7 @@ import {
 import { ApexOptions } from "apexcharts";
 import { ReactNode } from "react";
 import Chart from "react-apexcharts";
+import { useTranslation } from "react-i18next";
 
 export function StatisticsChart({
   chart,
@@ -15,26 +16,60 @@ export function StatisticsChart({
   description,
   footer,
 }: StatisticsChartProps) {
+  const { t } = useTranslation();
   return (
-    <Card className="rounded-none shadow sm:rounded-lg">
+    <Card
+      className="rounded-none shadow sm:rounded-lg"
+      placeholder={undefined}
+      onPointerEnterCapture={undefined}
+      onPointerLeaveCapture={undefined}
+    >
       <CardHeader
         variant="gradient"
         color="white"
         floated={false}
         shadow={false}
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
       >
-        <Chart {...chart} />
+        {/* Chart axes stay left-to-right in both languages. */}
+        <div dir="ltr">
+          <Chart {...chart} />
+        </div>
       </CardHeader>
-      <CardBody className="px-6 pt-0">
-        <Typography variant="h6" color="blue-gray">
-          {title}
+      <CardBody
+        className="px-6 pt-0"
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+      >
+        <Typography
+          variant="h6"
+          color="blue-gray"
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          {t(title)}
         </Typography>
-        <Typography variant="small" className="font-normal text-blue-gray-600">
-          {description}
+        <Typography
+          variant="small"
+          className="font-normal text-blue-gray-600"
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          {t(description)}
         </Typography>
       </CardBody>
       {footer && (
-        <CardFooter className="border-t border-blue-gray-50 px-6 py-5">
+        <CardFooter
+          className="border-t border-blue-gray-50 px-6 py-5"
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
           {footer}
         </CardFooter>
       )}
@@ -45,7 +80,7 @@ export function StatisticsChart({
 export interface StatisticsChartProps {
   chart: ChartProps;
   title: string;
-  description: string | ReactNode;
+  description: string;
   footer?: ReactNode;
 }
 

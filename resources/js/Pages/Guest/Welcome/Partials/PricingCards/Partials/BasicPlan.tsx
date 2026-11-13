@@ -43,7 +43,7 @@ export function BasicPlanBenefits() {
   ];
 
   return benefits.map((b, i) => (
-    <li key={i} className="flex items-center space-x-3">
+    <li key={i} className="flex items-center space-x-3 rtl:space-x-reverse">
       {b}
     </li>
   ));

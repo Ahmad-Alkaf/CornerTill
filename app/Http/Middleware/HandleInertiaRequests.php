@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use Tightenco\Ziggy\Ziggy;
+use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -41,6 +41,15 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn() => $request->session()->get('success'),
                 'error' => fn() => $request->session()->get('error'),
                 'warning' => fn() => $request->session()->get('warning'),
+            ],
+            // Launch switches (config/features.php) for the React pages.
+            'features' => [
+                'paymentsEnabled' => (bool) config('features.payments_enabled'),
+                'social' => [
+                    'google' => (bool) config('features.social.google'),
+                    'github' => (bool) config('features.social.github'),
+                    'x' => (bool) config('features.social.x'),
+                ],
             ],
             'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),

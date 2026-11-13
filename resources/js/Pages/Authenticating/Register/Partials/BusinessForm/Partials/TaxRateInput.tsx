@@ -1,6 +1,7 @@
 import Input, { InputProps } from "@/Components/Inputs/Input";
 import Num from "@/Utilities/Num";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function TaxRateInput({
   value,
@@ -17,6 +18,7 @@ export default function TaxRateInput({
   hideError: InputProps["hideError"];
   currency?: string; //when registering the <Num showCurrency /> component can't figure out the currency
 }) {
+  const { t } = useTranslation();
   return (
     <Input
       id="taxPercent"
@@ -33,19 +35,22 @@ export default function TaxRateInput({
       errorMsg={errorMsg}
       hideError={hideError}
       hint={
-        <span>
+        <span className="text-start">
           <span className="font-semibold text-blue-gray-600">
             <Num amount={value} />%
           </span>{" "}
-          tax on{" "}
+          {t("tax on")}{" "}
           <span className="font-semibold text-blue-gray-600">
-            {currency && <span>{currency}&thinsp;</span>}
-            <Num amount={100} showCurrency={!currency} />
+            {/* No symbol while the currency is empty (Num would read the business of the logged-in user). */}
+            <Num amount={100} showCurrency={!!currency} currency={currency} />
           </span>{" "}
-          is{" "}
+          {t("is")}{" "}
           <span className="font-semibold text-blue-gray-600">
-            {currency && <span>{currency}&thinsp;</span>}
-            <Num amount={(value / 100) * 100} showCurrency={!currency} />
+            <Num
+              amount={(value / 100) * 100}
+              showCurrency={!!currency}
+              currency={currency}
+            />
           </span>
         </span>
       }

@@ -15,7 +15,9 @@ export default function Pagination({
   return (
     <>
       {paginateItems.links.length > 3 && (
-        <div {...props} className={"flex justify-center pb-10 " + className}>
+        // Many pages make the row wider than a phone screen: it scrolls sideways.
+        <div {...props} className={"max-w-full overflow-x-auto pb-10 " + className}>
+        <div className="mx-auto flex w-max">
           <BetterLink
             href={paginateItems.prev_page_url ?? ""}
             disabled={!paginateItems.prev_page_url}
@@ -24,9 +26,12 @@ export default function Pagination({
             <IconButton
               disabled={!paginateItems.prev_page_url}
               variant="outlined"
-              className="rounded-r-none border-r-0"
+              className="ltr:rounded-r-none ltr:border-r-0 rtl:rounded-l-none rtl:border-l-0"
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
             >
-              <FaArrowLeft strokeWidth={2} className="h-4 w-4" />
+              <FaArrowLeft strokeWidth={2} className="h-4 w-4 rtl:rotate-180" />
             </IconButton>
           </BetterLink>
 
@@ -37,9 +42,12 @@ export default function Pagination({
                 <IconButton
                   variant="outlined"
                   className={
-                    "rounded-none border-r-0 text-base " +
+                    "rounded-none ltr:border-r-0 rtl:border-l-0 text-base " +
                     (v.active ? "bg-primary-800 text-gray-100" : "")
                   }
+                  placeholder={undefined}
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
                 >
                   {v.label}
                 </IconButton>
@@ -54,11 +62,15 @@ export default function Pagination({
             <IconButton
               disabled={!paginateItems.next_page_url}
               variant="outlined"
-              className="rounded-l-none"
+              className="ltr:rounded-l-none rtl:rounded-r-none"
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
             >
-              <FaArrowRight strokeWidth={2} className="h-4 w-4" />
+              <FaArrowRight strokeWidth={2} className="h-4 w-4 rtl:rotate-180" />
             </IconButton>
           </BetterLink>
+        </div>
         </div>
       )}
     </>

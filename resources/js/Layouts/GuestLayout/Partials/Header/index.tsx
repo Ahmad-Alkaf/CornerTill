@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import MobileMenu from "./Partials/MobileMenu";
 import DesktopMenu from "./Partials/DesktopMenu";
 import FullLogo from "@/Components/Logo/FullLogo";
+import LanguageSwitch from "@/Components/LanguageSwitch";
 
 export default function Header() {
   const [top, setTop] = useState<boolean>(true);
@@ -30,7 +31,10 @@ export default function Header() {
             {/* Site branding */}
             <FullLogo />
             <DesktopMenu />
-            <MobileMenu  />
+            <div className="ms-4 flex items-center gap-3 md:ms-5">
+              <LanguageSwitch />
+              <MobileMenu />
+            </div>
           </div>
         </div>
       </header>

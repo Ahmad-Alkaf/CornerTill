@@ -5,6 +5,7 @@ import CreateEditAccountModal from "@/Components/Modals/CreateEdit/AccountModal/
 import { FaUserPlus } from "react-icons/fa6";
 import PermanentDeleteConfirmAccountModal from "@/Components/Modals/CreateEdit/AccountModal/PermanentDeleteConfirmAccountModal";
 import PrimaryMaterialBtn from "@/Components/Buttons/Material/PrimaryMaterialBtn";
+import { useTranslation } from "react-i18next";
 
 export default function AccountsTable({
   business,
@@ -21,6 +22,7 @@ export default function AccountsTable({
     { open: true; account: IUser } | { open: false; account?: IUser }
   >({ open: false });
 
+  const { t } = useTranslation();
   return (
     <section className="bg-white p-4 pb-0 shadow sm:rounded-lg sm:p-8 sm:pb-0">
       <CreateEditAccountModal
@@ -30,20 +32,20 @@ export default function AccountsTable({
       />
 
       <header>
-        <h2 className="text-lg font-medium text-gray-900">Accounts</h2>
+        <h2 className="text-lg font-medium text-gray-900">{t("Accounts")}</h2>
 
         <div className="flex">
           <p className="text-normal mt-1 grow text-gray-600">
-            Add, remove, or edit an account in your business.
+            { t( "Add, remove, or edit an account in your business." ) }
           </p>
           <PrimaryMaterialBtn
-            className="!mx-2 flex gap-2 xl:!mr-10 "
+            className="!mx-2 flex gap-2 xl:!me-10 "
             onClick={() =>
               setModalAction({ open: true, state: "create", data: null })
             }
           >
             <FaUserPlus className="w-4" />
-            Create New Account
+            { t( "Create New Account" ) }
           </PrimaryMaterialBtn>
         </div>
       </header>
@@ -52,17 +54,19 @@ export default function AccountsTable({
         <div>
           <div className="mx-auto w-full overflow-x-auto overflow-y-hidden pb-28 xl:px-10 ">
             <div className="min-w-fit rounded-md border">
-              <table className="w-full table-auto  text-left">
+              <table className="w-full table-auto  ltr:text-left rtl:text-right">
                 <thead>
                   <tr>
-                    <TH className="rounded-tl-md">Name</TH>
-                    <TH>Email</TH>
-                    <TH>Role</TH>
-                    <TH title="Only verified accounts can access the system">
-                      State
+                    <TH className="rounded-ss-md">
+                      { t( "Name" ) }
                     </TH>
-                    <TH title="Created date">Date</TH>
-                    <TH title="Account options" className="rounded-tr-md ">
+                    <TH>{ t( "Email" ) }</TH>
+                    <TH>{ t( "Role" ) }</TH>
+                    <TH title={ t( "Only verified accounts can access the system"  )}>
+                      { t( "State" ) }
+                    </TH>
+                    <TH title={ t( "Created date"  )}>{ t( "Date" ) }</TH>
+                    <TH title={ t( "Account options"   )}className="rounded-se-md ">
                       {/* Options button */}
                     </TH>
                   </tr>

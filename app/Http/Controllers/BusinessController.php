@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Business;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
@@ -26,6 +28,26 @@ class BusinessController extends Controller
             }
         ])->find($request->user()->business_id);
         Gate::authorize('edit', $business);
+
+        // Free beta (PAYMENTS_ENABLED=false): no Paddle plans, only the beta limits.
+        if (!config('features.payments_enabled')) {
+            return Inertia::render('Authenticated/Business/Edit', [
+                'business' => $business,
+                'plansMaxRes' => config('constants.planResources'),
+                'subscriptionLinks' => [
+                    'basic' => null,
+                    'enhanced' => null,
+                    'advanced' => null,
+                    'subscribedTo' => 'Beta',
+                    'state' => null,
+                    'onTrial' => null,
+                    'progress' => $business->progress(),
+                    'lastPayment' => null,
+                    'nextPayment' => null,
+                    'gracePeriodExpiresAt' => null,
+                ],
+            ]);
+        }
 
         // dd(
         //     'Subscribed:',
@@ -47,11 +69,11 @@ class BusinessController extends Controller
         //     'Past Due (payment failed, customer should update payment method):',
         //     $business->subscription()?->pastDue(),
         //     'Subscribed to Advance:',
-        //     $business->subscription()?->hasProduct(env( 'PADDLE_PRODUCT_ID_ADVANCED' )),
+        //     $business->subscription()?->hasProduct(config('services.paddle.products.advanced')),
         //     'Subscribed to Enhanced:',
-        //     $business->subscription()?->hasProduct(env( 'PADDLE_PRODUCT_ID_ENHANCED' )),
+        //     $business->subscription()?->hasProduct(config('services.paddle.products.enhanced')),
         //     'Subscribed to Basic:',
-        //     $business->subscription()?->hasProduct(env( 'PADDLE_PRODUCT_ID_BASIC' )),
+        //     $business->subscription()?->hasProduct(config('services.paddle.products.basic')),
         // );
         // dd('Next billing cycle:', $business->subscription()->nextPayment());
         // dd('paused:', $business->subscription()->paused());
@@ -79,20 +101,20 @@ class BusinessController extends Controller
             else if ($sub->paused())
                 $state = 'Paused';
 
-            if ($sub->hasProduct(env('PADDLE_PRODUCT_ID_ADVANCED')))
+            if ($sub->hasProduct(config('services.paddle.products.advanced')))
                 $subscribedTo = 'Advanced';
-            else if ($sub->hasProduct(env('PADDLE_PRODUCT_ID_ENHANCED')))
+            else if ($sub->hasProduct(config('services.paddle.products.enhanced')))
                 $subscribedTo = 'Enhanced';
-            else if ($sub->hasProduct(env('PADDLE_PRODUCT_ID_BASIC')))
+            else if ($sub->hasProduct(config('services.paddle.products.basic')))
                 $subscribedTo = 'Basic';
         } else if ($business->onTrial()) {
             $subscribedTo = 'Trial';
         }
 
         //                                                monthly,                          annually
-        $basicPrices    = $subscribedTo === 'Basic'    ? [null, null] : [env('PADDLE_PRICE_ID_BASIC_MONTHLY'), env('PADDLE_PRICE_ID_BASIC_ANNUALLY')];
-        $enhancedPrices = $subscribedTo === 'Enhanced' ? [null, null] : [env('PADDLE_PRICE_ID_ENHANCED_MONTHLY'), env('PADDLE_PRICE_ID_ENHANCED_ANNUALLY')];
-        $advancedPrices = $subscribedTo === 'Advanced' ? [null, null] : [env('PADDLE_PRICE_ID_ADVANCED_MONTHLY'), env('PADDLE_PRICE_ID_ADVANCED_ANNUALLY')];
+        $basicPrices    = $subscribedTo === 'Basic'    ? [null, null] : [config('services.paddle.prices.basic.monthly'), config('services.paddle.prices.basic.annually')];
+        $enhancedPrices = $subscribedTo === 'Enhanced' ? [null, null] : [config('services.paddle.prices.enhanced.monthly'), config('services.paddle.prices.enhanced.annually')];
+        $advancedPrices = $subscribedTo === 'Advanced' ? [null, null] : [config('services.paddle.prices.advanced.monthly'), config('services.paddle.prices.advanced.annually')];
 
         $prices = [
             ...$basicPrices,
@@ -153,23 +175,37 @@ class BusinessController extends Controller
         Gate::authorize('update', $business);
 
         $updatedBusiness = $request->validated();
-        //1- if logo is null OR there is new logo THEN delete the old logo.
-        if (isset($business->logo) && ($request->hasFile('logoFile') || !isset($updatedBusiness['logo']))) {
-            $this->deleteFile($business->logo);
-        }
-        //2- if there is new logo store it.
+        // The logo changes only when the request uploads a new file (logoFile) or
+        // explicitly removes it (logo: null). The other forms of the business page
+        // (Location & Contact, Financial) do not send `logo`: they keep the logo.
+        // A logo name sent by the client is never stored, so a request cannot
+        // point the logo to (and later delete) another file.
+        $removeLogo = array_key_exists('logo', $updatedBusiness) && $updatedBusiness['logo'] === null;
+        unset($updatedBusiness['logo'], $updatedBusiness['logoFile']);
         if ($request->hasFile('logoFile')) {
             $updatedBusiness['logo'] = $this->storeFile($request);
+        } else if ($removeLogo) {
+            $updatedBusiness['logo'] = null;
         }
 
+        $oldLogo = $business->logo;
         $business->update($updatedBusiness);
-        $business->save();
 
-        return redirect()->back()->with('success', 'Successfully updated');
+        // Delete the old file only after the new value is saved.
+        if (isset($oldLogo) && $oldLogo !== $business->logo) {
+            $this->deleteFile($oldLogo);
+        }
+
+        return redirect()->back()->with('success', __('Successfully updated'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft-delete the business and its accounts. Nothing else is deleted now (also
+     * not the logo file), so a mistaken delete can be restored for
+     * config('constants.deletedBusinessRetentionDays') days:
+     * `php artisan business:restore {id}`. After that, the daily job
+     * `business:purge-deleted` deletes all data of the business permanently.
+     * No account of a deleted business can sign in (ActiveBusinessUserProvider).
      */
     public function destroy(Request $request, Business $business)
     {
@@ -178,25 +214,27 @@ class BusinessController extends Controller
         ]);
         Gate::authorize('destroy', $business);
 
-        if (isset($business->logo)) {
-            $this->deleteFile($business->logo);
-            $business->update(['logo' => null]);
-        }
+        DB::transaction(function () use ($business) {
+            // One time for the business and its accounts: business:restore restores
+            // the accounts with this time, not the accounts that the Owner removed before.
+            $deletedAt = now();
+            // The policy leaves only the Owner, but delete every active account of the business.
+            User::where('business_id', $business->id)->update(['deleted_at' => $deletedAt]);
+            $business->deleted_at = $deletedAt;
+            $business->save();
+        });
 
-        $user = $request->user();
         Auth::logout();
-        $user->delete();
-        $business->delete();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/')->with('success', 'Successfully deleted');
+        return Redirect::to('/')->with('success', __('Successfully deleted'));
     }
 
 
     private function deleteFile(string $filePath)
     {
-        if (env('FILESYSTEM_DISK') == 's3')
+        if (config('filesystems.default') == 's3')
             return Storage::disk('businesses-logo')->delete(basename($filePath));
         return Storage::disk('businesses-logo')->delete($filePath);
     }
@@ -204,7 +242,7 @@ class BusinessController extends Controller
     /**Store a file in the correspond filesystem and return the path/name. If file stored in the cloud and name if locally  */
     private function storeFile(Request $request): string
     {
-        if (env('FILESYSTEM_DISK') == 's3')
+        if (config('filesystems.default') == 's3')
             return $this->businessesStorage()->url($request->logoFile->store('', 'businesses-logo'));
         return $request->logoFile->store('', 'businesses-logo');
     }

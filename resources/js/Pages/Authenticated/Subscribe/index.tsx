@@ -93,10 +93,6 @@ Your payment is protected by: Paddle & HTTPS */}
             <div className="absolute left-full top-5 z-50 flex -translate-x-[150%] text-center">
               <FullLogo />
             </div>
-            {/* <img
-              src="https://jasper-pimstorage-skullcandy.s3.us-west-1.amazonaws.com/bd2253a9671dac36a95faf821b52e78935050140be1718ce001f6aace45cf25c.png"
-              className="absolute right-5 mr-5 h-96"
-            /> */}
             <section className="z-10 -mt-52 w-full max-w-md">
               <Link
                 href={route("subscription.plans")}

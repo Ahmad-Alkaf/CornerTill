@@ -1,9 +1,11 @@
+import flagUrl from "@/Utilities/flagUrl";
 import { Option } from "@material-tailwind/react";
 import React, { useMemo } from "react";
 import COUNTRIES from "./COUNTRIES";
 import { IBusiness } from "@/types";
 import SelectInput from "@/Components/Inputs/SelectInput";
 import { UseBetterForm } from "@/Utilities/useBetterForm";
+import { useTranslation } from "react-i18next";
 
 export default function CountryInput<
   T extends { country: IBusiness["country"] },
@@ -16,6 +18,7 @@ export default function CountryInput<
     [],
   );
 
+  const { t } = useTranslation();
   return (
     <SelectInput
       label="Country"
@@ -39,11 +42,11 @@ export default function CountryInput<
         .map((c, i) => (
           <Option key={i} value={c.name} className="flex items-center gap-2">
             <img
-              src={c.flags.svg}
+              src={flagUrl(c.flag)}
               alt={c.emoji}
               className="h-5 w-7 rounded object-cover"
             />
-            {c.name}
+            {t(c.name)}
           </Option>
         ))}
     </SelectInput>

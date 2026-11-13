@@ -1,3 +1,4 @@
+import { ACCEPTED_IMAGE_TYPES } from "@/Utilities/Constant";
 import DangerButton from "@/Components/Buttons/DangerButton";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton";
 import Input from "@/Components/Inputs/Input";
@@ -6,6 +7,7 @@ import { UseBetterForm } from "@/Utilities/useBetterForm";
 import { ICreateProduct, IModalAction, IProduct } from "@/types";
 import { Progress } from "@material-tailwind/react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function FormImage({
   formProps: form,
@@ -24,6 +26,8 @@ export default function FormImage({
   const [editImageState, setEditImageState] = useState<
     "removed" | "change" | "default"
   >(() => "default");
+
+  const {t} = useTranslation();
 
   if (state === "create")
     return (
@@ -62,7 +66,7 @@ export default function FormImage({
               setEditImageState("change");
             }}
           >
-            Change&nbsp;Image
+            <span className="whitespace-nowrap">{t("Change Image")}</span>
           </SecondaryButton>
           <DangerButton
             disabled={form.processing}
@@ -71,7 +75,7 @@ export default function FormImage({
               form.setData("img", null);
             }}
           >
-            Remove&nbsp;Image
+            { t( "Remove{{0}}Image" , {"0":"\u00A0"}) }
           </DangerButton>
         </div>
       </>
@@ -116,6 +120,7 @@ function InputImage({
   editImageState: "removed" | "change" | "default";
   form: UseBetterForm<ICreateProduct>;
 }) {
+  const { t } = useTranslation();
   return (
     <>
       <Input
@@ -123,14 +128,14 @@ function InputImage({
           ((img === null && state === "edit") ||
           editImageState === "removed" ||
           state === "create"
-            ? "Choose "
+            ? t("Choose Image")
             : editImageState === "change"
-              ? "Change "
-              : "") + "Image"
+              ? t("Change Image")
+              : t( "Image" ))
         }
         type="file"
         className="mt-1 block w-full"
-        accept="image/*"
+        accept={ACCEPTED_IMAGE_TYPES}
         hidden={!!img}
         disabled={state === "show" || form.processing}
         required={false}
@@ -139,9 +144,8 @@ function InputImage({
         }}
         errorMsg={form.errors.img || form.errors.imageFile}
         hideError={form.isDirty("img") || form.isDirty("imageFile")}
-        hint="We recommend an image with white background"
+        hint={t("We recommend an image with white background")}
       />
-      {/* {form.progress && <Progress value={50}/>} */}
     </>
   );
 }

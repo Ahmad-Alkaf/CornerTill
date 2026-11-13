@@ -2,10 +2,13 @@ import React, { useMemo } from "react";
 import { ChartProps, StatisticsChartProps } from "./StatisticsChart";
 import { ApexOptions } from "apexcharts";
 import { IDashboard } from "@/types";
+import { useTranslation } from "react-i18next";
 
 export default function useStatisticsChartsData(
   charts: IDashboard["charts"],
 ): StatisticsChartProps[] {
+  const { t, i18n } = useTranslation();
+
   return useMemo(() => {
     billsChart.series[0].data = charts.billsDailyCount;
     salesChart.series[0].data = charts.monthlySales;
@@ -16,6 +19,14 @@ export default function useStatisticsChartsData(
     cashiersBills.options.xaxis.categories = charts.accountsBillsDailyCount.map(
       (v) => v.account,
     );
+
+    //translating months name (May, Jun, ...)
+    salesChart.options.xaxis.categories =
+      salesChart.options.xaxis.categories.map((v: string) => t(v));
+
+    //translating week days name (Thu, Fri, ...)
+    billsChart.options.xaxis.categories =
+      billsChart.options.xaxis.categories.map((v: string) => t(v));
 
     return [
       {
@@ -31,7 +42,8 @@ export default function useStatisticsChartsData(
       },
       {
         title: "Cashiers Bills",
-        description: "Number of bills that each account created in the past 24 hours",
+        description:
+          "Number of bills that each account created in the past 24 hours",
         chart: cashiersBills,
       },
     ];
@@ -75,7 +87,7 @@ const chartsConfig: ApexOptions = {
         fontWeight: 300,
       },
     },
-    tickAmount:1,
+    tickAmount: 1,
   },
   grid: {
     show: true,

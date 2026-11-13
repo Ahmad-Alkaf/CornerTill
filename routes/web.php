@@ -47,11 +47,15 @@ Route::middleware(['auth', 'verified', 'role:Owner'])->group(function () {
     Route::delete('/account/{account}', [UserController::class, 'destroy'])->name('account.destroy');
     Route::post('/account/{id}/restore', [UserController::class, 'restore'])->name('account.restore');
     Route::delete('/account/{id}/force-destroy', [UserController::class, 'forceDestroy'])->name('account.forceDestroy');
+});
 
+// Paddle subscription routes. `payments` is first, so they return 404 for
+// everyone when PAYMENTS_ENABLED is false.
+Route::middleware(['payments', 'auth', 'verified', 'role:Owner'])->group(function () {
     Route::get('/update-payment-method', [SubscriptionController::class, 'updatePaymentMethod'])->name('subscription.updatePaymentMethod');
     Route::get('/subscription/swap-to-advanced/{period}', [SubscriptionController::class, 'swapToAdvanced'])->name('subscription.swapToAdvanced');
     Route::get('/subscription/swap-to-enhanced/{period}', [SubscriptionController::class, 'swapToEnhanced'])->name('subscription.swapToEnhanced');
-    Route::get('/subscription/swap-to-basic/{period}', [SubscriptionController::class, 'subscription.swapToBasic'])->name('subscription.swapToBasic');
+    Route::get('/subscription/swap-to-basic/{period}', [SubscriptionController::class, 'swapToBasic'])->name('subscription.swapToBasic');
     Route::get('/subscription/pause', [SubscriptionController::class, 'pause'])->name('subscription.pause');
     Route::get('/subscription/pause-now', [SubscriptionController::class, 'pauseNow'])->name('subscription.pauseNow');
     Route::get('/subscription/resume', [SubscriptionController::class, 'resume'])->name('subscription.resume');
@@ -73,7 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
-Route::middleware(['auth', 'role:Owner', 'unsubscribed'])->group(function () {
+Route::middleware(['payments', 'auth', 'role:Owner', 'unsubscribed'])->group(function () {
     Route::get('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
     Route::get('/subscription/plans', [SubscriptionController::class, 'plans'])->name('subscription.plans');
 });
@@ -87,6 +91,7 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/', function () {
         return Inertia::render('Guest/Welcome/index', [
             'plansMaxRes' => config('constants.planResources'),
+            'betaMaxRes' => config('constants.betaResources'),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             //'laravelVersion' => Application::VERSION,//10.25.2
@@ -106,9 +111,6 @@ Route::get('/privacy-policy', function () {
 Route::get('/terms-and-conditions', function () {
     return Inertia::render('Anyone/TermsAndConditions');
 })->name('termsAndConditions');
-Route::get('/payment-service-policy', function () {
-    return Inertia::render('Anyone/PaymentServicePolicy');
-})->name('paymentServicePolicy');
 
 
 

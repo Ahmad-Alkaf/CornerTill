@@ -17,6 +17,9 @@ return [
 
     'default' => env('DB_CONNECTION', 'mysql'),
 
+    // Seconds. Connect and read timeout of the database check in /api/health.
+    'health_timeout' => (int) env('DB_HEALTH_TIMEOUT', 2),
+
     /*
     |--------------------------------------------------------------------------
     | Database Connections
@@ -60,6 +63,8 @@ return [
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                // Connect timeout in seconds, so the health check fails fast when MySQL is down.
+                PDO::ATTR_TIMEOUT => (int) env('DB_CONNECT_TIMEOUT', 5),
             ]) : [],
         ],
 

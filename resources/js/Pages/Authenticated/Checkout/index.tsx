@@ -13,7 +13,9 @@ import RightSide from "./Partials/RightSide";
 import { ResizableBox } from "react-resizable";
 import CheckoutHeader from "./Partials/CheckoutHeader";
 import useBetterForm, { UseBetterForm } from "@/Utilities/useBetterForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 export interface BillOperations {
   form: UseBetterForm<ICreateBill | IBill>;
@@ -38,16 +40,66 @@ export default function Checkout({
   const [productItemSize, setProductItemSize] = useState<number>(
     JSON.parse(localStorage.getItem("productItemSize") ?? "192"),
   );
+  //The cart comes back after a reload or Back (one key for a new bill, one per edited bill).
   const form = useBetterForm<ICreateBill | IBill>(
     bill ?? {
       bill_details: [],
       cashReceived: null,
     },
+    bill ? "checkout:" + bill.id : "checkout",
   );
+
+  //A cart that comes back from the browser history (reload, Back) holds the
+  //product objects of that time. Refresh them once: a product of the edited
+  //bill keeps the values of its sale, any other product gets its current price
+  //from the server, and a product that no longer exists leaves the cart.
+  //The quantities stay. So the totals and the change due match what the server stores.
+  useEffect(() => {
+    const lines = form.data.bill_details;
+    if (lines.length === 0) return;
+    let cancelled = false;
+    Promise.all(
+      lines.map(async (line): Promise<[string, IProduct | null]> => {
+        const ofSale = bill?.bill_details.find(
+          (t) => t.product_id === line.product_id,
+        );
+        if (ofSale) return [line.product_id, ofSale.product];
+        try {
+          const response = await axios.get<IProduct>(
+            route("product.show", line.product_id),
+          );
+          return [line.product_id, response.data];
+        } catch {
+          return [line.product_id, null];
+        }
+      }),
+    ).then((pairs) => {
+      if (cancelled) return;
+      const fresh = new Map(pairs);
+      //Merge into the current cart: lines added meanwhile stay as they are.
+      form.setAllData((b) => ({
+        ...b,
+        bill_details: b.bill_details.flatMap((line) => {
+          if (!fresh.has(line.product_id)) return [line];
+          const product = fresh.get(line.product_id);
+          return product ? [{ ...line, product }] : [];
+        }),
+      }));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const setBill = (
     data: (previousData: ICreateBill | IBill) => ICreateBill | IBill,
   ) => form.setAllData(data);
+
+  /** An edited bill keeps the price and name of each product of its sale (the
+   * server does the same), also when the cashier removes a line and adds it again. */
+  const productOfSale = (product: IProduct): IProduct =>
+    bill?.bill_details.find((t) => t.product_id === product.id)?.product ??
+    product;
 
   /** @param product is used to change the qty of the correspond bill_detail */
   function changeQty(product: IProduct, qty: number) {
@@ -61,7 +113,7 @@ export default function Checkout({
         else
           updatedBill.bill_details = [
             ...updatedBill.bill_details,
-            { product, product_id: product.id, quantity: qty },
+            { product: productOfSale(product), product_id: product.id, quantity: qty },
           ];
       } else if (bill_detail)
         updatedBill.bill_details = updatedBill.bill_details.filter(
@@ -104,7 +156,7 @@ export default function Checkout({
       else
         updatedBill.bill_details = [
           ...updatedBill.bill_details,
-          { product, product_id: product.id, quantity: 1 },
+          { product: productOfSale(product), product_id: product.id, quantity: 1 },
         ];
       return updatedBill;
     });
@@ -128,15 +180,20 @@ export default function Checkout({
     changeQty,
     removeBillDetail,
   };
-  // console.log("screen width", window.innerWidth);
+
+  const { t, i18n } = useTranslation();
+  // The cart panel is at the end side: its resize handle is on the side
+  // that faces the products (west in LTR, east in RTL).
+  const handle = i18n.dir() === "rtl" ? "e" : "w";
   return (
     <AuthenticatedLayout user={auth.user} header={null}>
-      <Head title="Checkout" />
+      <Head title={ t( "Checkout"   )}/>
 
       <div className="w-full flex-row-reverse md:flex">
         <ResizableBox
+          key={handle}
           width={Number(localStorage.getItem("resizable-width")) || 420}
-          resizeHandles={["w"]}
+          resizeHandles={[handle]}
           minConstraints={[320, Infinity]}
           maxConstraints={[
             window.innerWidth -
@@ -152,11 +209,11 @@ export default function Checkout({
           }
           draggableOpts={{ axis: "x", grid: [1, 0] }}
         >
-          {/* left padding/margin pixels is for the size of the resize handler */}
-          <div className="grow md:ml-[10px]">
+          {/* start margin pixels are for the size of the resize handler */}
+          <div className="grow md:ms-[10px]">
             <RightSide
               billOperations={billOperations}
-              className="ml-0 min-w-full"
+              className="ms-0 min-w-full"
             />
           </div>
         </ResizableBox>
@@ -180,15 +237,10 @@ export default function Checkout({
 
 function computedElementWidthById(id: string): number {
   const e = document.getElementById(id);
-  // console.log("element", e);
   if (e == null) return 240; //default: is average width looks in my DevTools.
   const computedStyle = getComputedStyle(e);
-  // console.log("computedStyle", computedStyle);
   const width = computedStyle.width; //'###px' Ex: '123px'
-  // console.log("width", width);
-  const float = parseFloat(width); // '###' Ex: '123'
-  // console.log("float", float);
-  return float;
+   return parseFloat(width); // '###' Ex: '123'
 }
 
 function convertRemToPixels(rem: number): number {

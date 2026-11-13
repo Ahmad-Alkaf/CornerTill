@@ -6,6 +6,7 @@ import Product from "@/Pages/Authenticated/Inventory/Partials/Product";
 import { ILaravelPaginate, IModalAction, IProduct } from "@/types";
 import { Card, Tooltip, Typography } from "@material-tailwind/react";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaBoxesStacked, FaChevronRight } from "react-icons/fa6";
 
 export default function OutOfStock({
@@ -21,6 +22,8 @@ export default function OutOfStock({
   const [updateStockAction, setUpdateStockAction] = useState<
     { open: true; product: IProduct } | { open: false; product?: IProduct }
   >({ open: false });
+
+  const { t } = useTranslation();
   return (
     <>
       <CreateEditProductModal
@@ -33,32 +36,43 @@ export default function OutOfStock({
         modalAction={updateStockAction}
         close={() => setUpdateStockAction((p) => ({ ...p, open: false }))}
       />
-      <Card className="rounded-none shadow sm:rounded-lg">
+      <Card
+        className="rounded-none shadow sm:rounded-lg"
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+      >
         <div className="p-6">
           <header>
-            <Typography variant="h6" color="blue-gray">
-              Out of Stock Products
+            <Typography
+              variant="h6"
+              color="blue-gray"
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+            >
+              {t("Out of Stock Products")}
             </Typography>
             <A
               href={route("product.index", { stock: "out" })}
               className="font-normal"
             >
-              Viw all out of stock products
+              {t("View all out of stock products")}
             </A>
           </header>
           <section>
             {paginate.total > 0 ? (
               <div className="relative flex overflow-hidden">
-                <div className="pointer-events-none absolute right-0 z-[1] flex h-full w-52 justify-end bg-gradient-to-l from-white to-transparent">
+                <div className="pointer-events-none absolute end-0 z-[1] flex h-full w-52 justify-end bg-gradient-to-l rtl:bg-gradient-to-r from-white to-transparent">
                   {paginate.total > 5 && (
                     <div className="mb-2 self-center">
-                      <Tooltip content="Viw all out of stock products">
+                      <Tooltip content={t("View all out of stock products")}>
                         <span className="pointer-events-auto">
                           <BetterLink
                             className="inline-block self-center rounded-[50%] p-2 align-middle text-gray-700 transition duration-200 ease-in-out hover:bg-black hover:bg-opacity-10 hover:text-gray-900 focus:outline-none"
                             href={route("product.index", { stock: "out" })}
                           >
-                            <FaChevronRight className="text-lg" />
+                            <FaChevronRight className="text-lg rtl:rotate-180" />
                           </BetterLink>
                         </span>
                       </Tooltip>
@@ -84,7 +98,7 @@ export default function OutOfStock({
             ) : (
               <div className="my-20 flex justify-center gap-4 opacity-60">
                 <FaBoxesStacked className="mt-1" />
-                <p>You have no products with empty stock</p>
+                <p>{t("You have no products with empty stock")}</p>
               </div>
             )}
           </section>

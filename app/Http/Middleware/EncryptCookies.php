@@ -12,6 +12,7 @@ class EncryptCookies extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        // Language cookie written by JavaScript (i18next), read by SetLocale.
+        'i18next',
     ];
 }

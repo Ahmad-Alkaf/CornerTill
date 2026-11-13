@@ -1,12 +1,11 @@
 import {
   AuthPageProps,
-  ICreateProduct,
   ICreateBillDetail,
-  IProduct,
 } from "@/types";
 import ItemOptions from "./ItemOptions";
 import Num from "@/Utilities/Num";
 import { usePage } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 
 export default function ProductItem({
   requestChanged,
@@ -26,6 +25,7 @@ export default function ProductItem({
   const taxPercent = usePage<AuthPageProps>().props.auth.business.taxPercent;
   const product = bill_detail.product;
 
+  const { t } = useTranslation();
   return (
     <div
       role="button"
@@ -81,7 +81,7 @@ export default function ProductItem({
             }}
             className="inline-block overflow-hidden"
           >
-            {product.name}
+            <bdi>{product.name}</bdi>
           </span>
         </h3>
 
@@ -94,7 +94,7 @@ export default function ProductItem({
           >
             <span className="font-normal">
               {product.price === null ? (
-                "N/A"
+                t( "N/A" )
               ) : (
                 <Num
                   showCurrency
@@ -106,14 +106,15 @@ export default function ProductItem({
           </p>
           <div className="flex flex-col justify-center">
             {product.stock === 0 ? (
-              <p className="font-normal text-danger-400">Out of Stock</p>
+              <p className="font-normal text-danger-400">{t("Out of Stock")}</p>
             ) : bill_detail.quantity >= (product.stock || Infinity) ? (
               <p className="font-normal text-danger-400">
                 Stock {product.stock === null ? "N/A" : product.stock}
               </p>
             ) : (
               <p className="text-gray-200">
-                Stock&nbsp;
+                { t( "Stock" ) }
+                &nbsp;
                 <Num
                   amount={product.stock === null ? null : product.stock}
                   defaultNoAmount

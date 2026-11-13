@@ -1,6 +1,7 @@
 import AppName from "@/Components/Logo/AppName";
 import { Transition } from "@headlessui/react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Solutions() {
   const businesses = [
@@ -9,7 +10,7 @@ export default function Solutions() {
     "clothing boutique",
     "electronics store",
     "gift shop",
-    "café",
+    "coffee",
     "ice cream truck",
     "hair salon",
     "Restaurant",
@@ -31,14 +32,19 @@ export default function Solutions() {
     return () => clearInterval(interval);
   }, []);
 
+  const { t } = useTranslation();
   return (
-    <div className="mb-6 justify-center text-xl text-gray-600 md:-ml-20">
+    <div className="mb-6 justify-center text-xl text-gray-600 md:-ms-20">
       {/*The reason for the complexity is when using class 'text-center' with a changing width sentence (hence: dynamic list of businesses) will make the whole sentence re-align to center every time which is a bad thing */}
-      <span>Whatever is your use case,&nbsp;</span>
+      <span>{t("Whatever is your use case,{{nbsp}}", { nbsp: "\u00A0" })}</span>
       <div className="block md:inline ">
-        <div className="-ml-10 inline md:ml-0">
-          <AppName/> is built
-          for&nbsp;<span className="text-secondary-600 md:hidden">all retailers</span>
+        <div className="-ms-10 inline md:ms-0">
+          <AppName />
+          {t("is built for")}
+          &nbsp;
+          <span className="text-secondary-600 md:hidden">
+            {t("all retailers")}
+          </span>
           {businesses.map((b, i) => (
             <Transition
               appear={true}
@@ -51,9 +57,9 @@ export default function Solutions() {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 -translate-y-8"
               unmount={true}
-              className="absolute text-left text-secondary-600 hidden md:inline"
+              className="absolute hidden text-start text-secondary-600 md:inline"
             >
-              {b}
+              {t(b)}
             </Transition>
           ))}
         </div>

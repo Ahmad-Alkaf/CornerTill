@@ -1,5 +1,6 @@
 import Dropdown from "@/Components/Dropdown";
 import { ISubscriptionLinks } from "@/types";
+import { useTranslation } from "react-i18next";
 import { FaChevronDown } from "react-icons/fa6";
 
 export default function CurrentPlanAction({
@@ -9,6 +10,7 @@ export default function CurrentPlanAction({
   requestShowPauseSubAlert: () => any;
   state: ISubscriptionLinks["state"];
 }) {
+  const { t } = useTranslation();
   return (
     <Dropdown>
       <Dropdown.Trigger
@@ -22,30 +24,30 @@ export default function CurrentPlanAction({
         duration-200 ease-in-out
         hover:bg-primary-600 hover:shadow-lg  focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 active:scale-95 "
       >
-        <span className="grow">Current Plan</span>
-        <span className="mr-3">
+        <span className="grow">{t("Current Plan")}</span>
+        <span className="me-3">
           <FaChevronDown />
         </span>
       </Dropdown.Trigger>
 
       <Dropdown.Content width="w-full">
-        {/* Looks like it just redirect me back to laptop-pos!
+        {/* Looks like it just redirect me back to cornertill!
          * It MUST NOT be inertia's Link */}
         <a
           target="_blank"
           href={route("subscription.updatePaymentMethod")}
-          className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:bg-white "
+          className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:bg-white "
         >
-          Update Payment Method
+          {t("Update Payment Method")}
         </a>
         {state === "Recurring" && (
           <Dropdown.Button onClick={() => requestShowPauseSubAlert()}>
-            Pause Subscription
+            {t("Pause Subscription")}
           </Dropdown.Button>
         )}
         {(state === "Grace Period" || state === "Paused") && (
           <Dropdown.Link href={route("subscription.resume")}>
-            Resume Subscription
+            {t("Resume Subscription")}
           </Dropdown.Link>
         )}
       </Dropdown.Content>

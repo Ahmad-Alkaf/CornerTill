@@ -99,9 +99,16 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'support@laptop-pos.com'),
-        'name' => env('MAIL_FROM_NAME', 'Laptop POS'),
+        'address' => env('MAIL_FROM_ADDRESS', 'noreply@kaflabs.com'),
+        'name' => env('MAIL_FROM_NAME', 'CornerTill'),
     ],
+
+    /*
+    | Receiver of the daily "Database Tables Counts" report (app/Console/Kernel.php).
+    | Empty: the scheduled task only writes the counts to the log.
+    */
+
+    'admin_report_address' => env('ADMIN_REPORT_EMAIL'),
 
     /*
     |--------------------------------------------------------------------------

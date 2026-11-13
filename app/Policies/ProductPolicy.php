@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Business;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
@@ -23,7 +24,7 @@ class ProductPolicy
         $progress = $user->business->progressOrFail();
         if ($progress['products']['reached'] < $progress['products']['max'])
             return true;
-        else abort(403, 'You have reached the maximum number of products that you can create with your current plan. To create more products, you can upgrade your plan, delete some existing products, or contact our support team for assistance (support@laptop-pos.com).');
+        else abort(403, Business::limitReachedMessage('products'));
     }
 
     /**
@@ -47,7 +48,7 @@ class ProductPolicy
         ) {
             $count = $product->bill_details()->count();
             if ($count != 0) {
-                throw ValidationException::withMessages(['serverError' => 'This product (' . $product->name . ') is used by ' . $count . ' bills. Please make sure no bill is using this product before deleting.']);
+                throw ValidationException::withMessages(['serverError' => __('This product (:name) is used by :count bills. Please make sure no bill is using this product before deleting.', ['name' => $product->name, 'count' => $count])]);
             }
             return true;
         } else

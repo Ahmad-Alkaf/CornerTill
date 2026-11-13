@@ -17,7 +17,9 @@ class EnsureSubscribed
     {
 
         if (!$request->user()->business->subscribedOrOnTrial()) {
-            return redirect(route( 'business.edit' ))->with('error', 'You need to have an active subscription to ' . ( $request->method() === 'GET' ? 'access this page!' : 'perform this action!' ));
+            return redirect(route( 'business.edit' ))->with('error', $request->method() === 'GET'
+                ? __('You need to have an active subscription to access this page!')
+                : __('You need to have an active subscription to perform this action!'));
         }
         return $next($request);
     }

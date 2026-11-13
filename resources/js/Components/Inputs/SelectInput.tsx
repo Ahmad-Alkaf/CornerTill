@@ -1,6 +1,7 @@
 import { Select, SelectProps } from "@material-tailwind/react";
 import { HTMLAttributes } from "react";
 import ErrorMessage from "./ErrorMessage";
+import { useTranslation } from "react-i18next";
 
 export default function SelectInput({
   children,
@@ -14,7 +15,8 @@ export default function SelectInput({
   hideError,
   //There is no such required on Select :|
   required,
-  className ='',
+  className = "",
+  label,
   ...props
 }: SelectProps & {
   label: string;
@@ -28,14 +30,19 @@ export default function SelectInput({
     else if (errorMsg) error = true;
     else error = false;
   }
+  const { t } = useTranslation();
 
   return (
     <>
       <Select
+        label={t(label)}
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
         className={`focus:outline-none
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600
         focus-visible:ring-offset-2 ${className}`}
-        onClick={e=>e.currentTarget.blur()}
+        onClick={(e) => e.currentTarget.blur()}
         variant={variant}
         size={size}
         error={error}
@@ -43,7 +50,10 @@ export default function SelectInput({
       >
         {children}
       </Select>
-      <ErrorMessage message={errorMsg} {...errorMsgProps} />
+      <ErrorMessage
+        message={typeof errorMsg === "string" ? t(errorMsg) : errorMsg}
+        {...errorMsgProps}
+      />
     </>
   );
 }

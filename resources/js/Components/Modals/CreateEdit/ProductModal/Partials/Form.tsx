@@ -24,9 +24,6 @@ export default function Form({
           stock: null,
         }
       : ({ ...modalAction.data, _method: "patch" } as IProduct), //`method spoofing` is a workaround because image can only be submitted on `post` method so we send a hint to laravel that it should consider it `patch`
-    modalAction.data
-      ? modalAction.data.id.toString() + modalAction.data.img //if img changed the the form needs to update the FormImage
-      : modalAction.state,
   );
 
   function handleSubmit(e: FormEvent) {

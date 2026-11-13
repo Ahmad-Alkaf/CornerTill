@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useEffect, FormEventHandler } from "react";
 import GuestFormLayout from "@/Layouts/GuestLayout/GuestFormLayout";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton";
@@ -14,6 +15,7 @@ export default function ResetPassword({
   token: string;
   email: string;
 }>) {
+  const { t } = useTranslation();
   const { data, setData, post, processing, errors, reset, isDirty } =
     useBetterForm({
       token: token,
@@ -91,8 +93,8 @@ export default function ResetPassword({
         </div>
 
         <div className="mt-4 flex items-center justify-end">
-          <PrimaryButton type="submit" className="ml-4" disabled={processing}>
-            Reset Password
+          <PrimaryButton type="submit" className="ms-4" disabled={processing}>
+            {t("Reset Password")}
           </PrimaryButton>
         </div>
       </form>

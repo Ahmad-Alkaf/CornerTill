@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Business;
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -44,12 +47,35 @@ class LoginRequest extends FormRequest
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
+            $this->failIfBusinessIsDeleted();
+
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
         }
         
         RateLimiter::clear($this->throttleKey());
+    }
+
+    /**
+     * An account of a deleted business cannot sign in (ActiveBusinessUserProvider).
+     * When the password is correct, tell why and how to restore the business.
+     * With a wrong password, the normal message shows: it tells nothing about the business.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    private function failIfBusinessIsDeleted(): void
+    {
+        $user = User::withTrashed()->where('email', $this->input('email'))->first();
+        if (! $user || ! Hash::check((string) $this->input('password'), $user->password))
+            return;
+
+        $business = Business::withTrashed()->find($user->business_id);
+        if ($business?->trashed()) {
+            throw ValidationException::withMessages([
+                'email' => $business->deletedMessage(),
+            ]);
+        }
     }
 
     /**

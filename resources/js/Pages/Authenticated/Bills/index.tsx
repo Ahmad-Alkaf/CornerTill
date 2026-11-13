@@ -8,6 +8,7 @@ import Bill from "./Partials/Bill";
 import Pagination from "@/Components/Pagination";
 import Footer from "@/Layouts/GuestLayout/Partials/Footer";
 import BillsHeader from "./Partials/BillsHeader";
+import { useTranslation } from "react-i18next";
 
 export default function Bills({
   auth,
@@ -18,33 +19,44 @@ export default function Bills({
 }>) {
   const bills: IBill[] = paginateBills.data;
 
+  const { t } = useTranslation();
   return (
     <AuthenticatedLayout
       user={auth.user}
       header={<BillsHeader totalResult={paginateBills.total} />}
     >
-      <Head title="Bills" />
+      <Head title={t("Bills")} />
       <div className="flex min-h-[75vh] flex-col justify-between">
         {/* Overflow classes will set the position to relative, and this cause a problem
       when rendering the dropdown content, it will render inside the table so
       last item will not be shown because dropdown content is display below the
       item and that is outside the table */}
         <div className="mx-auto w-full overflow-x-auto overflow-y-hidden pb-36 pt-6 md:w-11/12 ">
-          <Card className="w-full min-w-fit rounded-md">
-            <table className="table-auto text-left">
+          <Card
+            className="w-full min-w-fit rounded-md"
+            placeholder={undefined}
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
+          >
+            <table className="table-auto ltr:text-left rtl:text-right">
               <thead>
                 <tr>
-                  <TH className="rounded-tl-md">ID</TH>
-                  <TH>Created By</TH>
-                  <TH title="Created Before">Date</TH>
-                  <TH title="Sub total price (tax is NOT included)">
-                    Sub total
+                  <TH className="rounded-ss-md">{t("ID")}</TH>
+                  <TH>{t("Created By")}</TH>
+                  <TH title={t("Created Before")}>{t("Date")}</TH>
+                  <TH title={t("Sub total price (tax is NOT included)")}>
+                    {t("Sub total")}
                   </TH>
-                  <TH title="Total price (tax is included)">Total price</TH>
-                  <TH>Received</TH>
-                  <TH>Remaining</TH>
-                  <TH>Total Quantity</TH>
-                  <TH title="Bill options" className="max-w-fit rounded-tr-md">
+                  <TH title={t("Total price (tax is included)")}>
+                    {t("Total price")}
+                  </TH>
+                  <TH>{t("Received")}</TH>
+                  <TH>{t("Remaining")}</TH>
+                  <TH>{t("Total Quantity")}</TH>
+                  <TH
+                    title={t("Bill options")}
+                    className="max-w-fit rounded-se-md"
+                  >
                     {/* Options button */}
                   </TH>
                 </tr>
@@ -58,7 +70,7 @@ export default function Bills({
             {bills.length === 0 && (
               <div className="my-12 flex justify-center gap-4 opacity-50">
                 <BsSearch className="mt-1" />
-                <p>No bills found!</p>
+                <p>{t("No bills found!")}</p>
               </div>
             )}
           </Card>

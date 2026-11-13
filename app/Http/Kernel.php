@@ -2,10 +2,20 @@
 
 namespace App\Http;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Routing\Router;
 
 class Kernel extends HttpKernel
 {
+    public function __construct(Application $app, Router $router)
+    {
+        parent::__construct($app, $router);
+        // Check the PAYMENTS_ENABLED switch before auth and sessions, so payment
+        // routes return 404 for guests too (auth has a higher default priority).
+        $this->prependToMiddlewarePriority(\App\Http\Middleware\EnsurePaymentsEnabled::class);
+    }
+
     /**
      * The application's global HTTP middleware stack.
      *
@@ -16,6 +26,9 @@ class Kernel extends HttpKernel
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
+        // Global, so 404 pages of unknown URLs are translated too. The
+        // i18next cookie is not encrypted (EncryptCookies $except).
+        \App\Http\Middleware\SetLocale::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
@@ -69,5 +82,6 @@ class Kernel extends HttpKernel
         'role' => \App\Http\Middleware\UserRole::class,
         'subscribed' => \App\Http\Middleware\EnsureSubscribed::class,
         'unsubscribed' => \App\Http\Middleware\Unsubscribed::class,
+        'payments' => \App\Http\Middleware\EnsurePaymentsEnabled::class,
     ];
 }

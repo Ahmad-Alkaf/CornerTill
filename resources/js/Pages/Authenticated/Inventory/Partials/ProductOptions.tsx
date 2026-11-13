@@ -6,6 +6,7 @@ import { AuthPageProps, IProduct } from "@/types";
 import DeleteConfirmProductModal from "@/Components/Modals/CreateEdit/ProductModal/DeleteConfirmProductModal";
 import { usePage } from "@inertiajs/react";
 import { FaBoxesStacked } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
 
 export default function ProductOptions({
   requestEdit,
@@ -21,8 +22,13 @@ export default function ProductOptions({
   const user = usePage<AuthPageProps>().props.auth.user;
   const [openConfirmDeleteModal, setOpenConfirmDeleteModal] =
     useState<boolean>(false);
+
+  const { t } = useTranslation();
   return (
-    <div className="absolute right-2 top-2 hidden group-hover:block">
+    // `invisible`, not `hidden`: with `display: none` (when the mouse leaves the
+    // card, for example to a modal) the leave transition of the menu never ends,
+    // so the menu stays open.
+    <div className="invisible absolute end-2 top-2 group-hover:visible">
       <Dropdown>
         <Dropdown.Trigger>
           <span className="inline-flex">
@@ -37,15 +43,18 @@ export default function ProductOptions({
           </span>
         </Dropdown.Trigger>
 
+        {/* No stopPropagation in the buttons: the click goes up to
+        Dropdown.Content, which closes the menu and stops the click before the
+        product card (that opens the product). */}
         <Dropdown.Content>
           <Dropdown.Button
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               requestShow();
             }}
           >
             <div className="flex items-center gap-3">
-              <FaBars className="text-base" /> View
+              <FaBars className="text-base" />{" "}
+              { t( "View" ) }
             </div>
           </Dropdown.Button>
 
@@ -57,13 +66,13 @@ export default function ProductOptions({
                 user.role == "Maintainer"
               )
             }
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               requestChangeStock();
             }}
           >
             <div className="flex items-center gap-3">
-              <FaBoxesStacked className="text-base" /> Update Stock
+              <FaBoxesStacked className="text-base" />{" "}
+              { t( "Update Stock" ) }
             </div>
           </Dropdown.Button>
 
@@ -75,13 +84,13 @@ export default function ProductOptions({
                 user.role == "Maintainer"
               )
             }
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               requestEdit();
             }}
           >
             <div className="flex items-center gap-3">
-              <FaEdit className="text-base" /> Edit
+              <FaEdit className="text-base" />{" "}
+              { t( "Edit" ) }
             </div>
           </Dropdown.Button>
 
@@ -93,14 +102,14 @@ export default function ProductOptions({
                 user.role == "Maintainer"
               )
             }
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               setOpenConfirmDeleteModal(true);
             }}
-            className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:bg-white"
+            className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:bg-white"
           >
             <div className="flex items-center gap-3 text-danger-600">
-              <FaTrashAlt className="text-base" /> Delete
+              <FaTrashAlt className="text-base" />{" "}
+              { t( "Delete" ) }
             </div>
           </Dropdown.Button>
         </Dropdown.Content>

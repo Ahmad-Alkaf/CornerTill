@@ -50,7 +50,7 @@ class ProductController extends Controller
         }
         $product->save();
 
-        return redirect()->back()->with('success', 'Successfully created');
+        return redirect()->back()->with('success', __('Successfully created'));
     }
 
     protected function destroy(Product $product)
@@ -60,32 +60,40 @@ class ProductController extends Controller
         if (isset($product->img))
             $this->deleteImg($product->img);
         $product->delete();
-        return redirect()->back()->with('success', 'Successfully deleted');
+        return redirect()->back()->with('success', __('Successfully deleted'));
     }
 
     protected function update(UpdateProductRequest $request, Product $product)
     {
         Gate::authorize('update', $product);
         $newProduct = $request->validated();
-        //1- if img is null OR there is new image THEN delete the old image.
-        if (
-            isset($product->img) && ($request->hasFile('imageFile') || !isset($newProduct['img']))
-        ) {
-            $this->deleteImg($product->img);
-        }
-        //2- if there is new image store it.
+        // The image changes only when the request uploads a new file (imageFile) or
+        // explicitly removes it (img: null). The "Update Stock" form sends only
+        // `stock`: it keeps the image. An image name sent by the client is never
+        // stored, so a request cannot point the image to (and later delete) another file.
+        $removeImg = array_key_exists('img', $newProduct) && $newProduct['img'] === null;
+        unset($newProduct['img'], $newProduct['imageFile']);
         if ($request->hasFile('imageFile')) {
             $newProduct['img'] = $this->storeImg($request);
+        } else if ($removeImg) {
+            $newProduct['img'] = null;
         }
+
+        $oldImg = $product->img;
         $product->update($newProduct);
 
-        return redirect()->back()->with('success', 'Successfully updated');
+        // Delete the old file only after the new value is saved.
+        if (isset($oldImg) && $oldImg !== $product->img) {
+            $this->deleteImg($oldImg);
+        }
+
+        return redirect()->back()->with('success', __('Successfully updated'));
     }
 
 
     private function deleteImg(string $filePath)
     {
-        if (env('FILESYSTEM_DISK') == 's3')
+        if (config('filesystems.default') == 's3')
             return Storage::disk('products-images')->delete(basename($filePath));
         return Storage::disk('products-images')->delete($filePath);
     }
@@ -93,7 +101,7 @@ class ProductController extends Controller
     /**Store an img file in the correspond filesystem and return the img path/name. path if it stored in the cloud and name if locally  */
     private function storeImg(Request $request): string
     {
-        if (env('FILESYSTEM_DISK') == 's3')
+        if (config('filesystems.default') == 's3')
             return $this->productsImagesStorage()->url($request->imageFile->store('', 'products-images'));
         return $request->imageFile->store('', 'products-images');
     }

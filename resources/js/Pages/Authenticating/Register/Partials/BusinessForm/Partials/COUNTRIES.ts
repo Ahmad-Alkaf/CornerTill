@@ -1,8 +1,5 @@
 export type Country = {
   name: string;
-  capital: string;
-  area: number;
-  coordinates: number[];
   currencies: {
     name: string;
     symbol?: string;
@@ -12,397 +9,575 @@ export type Country = {
     format: string;
     regex?: string;
   };
-  flags: {
-    png: string;
-    svg: string;
-  };
+  /** Flag file name (ISO 3166-1 alpha-2 code); see Utilities/flagUrl.ts. */
+  flag: string;
   emoji: string;
   countryCallingCode: string;
   tax?: number;
 };
+/**
 
+json
+Lao kip
+Laos
+dalasi
+Gambia
+South African rand
+Namibian dollar
+Namibia
+Mozambican metical
+Mozambique
+Central African CFA franc
+Cameroon
+Ukrainian hryvnia
+Ukraine
+Mauritanian ouguiya
+Mauritania
+West African CFA franc
+Mali
+Zimbabwean dollar
+Zimbabwe
+Azerbaijani manat
+Azerbaijan
+Euro
+Cyprus
+Egyptian pound
+Egypt
+Norwegian krone
+Norway
+West African CFA franc
+Guinea-Bissau
+Saudi riyal
+Saudi Arabia
+Danish krone
+Denmark
+Indian rupee
+India
+Afghan afghani
+Afghanistan
+Romanian leu
+Romania
+Serbian dinar
+Serbia
+New Zealand dollar
+New Zealand
+Iraqi dinar
+Iraq
+Ghanaian cedi
+Ghana
+Tunisian dinar
+Tunisia
+Angolan kwanza
+Angola
+Euro
+Lithuania
+New Taiwan dollar
+Taiwan
+North Korean won
+North Korea
+United States dollar
+Puerto Rico
+South Korean won
+South Korea
+United States dollar
+Ecuador
+Costa Rican colón
+Costa Rica
+Papua New Guinean kina
+Papua New Guinea
+Bulgarian lev
+Bulgaria
+United States dollar
+United States
+Euro
+Germany
+Moroccan dirham
+Morocco
+Uruguayan peso
+Uruguay
+Guatemalan quetzal
+Guatemala
+Bangladeshi taka
+Bangladesh
+Indonesian rupiah
+Indonesia
+Bahraini dinar
+Bahrain
+West African CFA franc
+Niger
+Euro
+Netherlands
+Uzbekistani soʻm
+Uzbekistan
+Kyrgyzstani som
+Kyrgyzstan
+Syrian pound
+Syria
+Malawian kwacha
+Malawi
+Argentine peso
+Argentina
+Nepalese rupee
+Nepal
+Polish złoty
+Poland
+Mongolian tögrög
+Mongolia
+Australian dollar
+Australia
+Tanzanian shilling
+Tanzania
+Yemeni rial
+Yemen
+Central African CFA franc
+Equatorial Guinea
+Liberian dollar
+Liberia
+Venezuelan bolívar soberano
+Venezuela
+Qatari riyal
+Qatar
+Central African CFA franc
+Gabon
+Albanian lek
+Albania
+Philippine peso
+Philippines
+Euro
+Slovakia
+West African CFA franc
+Senegal
+Burmese kyat
+Myanmar
+Brazilian real
+Brazil
+Vietnamese đồng
+Vietnam
+Icelandic króna
+Iceland
+Zambian kwacha
+Zambia
+Belarusian ruble
+Belarus
+West African CFA franc
+Burkina Faso
+Tajikistani somoni
+Tajikistan
+Eritrean nakfa
+Eritrea
+Central African CFA franc
+Republic of the Congo
+Guinean franc
+Guinea
+Mauritian rupee
+Mauritius
+Lebanese pound
+Lebanon
+Euro
+Latvia
+Hong Kong dollar
+Hong Kong
+Pakistani rupee
+Pakistan
+Croatian kuna
+Croatia
+Euro
+Italy
+Jamaican dollar
+Jamaica
+Euro
+Greece
+Sri Lankan rupee
+Sri Lanka
+Euro
+Slovenia
+West African CFA franc
+Ivory Coast
+West African CFA franc
+Togo
+Canadian dollar
+Canada
+Nicaraguan córdoba
+Nicaragua
+Chinese yuan
+China
+Euro
+Belgium
+South African rand
+Swazi lilangeni
+Eswatini
+Singapore dollar
+Singapore
+Bosnia and Herzegovina convertible mark
+Bosnia and Herzegovina
+Chilean peso
+Chile
+Cuban peso
+Cuban convertible peso
+Cuba
+Congolese franc
+DR Congo
+Malaysian ringgit
+Malaysia
+Euro
+Spain
+British pound
+United Kingdom
+Bolivian boliviano
+Bolivia
+South African rand
+Lesotho loti
+Lesotho
+United States dollar
+Cambodian riel
+Cambodia
+Burundian franc
+Burundi
+lari
+Georgia
+Kuwaiti dinar
+Kuwait
+Armenian dram
+Armenia
+United States dollar
+Timor-Leste
+Thai baht
+Thailand
+Euro
+Portugal
+Omani rial
+Oman
+Rwandan franc
+Rwanda
+Dominican peso
+Dominican Republic
+Honduran lempira
+Honduras
+Euro
+Finland
+Jordanian dinar
+Israeli new shekel
+Egyptian pound
+Palestine
+Euro
+Estonia
+Paraguayan guaraní
+Paraguay
+Moldovan leu
+Moldova
+Kazakhstani tenge
+Kazakhstan
+Ugandan shilling
+Uganda
+Sudanese pound
+Sudan
+Japanese yen
+Japan
+Haitian gourde
+Haiti
+Botswana pula
+Botswana
+Euro
+Ireland
+Turkish lira
+Turkey
+South Sudanese pound
+South Sudan
+West African CFA franc
+Benin
+Peruvian sol
+Peru
+Hungarian forint
+Hungary
+Czech koruna
+Czechia
+South African rand
+South Africa
+United Arab Emirates dirham
+United Arab Emirates
+Iranian rial
+Iran
+Colombian peso
+Colombia
+Euro
+Kosovo
+United States dollar
+El Salvador
+denar
+North Macedonia
+Central African CFA franc
+Central African Republic
+Trinidad and Tobago dollar
+Trinidad and Tobago
+Central African CFA franc
+Chad
+Russian ruble
+Russia
+Euro
+France
+Somali shilling
+Somalia
+Ethiopian birr
+Ethiopia
+Swiss franc
+Switzerland
+Swedish krona
+Sweden
+Algerian dinar
+Algeria
+United States dollar
+Panamanian balboa
+Panama
+Turkmenistan manat
+Turkmenistan
+Mexican peso
+Mexico
+Libyan dinar
+Libya
+Jordanian dinar
+Jordan
+Nigerian naira
+Nigeria
+Malagasy ariary
+Madagascar
+Sierra Leonean leone
+Sierra Leone
+Kenyan shilling
+Kenya
+
+
+ */
 //export default
 const COUNTRIES: Country[] = [
   {
     name: "Kenya",
-    capital: "Nairobi",
-    area: 580367,
-    coordinates: [1, 38],
     currencies: [{ name: "Kenyan shilling", symbol: "Sh" }],
     languages: ["English", "Swahili"],
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ke.png",
-      svg: "https://flagcdn.com/ke.svg",
-    },
+    flag: "ke",
     emoji: "🇰🇪",
     countryCallingCode: "+254",
   },
   {
     name: "Sierra Leone",
-    capital: "Freetown",
     currencies: [{ name: "Sierra Leonean leone", symbol: "Le" }],
     languages: ["English"],
-    coordinates: [8.5, -11.5],
-    area: 71740,
-    flags: {
-      png: "https://flagcdn.com/w320/sl.png",
-      svg: "https://flagcdn.com/sl.svg",
-    },
+    flag: "sl",
     emoji: "🇸🇱",
     countryCallingCode: "+232",
   },
   {
     name: "Madagascar",
-    capital: "Antananarivo",
     currencies: [{ name: "Malagasy ariary", symbol: "Ar" }],
     languages: ["French", "Malagasy"],
-    coordinates: [-20, 47],
-    area: 587041,
     postalCode: { format: "###", regex: "^(\\d{3})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/mg.png",
-      svg: "https://flagcdn.com/mg.svg",
-    },
+    flag: "mg",
     emoji: "🇲🇬",
     countryCallingCode: "+261",
   },
   {
     name: "Nigeria",
-    capital: "Abuja",
     currencies: [{ name: "Nigerian naira", symbol: "₦" }],
     languages: ["English"],
-    coordinates: [10, 8],
-    area: 923768,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ng.png",
-      svg: "https://flagcdn.com/ng.svg",
-    },
+    flag: "ng",
     emoji: "🇳🇬",
     countryCallingCode: "+234",
     tax: 0.075
   },
   {
     name: "Jordan",
-    capital: "Amman",
     currencies: [{ name: "Jordanian dinar", symbol: "د.ا" }],
     languages: ["Arabic"],
-    coordinates: [31, 36],
-    area: 89342,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/jo.png",
-      svg: "https://flagcdn.com/jo.svg",
-    },
+    flag: "jo",
     emoji: "🇯🇴",
     countryCallingCode: "+962",
   },
   {
     name: "Libya",
-    capital: "Tripoli",
     currencies: [{ name: "Libyan dinar", symbol: "ل.د" }],
     languages: ["Arabic"],
-    coordinates: [25, 17],
-    area: 1759540,
-    flags: {
-      png: "https://flagcdn.com/w320/ly.png",
-      svg: "https://flagcdn.com/ly.svg",
-    },
+    flag: "ly",
     emoji: "🇱🇾",
     countryCallingCode: "+218",
   },
   {
     name: "Mexico",
-    capital: "Mexico City",
     currencies: [{ name: "Mexican peso", symbol: "$" }],
     languages: ["Spanish"],
-    coordinates: [23, -102],
-    area: 1964375,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/mx.png",
-      svg: "https://flagcdn.com/mx.svg",
-    },
+    flag: "mx",
     emoji: "🇲🇽",
     countryCallingCode: "+52",
     tax: 0.16,
   },
   {
     name: "Turkmenistan",
-    capital: "Ashgabat",
     currencies: [{ name: "Turkmenistan manat", symbol: "m" }],
     languages: ["Russian", "Turkmen"],
-    coordinates: [40, 60],
-    area: 488100,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/tm.png",
-      svg: "https://flagcdn.com/tm.svg",
-    },
+    flag: "tm",
     emoji: "🇹🇲",
     countryCallingCode: "+993",
   },
   {
     name: "Panama",
-    capital: "Panama City",
     currencies: [
       { name: "Panamanian balboa", symbol: "B/." },
       { name: "United States dollar", symbol: "$" },
     ],
     languages: ["Spanish"],
-    coordinates: [9, -80],
-    area: 75417,
-    flags: {
-      png: "https://flagcdn.com/w320/pa.png",
-      svg: "https://flagcdn.com/pa.svg",
-    },
+    flag: "pa",
     emoji: "🇵🇦",
     countryCallingCode: "+507",
   },
   {
     name: "Algeria",
-    capital: "Algiers",
     currencies: [{ name: "Algerian dinar", symbol: "د.ج" }],
     languages: ["Arabic"],
-    coordinates: [28, 3],
-    area: 2381741,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/dz.png",
-      svg: "https://flagcdn.com/dz.svg",
-    },
+    flag: "dz",
     emoji: "🇩🇿",
     countryCallingCode: "+213",
     tax: 0.19,
   },
   {
     name: "Sweden",
-    capital: "Stockholm",
     currencies: [{ name: "Swedish krona", symbol: "kr" }],
     languages: ["Swedish"],
-    coordinates: [62, 15],
-    area: 450295,
     postalCode: { format: "SE-### ##", regex: "^(?:SE)*(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/se.png",
-      svg: "https://flagcdn.com/se.svg",
-    },
+    flag: "se",
     emoji: "🇸🇪",
     countryCallingCode: "+46",
   },
   {
     name: "Switzerland",
-    capital: "Bern",
     currencies: [{ name: "Swiss franc", symbol: "Fr." }],
     languages: ["French", "Swiss German", "Italian", "Romansh"],
-    coordinates: [47, 8],
-    area: 41284,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ch.png",
-      svg: "https://flagcdn.com/ch.svg",
-    },
+    flag: "ch",
     emoji: "🇨🇭",
     countryCallingCode: "+41",
   },
   {
     name: "Ethiopia",
-    capital: "Addis Ababa",
     currencies: [{ name: "Ethiopian birr", symbol: "Br" }],
     languages: ["Amharic"],
-    coordinates: [8, 38],
-    area: 1104300,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/et.png",
-      svg: "https://flagcdn.com/et.svg",
-    },
+    flag: "et",
     emoji: "🇪🇹",
     countryCallingCode: "+251",
     tax: 0.15,
   },
   {
     name: "Somalia",
-    capital: "Mogadishu",
     currencies: [{ name: "Somali shilling", symbol: "Sh" }],
     languages: ["Arabic", "Somali"],
-    coordinates: [10, 49],
-    area: 637657,
     postalCode: { format: "@@  #####", regex: "^([A-Z]{2}\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/so.png",
-      svg: "https://flagcdn.com/so.svg",
-    },
+    flag: "so",
     emoji: "🇸🇴",
     countryCallingCode: "+252",
   },
   {
     name: "France",
-    capital: "Paris",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["French"],
-    coordinates: [46, 2],
-    area: 551695,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/fr.png",
-      svg: "https://flagcdn.com/fr.svg",
-    },
+    flag: "fr",
     emoji: "🇫🇷",
     countryCallingCode: "+33",
   },
   {
     name: "Russia",
-    capital: "Moscow",
     currencies: [{ name: "Russian ruble", symbol: "₽" }],
     languages: ["Russian"],
-    coordinates: [60, 100],
-    area: 17098242,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ru.png",
-      svg: "https://flagcdn.com/ru.svg",
-    },
+    flag: "ru",
     emoji: "",
     countryCallingCode: "",
     tax: 0.20,
   },
   {
     name: "Chad",
-    capital: "N'Djamena",
     currencies: [{ name: "Central African CFA franc", symbol: "Fr" }],
     languages: ["Arabic", "French"],
-    coordinates: [15, 19],
-    area: 1284000,
-    flags: {
-      png: "https://flagcdn.com/w320/td.png",
-      svg: "https://flagcdn.com/td.svg",
-    },
+    flag: "td",
     emoji: "🇹🇩",
     countryCallingCode: "+235",
   },
   {
     name: "Trinidad and Tobago",
-    capital: "Port of Spain",
     currencies: [{ name: "Trinidad and Tobago dollar", symbol: "$" }],
     languages: ["English"],
-    coordinates: [11, -61],
-    area: 5130,
-    flags: {
-      png: "https://flagcdn.com/w320/tt.png",
-      svg: "https://flagcdn.com/tt.svg",
-    },
+    flag: "tt",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Central African Republic",
-    capital: "Bangui",
     currencies: [{ name: "Central African CFA franc", symbol: "Fr" }],
     languages: ["French", "Sango"],
-    coordinates: [7, 21],
-    area: 622984,
-    flags: {
-      png: "https://flagcdn.com/w320/cf.png",
-      svg: "https://flagcdn.com/cf.svg",
-    },
+    flag: "cf",
     emoji: "🇨🇫",
     countryCallingCode: "+236",
   },
   {
     name: "North Macedonia",
-    capital: "Skopje",
     currencies: [{ name: "denar", symbol: "den" }],
     languages: ["Macedonian"],
-    coordinates: [41.83333333, 22],
-    area: 25713,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/mk.png",
-      svg: "https://flagcdn.com/mk.svg",
-    },
+    flag: "mk",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "El Salvador",
-    capital: "San Salvador",
     currencies: [{ name: "United States dollar", symbol: "$" }],
     languages: ["Spanish"],
-    coordinates: [13.83333333, -88.91666666],
-    area: 21041,
     postalCode: { format: "CP ####", regex: "^(?:CP)*(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/sv.png",
-      svg: "https://flagcdn.com/sv.svg",
-    },
+    flag: "sv",
     emoji: "🇸🇻",
     countryCallingCode: "+503",
     tax: 0.13,
   },
   {
     name: "Kosovo",
-    capital: "Pristina",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Albanian", "Serbian"],
-    coordinates: [42.666667, 21.166667],
-    area: 10908,
-    flags: {
-      png: "https://flagcdn.com/w320/xk.png",
-      svg: "https://flagcdn.com/xk.svg",
-    },
+    flag: "xk",
     emoji: "",
     countryCallingCode: "+383",
   },
   {
     name: "Colombia",
-    capital: "Bogotá",
     currencies: [{ name: "Colombian peso", symbol: "$" }],
     languages: ["Spanish"],
-    coordinates: [4, -72],
-    area: 1141748,
-    flags: {
-      png: "https://flagcdn.com/w320/co.png",
-      svg: "https://flagcdn.com/co.svg",
-    },
+    flag: "co",
     emoji: "🇨🇴",
     countryCallingCode: "+57",
     tax: 0.19,
   },
   {
     name: "Iran",
-    capital: "Tehran",
     currencies: [{ name: "Iranian rial", symbol: "﷼" }],
     languages: ["Persian (Farsi)"],
-    coordinates: [32, 53],
-    area: 1648195,
     postalCode: { format: "##########", regex: "^(\\d{10})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ir.png",
-      svg: "https://flagcdn.com/ir.svg",
-    },
+    flag: "ir",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "United Arab Emirates",
-    capital: "Abu Dhabi",
     currencies: [{ name: "United Arab Emirates dirham", symbol: "د.إ" }],
     languages: ["Arabic"],
-    coordinates: [24, 54],
-    area: 83600,
-    flags: {
-      png: "https://flagcdn.com/w320/ae.png",
-      svg: "https://flagcdn.com/ae.svg",
-    },
+    flag: "ae",
     emoji: "🇦🇪",
     countryCallingCode: "+971",
     tax: 0.05,
   },
   {
     name: "South Africa",
-    capital: "Pretoria",
     currencies: [{ name: "South African rand", symbol: "R" }],
     languages: [
       "Afrikaans",
@@ -417,1921 +592,1172 @@ const COUNTRIES: Country[] = [
       "Xhosa",
       "Zulu",
     ],
-    coordinates: [-29, 24],
-    area: 1221037,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/za.png",
-      svg: "https://flagcdn.com/za.svg",
-    },
+    flag: "za",
     emoji: "🇿🇦",
     countryCallingCode: "+27",
   },
   {
     name: "Czechia",
-    capital: "Prague",
     currencies: [{ name: "Czech koruna", symbol: "Kč" }],
     languages: ["Czech", "Slovak"],
-    coordinates: [49.75, 15.5],
-    area: 78865,
     postalCode: { format: "### ##", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/cz.png",
-      svg: "https://flagcdn.com/cz.svg",
-    },
+    flag: "cz",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Hungary",
-    capital: "Budapest",
     currencies: [{ name: "Hungarian forint", symbol: "Ft" }],
     languages: ["Hungarian"],
-    coordinates: [47, 20],
-    area: 93028,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/hu.png",
-      svg: "https://flagcdn.com/hu.svg",
-    },
+    flag: "hu",
     emoji: "🇭🇺",
     countryCallingCode: "+36",
   },
   {
     name: "Peru",
-    capital: "Lima",
     currencies: [{ name: "Peruvian sol", symbol: "S/ " }],
     languages: ["Aymara", "Quechua", "Spanish"],
-    coordinates: [-10, -76],
-    area: 1285216,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/pe.png",
-      svg: "https://flagcdn.com/pe.svg",
-    },
+    flag: "pe",
     emoji: "🇵🇪",
     countryCallingCode: "+51",
     tax: 0.18,
   },
   {
     name: "Benin",
-    capital: "Porto-Novo",
     currencies: [{ name: "West African CFA franc", symbol: "Fr" }],
     languages: ["French"],
-    coordinates: [9.5, 2.25],
-    area: 112622,
-    flags: {
-      png: "https://flagcdn.com/w320/bj.png",
-      svg: "https://flagcdn.com/bj.svg",
-    },
+    flag: "bj",
     emoji: "🇧🇯",
     countryCallingCode: "+229",
   },
   {
     name: "South Sudan",
-    capital: "Juba",
     currencies: [{ name: "South Sudanese pound", symbol: "£" }],
     languages: ["English"],
-    coordinates: [7, 30],
-    area: 619745,
-    flags: {
-      png: "https://flagcdn.com/w320/ss.png",
-      svg: "https://flagcdn.com/ss.svg",
-    },
+    flag: "ss",
     emoji: "🇸🇸",
     countryCallingCode: "+211",
   },
   {
     name: "Turkey",
-    capital: "Ankara",
     currencies: [{ name: "Turkish lira", symbol: "₺" }],
     languages: ["Turkish"],
-    coordinates: [39, 35],
-    area: 783562,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/tr.png",
-      svg: "https://flagcdn.com/tr.svg",
-    },
+    flag: "tr",
     emoji: "🇹🇷",
     countryCallingCode: "+90",
     tax: 0.19,
   },
   {
     name: "Ireland",
-    capital: "Dublin",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["English", "Irish"],
-    coordinates: [53, -8],
-    area: 70273,
-    flags: {
-      png: "https://flagcdn.com/w320/ie.png",
-      svg: "https://flagcdn.com/ie.svg",
-    },
+    flag: "ie",
     emoji: "🇮🇪",
     countryCallingCode: "+353",
   },
   {
     name: "Botswana",
-    capital: "Gaborone",
     currencies: [{ name: "Botswana pula", symbol: "P" }],
     languages: ["English", "Tswana"],
-    coordinates: [-22, 24],
-    area: 582000,
-    flags: {
-      png: "https://flagcdn.com/w320/bw.png",
-      svg: "https://flagcdn.com/bw.svg",
-    },
+    flag: "bw",
     emoji: "🇧🇼",
     countryCallingCode: "+267",
     tax: 0.14,
   },
   {
     name: "Haiti",
-    capital: "Port-au-Prince",
     currencies: [{ name: "Haitian gourde", symbol: "G" }],
     languages: ["French", "Haitian Creole"],
-    coordinates: [19, -72.41666666],
-    area: 27750,
     postalCode: { format: "HT####", regex: "^(?:HT)*(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ht.png",
-      svg: "https://flagcdn.com/ht.svg",
-    },
+    flag: "ht",
     emoji: "🇭🇹",
     countryCallingCode: "+509",
   },
   {
     name: "Japan",
-    capital: "Tokyo",
     currencies: [{ name: "Japanese yen", symbol: "¥" }],
     languages: ["Japanese"],
-    coordinates: [36, 138],
-    area: 377930,
     postalCode: { format: "###-####", regex: "^(\\d{7})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/jp.png",
-      svg: "https://flagcdn.com/jp.svg",
-    },
+    flag: "jp",
     emoji: "🇯🇵",
     countryCallingCode: "+81",
     tax: 0.10,
   },
   {
     name: "Sudan",
-    capital: "Khartoum",
     currencies: [{ name: "Sudanese pound" }],
     languages: ["Arabic", "English"],
-    coordinates: [15, 30],
-    area: 1886068,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/sd.png",
-      svg: "https://flagcdn.com/sd.svg",
-    },
+    flag: "sd",
     emoji: "🇸🇩",
     countryCallingCode: "+249",
   },
   {
     name: "Uganda",
-    capital: "Kampala",
     currencies: [{ name: "Ugandan shilling", symbol: "Sh" }],
     languages: ["English", "Swahili"],
-    coordinates: [1, 32],
-    area: 241550,
-    flags: {
-      png: "https://flagcdn.com/w320/ug.png",
-      svg: "https://flagcdn.com/ug.svg",
-    },
+    flag: "ug",
     emoji: "🇺🇬",
     countryCallingCode: "+256",
     tax: 0.18,
   },
   {
     name: "Kazakhstan",
-    capital: "Nur-Sultan",
     currencies: [{ name: "Kazakhstani tenge", symbol: "₸" }],
     languages: ["Kazakh", "Russian"],
-    coordinates: [48, 68],
-    area: 2724900,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/kz.png",
-      svg: "https://flagcdn.com/kz.svg",
-    },
+    flag: "kz",
     emoji: "🇰🇿",
     countryCallingCode: "+7",
     tax: 0.12,
   },
   {
     name: "Moldova",
-    capital: "Chișinău",
     currencies: [{ name: "Moldovan leu", symbol: "L" }],
     languages: ["Moldavian"],
-    coordinates: [47, 29],
-    area: 33846,
     postalCode: { format: "MD-####", regex: "^(?:MD)*(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/md.png",
-      svg: "https://flagcdn.com/md.svg",
-    },
+    flag: "md",
     emoji: "🇲🇩",
     countryCallingCode: "+373",
   },
   {
     name: "Paraguay",
-    capital: "Asunción",
     currencies: [{ name: "Paraguayan guaraní", symbol: "₲" }],
     languages: ["Guaraní", "Spanish"],
-    coordinates: [-23, -58],
-    area: 406752,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/py.png",
-      svg: "https://flagcdn.com/py.svg",
-    },
+    flag: "py",
     emoji: "🇵🇾",
     countryCallingCode: "+595",
   },
   {
     name: "Estonia",
-    capital: "Tallinn",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Estonian"],
-    coordinates: [59, 26],
-    area: 45227,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ee.png",
-      svg: "https://flagcdn.com/ee.svg",
-    },
+    flag: "ee",
     emoji: "🇪🇪",
     countryCallingCode: "+372",
   },
   {
     name: "Palestine",
-    capital: "Ramallah",
     currencies: [
-      { name: "Egyptian pound", symbol: "E£" },
       { name: "Israeli new shekel", symbol: "₪" },
+      { name: "Egyptian pound", symbol: "E£" },
       { name: "Jordanian dinar", symbol: "JD" },
     ],
     languages: ["Arabic"],
-    coordinates: [31.9, 35.2],
-    area: 6220,
-    flags: {
-      png: "https://flagcdn.com/w320/ps.png",
-      svg: "https://flagcdn.com/ps.svg",
-    },
+    flag: "ps",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Finland",
-    capital: "Helsinki",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Finnish", "Swedish"],
-    coordinates: [64, 26],
-    area: 338424,
     postalCode: { format: "#####", regex: "^(?:FI)*(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/fi.png",
-      svg: "https://flagcdn.com/fi.svg",
-    },
+    flag: "fi",
     emoji: "🇫🇮",
     countryCallingCode: "+358",
   },
   {
     name: "Honduras",
-    capital: "Tegucigalpa",
     currencies: [{ name: "Honduran lempira", symbol: "L" }],
     languages: ["Spanish"],
-    coordinates: [15, -86.5],
-    area: 112492,
     postalCode: { format: "@@####", regex: "^([A-Z]{2}\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/hn.png",
-      svg: "https://flagcdn.com/hn.svg",
-    },
+    flag: "hn",
     emoji: "🇭🇳",
     countryCallingCode: "+504",
   },
   {
     name: "Dominican Republic",
-    capital: "Santo Domingo",
     currencies: [{ name: "Dominican peso", symbol: "$" }],
     languages: ["Spanish"],
-    coordinates: [19, -70.66666666],
-    area: 48671,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/do.png",
-      svg: "https://flagcdn.com/do.svg",
-    },
+    flag: "do",
     emoji: "🇩🇴",
     countryCallingCode: "+1 809",
   },
   {
     name: "Rwanda",
-    capital: "Kigali",
     currencies: [{ name: "Rwandan franc", symbol: "Fr" }],
     languages: ["English", "French", "Kinyarwanda"],
-    coordinates: [-2, 30],
-    area: 26338,
-    flags: {
-      png: "https://flagcdn.com/w320/rw.png",
-      svg: "https://flagcdn.com/rw.svg",
-    },
+    flag: "rw",
     emoji: "🇷🇼",
     countryCallingCode: "+250",
   },
   {
     name: "Oman",
-    capital: "Muscat",
     currencies: [{ name: "Omani rial", symbol: "ر.ع." }],
     languages: ["Arabic"],
-    coordinates: [21, 57],
-    area: 309500,
     postalCode: { format: "###", regex: "^(\\d{3})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/om.png",
-      svg: "https://flagcdn.com/om.svg",
-    },
+    flag: "om",
     emoji: "🇴🇲",
     countryCallingCode: "+968",
     tax: 0.05,
   },
   {
     name: "Portugal",
-    capital: "Lisbon",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Portuguese"],
-    coordinates: [39.5, -8],
-    area: 92090,
     postalCode: { format: "####-###", regex: "^(\\d{7})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/pt.png",
-      svg: "https://flagcdn.com/pt.svg",
-    },
+    flag: "pt",
     emoji: "🇵🇹",
     countryCallingCode: "+351",
   },
   {
     name: "Thailand",
-    capital: "Bangkok",
     currencies: [{ name: "Thai baht", symbol: "฿" }],
     languages: ["Thai"],
-    coordinates: [15, 100],
-    area: 513120,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/th.png",
-      svg: "https://flagcdn.com/th.svg",
-    },
+    flag: "th",
     emoji: "🇹🇭",
     countryCallingCode: "+66",
     tax: 0.07,
   },
   {
     name: "Timor-Leste",
-    capital: "Dili",
     currencies: [{ name: "United States dollar", symbol: "$" }],
     languages: ["Portuguese", "Tetum"],
-    coordinates: [-8.83333333, 125.91666666],
-    area: 14874,
-    flags: {
-      png: "https://flagcdn.com/w320/tl.png",
-      svg: "https://flagcdn.com/tl.svg",
-    },
+    flag: "tl",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Armenia",
-    capital: "Yerevan",
     currencies: [{ name: "Armenian dram", symbol: "֏" }],
     languages: ["Armenian"],
-    coordinates: [40, 45],
-    area: 29743,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/am.png",
-      svg: "https://flagcdn.com/am.svg",
-    },
+    flag: "am",
     emoji: "🇦🇲",
     countryCallingCode: "+374",
     tax: 0.20,
   },
   {
     name: "Kuwait",
-    capital: "Kuwait City",
     currencies: [{ name: "Kuwaiti dinar", symbol: "د.ك" }],
     languages: ["Arabic"],
-    coordinates: [29.5, 45.75],
-    area: 17818,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/kw.png",
-      svg: "https://flagcdn.com/kw.svg",
-    },
+    flag: "kw",
     emoji: "🇰🇼",
     countryCallingCode: "+965",
     tax: 0,
   },
   {
     name: "Georgia",
-    capital: "Tbilisi",
     currencies: [{ name: "lari", symbol: "₾" }],
     languages: ["Georgian"],
-    coordinates: [42, 43.5],
-    area: 69700,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ge.png",
-      svg: "https://flagcdn.com/ge.svg",
-    },
+    flag: "ge",
     emoji: "🇬🇪",
     countryCallingCode: "+995",
     tax: 0.18,
   },
   {
     name: "Burundi",
-    capital: "Gitega",
     currencies: [{ name: "Burundian franc", symbol: "Fr" }],
     languages: ["French", "Kirundi"],
-    coordinates: [-3.5, 30],
-    area: 27834,
-    flags: {
-      png: "https://flagcdn.com/w320/bi.png",
-      svg: "https://flagcdn.com/bi.svg",
-    },
+    flag: "bi",
     emoji: "🇧🇮",
     countryCallingCode: "+257",
   },
   {
     name: "Cambodia",
-    capital: "Phnom Penh",
     currencies: [
       { name: "Cambodian riel", symbol: "៛" },
       { name: "United States dollar", symbol: "$" },
     ],
     languages: ["Khmer"],
-    coordinates: [13, 105],
-    area: 181035,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/kh.png",
-      svg: "https://flagcdn.com/kh.svg",
-    },
+    flag: "kh",
     emoji: "🇰🇭",
     countryCallingCode: "+855",
   },
   {
     name: "Lesotho",
-    capital: "Maseru",
     currencies: [
       { name: "Lesotho loti", symbol: "L" },
       { name: "South African rand", symbol: "R" },
     ],
     languages: ["English", "Sotho"],
-    coordinates: [-29.5, 28.5],
-    area: 30355,
     postalCode: { format: "###", regex: "^(\\d{3})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ls.png",
-      svg: "https://flagcdn.com/ls.svg",
-    },
+    flag: "ls",
     emoji: "🇱🇸",
     countryCallingCode: "+266",
   },
   {
     name: "Bolivia",
-    capital: "Sucre",
     currencies: [{ name: "Bolivian boliviano", symbol: "Bs." }],
     languages: ["Aymara", "Guaraní", "Quechua", "Spanish"],
-    coordinates: [-17, -65],
-    area: 1098581,
-    flags: {
-      png: "https://flagcdn.com/w320/bo.png",
-      svg: "https://flagcdn.com/bo.svg",
-    },
+    flag: "bo",
     emoji: "",
     countryCallingCode: "",
     tax: 0.13,
   },
   {
     name: "United Kingdom",
-    capital: "London",
     currencies: [{ name: "British pound", symbol: "£" }],
     languages: ["English"],
-    coordinates: [54, -2],
-    area: 242900,
     postalCode: {
       format: "@# #@@|@## #@@|@@# #@@|@@## #@@|@#@ #@@|@@#@ #@@|GIR0AA",
       regex:
         "^(([A-Z]\\d{2}[A-Z]{2})|([A-Z]\\d{3}[A-Z]{2})|([A-Z]{2}\\d{2}[A-Z]{2})|([A-Z]{2}\\d{3}[A-Z]{2})|([A-Z]\\d[A-Z]\\d[A-Z]{2})|([A-Z]{2}\\d[A-Z]\\d[A-Z]{2})|(GIR0AA))$",
     },
-    flags: {
-      png: "https://flagcdn.com/w320/gb.png",
-      svg: "https://flagcdn.com/gb.svg",
-    },
+    flag: "gb",
     emoji: "🇬🇧",
     countryCallingCode: "+44",
     tax: 0.20,
   },
   {
     name: "Spain",
-    capital: "Madrid",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Spanish"],
-    coordinates: [40, -4],
-    area: 505992,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/es.png",
-      svg: "https://flagcdn.com/es.svg",
-    },
+    flag: "es",
     emoji: "🇪🇸",
     countryCallingCode: "+34",
   },
   {
     name: "Malaysia",
-    capital: "Kuala Lumpur",
     currencies: [{ name: "Malaysian ringgit", symbol: "RM" }],
     languages: ["English", "Malay"],
-    coordinates: [2.5, 112.5],
-    area: 330803,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/my.png",
-      svg: "https://flagcdn.com/my.svg",
-    },
+    flag: "my",
     emoji: "🇲🇾",
     countryCallingCode: "+60",
   },
   {
     name: "DR Congo",
-    capital: "Kinshasa",
     currencies: [{ name: "Congolese franc", symbol: "FC" }],
     languages: ["French", "Kikongo", "Lingala", "Tshiluba", "Swahili"],
-    coordinates: [0, 25],
-    area: 2344858,
-    flags: {
-      png: "https://flagcdn.com/w320/cd.png",
-      svg: "https://flagcdn.com/cd.svg",
-    },
+    flag: "cd",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Cuba",
-    capital: "Havana",
     currencies: [
       { name: "Cuban convertible peso", symbol: "$" },
       { name: "Cuban peso", symbol: "$" },
     ],
     languages: ["Spanish"],
-    coordinates: [21.5, -80],
-    area: 109884,
     postalCode: { format: "CP #####", regex: "^(?:CP)*(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/cu.png",
-      svg: "https://flagcdn.com/cu.svg",
-    },
+    flag: "cu",
     emoji: "🇨🇺",
     countryCallingCode: "+53",
   },
   {
     name: "Chile",
-    capital: "Santiago",
     currencies: [{ name: "Chilean peso", symbol: "$" }],
     languages: ["Spanish"],
-    coordinates: [-30, -71],
-    area: 756102,
     postalCode: { format: "#######", regex: "^(\\d{7})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/cl.png",
-      svg: "https://flagcdn.com/cl.svg",
-    },
+    flag: "cl",
     emoji: "🇨🇱",
     countryCallingCode: "+56",
     tax: 0.19,
   },
   {
     name: "Bosnia and Herzegovina",
-    capital: "Sarajevo",
     currencies: [{ name: "Bosnia and Herzegovina convertible mark" }],
     languages: ["Bosnian", "Croatian", "Serbian"],
-    coordinates: [44, 18],
-    area: 51209,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ba.png",
-      svg: "https://flagcdn.com/ba.svg",
-    },
+    flag: "ba",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Singapore",
-    capital: "Singapore",
     currencies: [{ name: "Singapore dollar", symbol: "$" }],
     languages: ["Chinese", "English", "Malay", "Tamil"],
-    coordinates: [1.36666666, 103.8],
-    area: 710,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/sg.png",
-      svg: "https://flagcdn.com/sg.svg",
-    },
+    flag: "sg",
     emoji: "🇸🇬",
     countryCallingCode: "+65",
     tax: 0.08,
   },
   {
     name: "Eswatini",
-    capital: "Mbabane",
     currencies: [
       { name: "Swazi lilangeni", symbol: "L" },
       { name: "South African rand", symbol: "R" },
     ],
     languages: ["English", "Swazi"],
-    coordinates: [-26.5, 31.5],
-    area: 17364,
     postalCode: { format: "@###", regex: "^([A-Z]\\d{3})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/sz.png",
-      svg: "https://flagcdn.com/sz.svg",
-    },
+    flag: "sz",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Belgium",
-    capital: "Brussels",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["German", "French", "Dutch"],
-    coordinates: [50.83333333, 4],
-    area: 30528,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/be.png",
-      svg: "https://flagcdn.com/be.svg",
-    },
+    flag: "be",
     emoji: "🇧🇪",
     countryCallingCode: "+32",
   },
   {
     name: "China",
-    capital: "Beijing",
     currencies: [{ name: "Chinese yuan", symbol: "¥" }],
     languages: ["Chinese"],
-    coordinates: [35, 105],
-    area: 9706961,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/cn.png",
-      svg: "https://flagcdn.com/cn.svg",
-    },
+    flag: "cn",
     emoji: "🇨🇳",
     countryCallingCode: "+86",
   },
   {
     name: "Nicaragua",
-    capital: "Managua",
     currencies: [{ name: "Nicaraguan córdoba", symbol: "C$" }],
     languages: ["Spanish"],
-    coordinates: [13, -85],
-    area: 130373,
     postalCode: { format: "###-###-#", regex: "^(\\d{7})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ni.png",
-      svg: "https://flagcdn.com/ni.svg",
-    },
+    flag: "ni",
     emoji: "🇳🇮",
     countryCallingCode: "+505",
   },
   {
     name: "Canada",
-    capital: "Ottawa",
     currencies: [{ name: "Canadian dollar", symbol: "$" }],
     languages: ["English", "French"],
-    coordinates: [60, -95],
-    area: 9984670,
     postalCode: {
       format: "@#@ #@#",
       regex:
         "^([ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ]) ?(\\d[ABCEGHJKLMNPRSTVWXYZ]\\d)$ ",
     },
-    flags: {
-      png: "https://flagcdn.com/w320/ca.png",
-      svg: "https://flagcdn.com/ca.svg",
-    },
+    flag: "ca",
     emoji: "🇨🇦",
     countryCallingCode: "+1",
     tax: 0.05,
   },
   {
     name: "Togo",
-    capital: "Lomé",
     currencies: [{ name: "West African CFA franc", symbol: "Fr" }],
     languages: ["French"],
-    coordinates: [8, 1.16666666],
-    area: 56785,
-    flags: {
-      png: "https://flagcdn.com/w320/tg.png",
-      svg: "https://flagcdn.com/tg.svg",
-    },
+    flag: "tg",
     emoji: "🇹🇬",
     countryCallingCode: "+228",
   },
   {
     name: "Ivory Coast",
-    capital: "Yamoussoukro",
     currencies: [{ name: "West African CFA franc", symbol: "Fr" }],
     languages: ["French"],
-    coordinates: [8, -5],
-    area: 322463,
-    flags: {
-      png: "https://flagcdn.com/w320/ci.png",
-      svg: "https://flagcdn.com/ci.svg",
-    },
+    flag: "ci",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Slovenia",
-    capital: "Ljubljana",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Slovene"],
-    coordinates: [46.11666666, 14.81666666],
-    area: 20273,
     postalCode: { format: "SI- ####", regex: "^(?:SI)*(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/si.png",
-      svg: "https://flagcdn.com/si.svg",
-    },
+    flag: "si",
     emoji: "🇸🇮",
     countryCallingCode: "+386",
   },
   {
     name: "Sri Lanka",
-    capital: "Sri Jayawardenepura Kotte",
     currencies: [{ name: "Sri Lankan rupee", symbol: "Rs  රු" }],
     languages: ["Sinhala", "Tamil"],
-    coordinates: [7, 81],
-    area: 65610,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/lk.png",
-      svg: "https://flagcdn.com/lk.svg",
-    },
+    flag: "lk",
     emoji: "🇱🇰",
     countryCallingCode: "+94",
   },
   {
     name: "Greece",
-    capital: "Athens",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Greek"],
-    coordinates: [39, 22],
-    area: 131990,
     postalCode: { format: "### ##", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/gr.png",
-      svg: "https://flagcdn.com/gr.svg",
-    },
+    flag: "gr",
     emoji: "🇬🇷",
     countryCallingCode: "+30",
   },
   {
     name: "Jamaica",
-    capital: "Kingston",
     currencies: [{ name: "Jamaican dollar", symbol: "$" }],
     languages: ["English", "Jamaican Patois"],
-    coordinates: [18.25, -77.5],
-    area: 10991,
-    flags: {
-      png: "https://flagcdn.com/w320/jm.png",
-      svg: "https://flagcdn.com/jm.svg",
-    },
+    flag: "jm",
     emoji: "🇯🇲",
     countryCallingCode: "+1 876",
   },
   {
     name: "Italy",
-    capital: "Rome",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Italian"],
-    coordinates: [42.83333333, 12.83333333],
-    area: 301336,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/it.png",
-      svg: "https://flagcdn.com/it.svg",
-    },
+    flag: "it",
     emoji: "🇮🇹",
     countryCallingCode: "+39",
   },
   {
     name: "Croatia",
-    capital: "Zagreb",
     currencies: [{ name: "Croatian kuna", symbol: "kn" }],
     languages: ["Croatian"],
-    coordinates: [45.16666666, 15.5],
-    area: 56594,
     postalCode: { format: "HR-#####", regex: "^(?:HR)*(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/hr.png",
-      svg: "https://flagcdn.com/hr.svg",
-    },
+    flag: "hr",
     emoji: "🇭🇷",
     countryCallingCode: "+385",
   },
   {
     name: "Pakistan",
-    capital: "Islamabad",
     currencies: [{ name: "Pakistani rupee", symbol: "₨" }],
     languages: ["English", "Urdu"],
-    coordinates: [30, 70],
-    area: 881912,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/pk.png",
-      svg: "https://flagcdn.com/pk.svg",
-    },
+    flag: "pk",
     emoji: "🇵🇰",
     countryCallingCode: "+92",
     tax: 0.18
   },
   {
     name: "Hong Kong",
-    capital: "City of Victoria",
     currencies: [{ name: "Hong Kong dollar", symbol: "$" }],
     languages: ["English", "Chinese"],
-    coordinates: [22.267, 114.188],
-    area: 1104,
-    flags: {
-      png: "https://flagcdn.com/w320/hk.png",
-      svg: "https://flagcdn.com/hk.svg",
-    },
+    flag: "hk",
     emoji: "🇭🇰",
     countryCallingCode: "+852",
     tax: 0,
   },
   {
     name: "Latvia",
-    capital: "Riga",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Latvian"],
-    coordinates: [57, 25],
-    area: 64559,
     postalCode: { format: "LV-####", regex: "^(?:LV)*(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/lv.png",
-      svg: "https://flagcdn.com/lv.svg",
-    },
+    flag: "lv",
     emoji: "🇱🇻",
     countryCallingCode: "+371",
   },
   {
     name: "Lebanon",
-    capital: "Beirut",
     currencies: [{ name: "Lebanese pound", symbol: "ل.ل" }],
     languages: ["Arabic", "French"],
-    coordinates: [33.83333333, 35.83333333],
-    area: 10452,
     postalCode: {
       format: "#### ####|####",
       regex: "^(\\d{4}(\\d{4})?)$",
     },
-    flags: {
-      png: "https://flagcdn.com/w320/lb.png",
-      svg: "https://flagcdn.com/lb.svg",
-    },
+    flag: "lb",
     emoji: "🇱🇧",
     countryCallingCode: "+961",
   },
   {
     name: "Mauritius",
-    capital: "Port Louis",
     currencies: [{ name: "Mauritian rupee", symbol: "₨" }],
     languages: ["English", "French", "Mauritian Creole"],
-    coordinates: [-20.28333333, 57.55],
-    area: 2040,
-    flags: {
-      png: "https://flagcdn.com/w320/mu.png",
-      svg: "https://flagcdn.com/mu.svg",
-    },
+    flag: "mu",
     emoji: "🇲🇺",
     countryCallingCode: "+230",
     tax: 0.15,
   },
   {
     name: "Guinea",
-    capital: "Conakry",
     currencies: [{ name: "Guinean franc", symbol: "Fr" }],
     languages: ["French"],
-    coordinates: [11, -10],
-    area: 245857,
-    flags: {
-      png: "https://flagcdn.com/w320/gn.png",
-      svg: "https://flagcdn.com/gn.svg",
-    },
+    flag: "gn",
     emoji: "🇬🇳",
     countryCallingCode: "+224",
   },
   {
     name: "Republic of the Congo",
-    capital: "Brazzaville",
     currencies: [{ name: "Central African CFA franc", symbol: "Fr" }],
     languages: ["French", "Kikongo", "Lingala"],
-    coordinates: [-1, 15],
-    area: 342000,
-    flags: {
-      png: "https://flagcdn.com/w320/cg.png",
-      svg: "https://flagcdn.com/cg.svg",
-    },
+    flag: "cg",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Eritrea",
-    capital: "Asmara",
     currencies: [{ name: "Eritrean nakfa", symbol: "Nfk" }],
     languages: ["Arabic", "English", "Tigrinya"],
-    coordinates: [15, 39],
-    area: 117600,
-    flags: {
-      png: "https://flagcdn.com/w320/er.png",
-      svg: "https://flagcdn.com/er.svg",
-    },
+    flag: "er",
     emoji: "🇪🇷",
     countryCallingCode: "+291",
   },
   {
     name: "Tajikistan",
-    capital: "Dushanbe",
     currencies: [{ name: "Tajikistani somoni", symbol: "ЅМ" }],
     languages: ["Russian", "Tajik"],
-    coordinates: [39, 71],
-    area: 143100,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/tj.png",
-      svg: "https://flagcdn.com/tj.svg",
-    },
+    flag: "tj",
     emoji: "🇹🇯",
     countryCallingCode: "+992",
   },
   {
     name: "Burkina Faso",
-    capital: "Ouagadougou",
     currencies: [{ name: "West African CFA franc", symbol: "Fr" }],
     languages: ["French"],
-    coordinates: [13, -2],
-    area: 272967,
-    flags: {
-      png: "https://flagcdn.com/w320/bf.png",
-      svg: "https://flagcdn.com/bf.svg",
-    },
+    flag: "bf",
     emoji: "🇧🇫",
     countryCallingCode: "+226",
   },
   {
     name: "Belarus",
-    capital: "Minsk",
     currencies: [{ name: "Belarusian ruble", symbol: "Br" }],
     languages: ["Belarusian", "Russian"],
-    coordinates: [53, 28],
-    area: 207600,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/by.png",
-      svg: "https://flagcdn.com/by.svg",
-    },
+    flag: "by",
     emoji: "🇧🇾",
     countryCallingCode: "+375",
   },
   {
     name: "Zambia",
-    capital: "Lusaka",
     currencies: [{ name: "Zambian kwacha", symbol: "ZK" }],
     languages: ["English"],
-    coordinates: [-15, 30],
-    area: 752612,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/zm.png",
-      svg: "https://flagcdn.com/zm.svg",
-    },
+    flag: "zm",
     emoji: "🇿🇲",
     countryCallingCode: "+260",
   },
   {
     name: "Iceland",
-    capital: "Reykjavik",
     currencies: [{ name: "Icelandic króna", symbol: "kr" }],
     languages: ["Icelandic"],
-    coordinates: [65, -18],
-    area: 103000,
     postalCode: { format: "###", regex: "^(\\d{3})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/is.png",
-      svg: "https://flagcdn.com/is.svg",
-    },
+    flag: "is",
     emoji: "🇮🇸",
     countryCallingCode: "+354",
   },
   {
     name: "Vietnam",
-    capital: "Hanoi",
     currencies: [{ name: "Vietnamese đồng", symbol: "₫" }],
     languages: ["Vietnamese"],
-    coordinates: [16.16666666, 107.83333333],
-    area: 331212,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/vn.png",
-      svg: "https://flagcdn.com/vn.svg",
-    },
+    flag: "vn",
     emoji: "",
     countryCallingCode: "",
     tax: 0.10,
   },
   {
     name: "Brazil",
-    capital: "Brasília",
     currencies: [{ name: "Brazilian real", symbol: "R$" }],
     languages: ["Portuguese"],
-    coordinates: [-10, -55],
-    area: 8515767,
     postalCode: { format: "#####-###", regex: "^(\\d{8})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/br.png",
-      svg: "https://flagcdn.com/br.svg",
-    },
+    flag: "br",
     emoji: "🇧🇷",
     countryCallingCode: "+55",
   },
   {
     name: "Myanmar",
-    capital: "Naypyidaw",
     currencies: [{ name: "Burmese kyat", symbol: "Ks" }],
     languages: ["Burmese"],
-    coordinates: [22, 98],
-    area: 676578,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/mm.png",
-      svg: "https://flagcdn.com/mm.svg",
-    },
+    flag: "mm",
     emoji: "🇲🇲",
     countryCallingCode: "+95",
   },
   {
     name: "Senegal",
-    capital: "Dakar",
     currencies: [{ name: "West African CFA franc", symbol: "Fr" }],
     languages: ["French"],
-    coordinates: [14, -14],
-    area: 196722,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/sn.png",
-      svg: "https://flagcdn.com/sn.svg",
-    },
+    flag: "sn",
     emoji: "🇸🇳",
     countryCallingCode: "+221",
   },
   {
     name: "Slovakia",
-    capital: "Bratislava",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Slovak"],
-    coordinates: [48.66666666, 19.5],
-    area: 49037,
     postalCode: { format: "###  ##", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/sk.png",
-      svg: "https://flagcdn.com/sk.svg",
-    },
+    flag: "sk",
     emoji: "🇸🇰",
     countryCallingCode: "+421",
   },
   {
     name: "Philippines",
-    capital: "Manila",
     currencies: [{ name: "Philippine peso", symbol: "₱" }],
     languages: ["English", "Filipino"],
-    coordinates: [13, 122],
-    area: 342353,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ph.png",
-      svg: "https://flagcdn.com/ph.svg",
-    },
+    flag: "ph",
     emoji: "🇵🇭",
     countryCallingCode: "+63",
     tax: 0.12,
   },
   {
     name: "Albania",
-    capital: "Tirana",
     currencies: [{ name: "Albanian lek", symbol: "L" }],
     languages: ["Albanian"],
-    coordinates: [41, 20],
-    area: 28748,
-    flags: {
-      png: "https://flagcdn.com/w320/al.png",
-      svg: "https://flagcdn.com/al.svg",
-    },
+    flag: "al",
     emoji: "🇦🇱",
     countryCallingCode: "+355",
   },
   {
     name: "Gabon",
-    capital: "Libreville",
     currencies: [{ name: "Central African CFA franc", symbol: "Fr" }],
     languages: ["French"],
-    coordinates: [-1, 11.75],
-    area: 267668,
-    flags: {
-      png: "https://flagcdn.com/w320/ga.png",
-      svg: "https://flagcdn.com/ga.svg",
-    },
+    flag: "ga",
     emoji: "🇬🇦",
     countryCallingCode: "+241",
   },
   {
     name: "Qatar",
-    capital: "Doha",
     currencies: [{ name: "Qatari riyal", symbol: "ر.ق" }],
     languages: ["Arabic"],
-    coordinates: [25.5, 51.25],
-    area: 11586,
-    flags: {
-      png: "https://flagcdn.com/w320/qa.png",
-      svg: "https://flagcdn.com/qa.svg",
-    },
+    flag: "qa",
     emoji: "🇶🇦",
     countryCallingCode: "+974",
     tax: 0,
   },
   {
     name: "Venezuela",
-    capital: "Caracas",
     currencies: [{ name: "Venezuelan bolívar soberano", symbol: "Bs.S." }],
     languages: ["Spanish"],
-    coordinates: [8, -66],
-    area: 916445,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ve.png",
-      svg: "https://flagcdn.com/ve.svg",
-    },
+    flag: "ve",
     emoji: "",
     countryCallingCode: "",
     tax: 0.16,
   },
   {
     name: "Liberia",
-    capital: "Monrovia",
     currencies: [{ name: "Liberian dollar", symbol: "$" }],
     languages: ["English"],
-    coordinates: [6.5, -9.5],
-    area: 111369,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/lr.png",
-      svg: "https://flagcdn.com/lr.svg",
-    },
+    flag: "lr",
     emoji: "🇱🇷",
     countryCallingCode: "+231",
   },
   {
     name: "Equatorial Guinea",
-    capital: "Malabo",
     currencies: [{ name: "Central African CFA franc", symbol: "Fr" }],
     languages: ["French", "Portuguese", "Spanish"],
-    coordinates: [2, 10],
-    area: 28051,
-    flags: {
-      png: "https://flagcdn.com/w320/gq.png",
-      svg: "https://flagcdn.com/gq.svg",
-    },
+    flag: "gq",
     emoji: "🇬🇶",
     countryCallingCode: "+240",
     tax: 15,
   },
   {
     name: "Yemen",
-    capital: "Sana'a",
     currencies: [{ name: "Yemeni rial", symbol: "﷼" }],
     languages: ["Arabic"],
-    coordinates: [15, 48],
-    area: 527968,
-    flags: {
-      png: "https://flagcdn.com/w320/ye.png",
-      svg: "https://flagcdn.com/ye.svg",
-    },
+    flag: "ye",
     emoji: "🇾🇪",
     countryCallingCode: "+967",
   },
   {
     name: "Tanzania",
-    capital: "Dodoma",
     currencies: [{ name: "Tanzanian shilling", symbol: "Sh" }],
     languages: ["English", "Swahili"],
-    coordinates: [-6, 35],
-    area: 945087,
-    flags: {
-      png: "https://flagcdn.com/w320/tz.png",
-      svg: "https://flagcdn.com/tz.svg",
-    },
+    flag: "tz",
     emoji: "",
     countryCallingCode: "",
     tax: 0.18,
   },
   {
     name: "Australia",
-    capital: "Canberra",
     currencies: [{ name: "Australian dollar", symbol: "$" }],
     languages: ["English"],
-    coordinates: [-27, 133],
-    area: 7692024,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/au.png",
-      svg: "https://flagcdn.com/au.svg",
-    },
+    flag: "au",
     emoji: "🇦🇺",
     countryCallingCode: "+61",
     tax: 0.10,
   },
   {
     name: "Mongolia",
-    capital: "Ulan Bator",
     currencies: [{ name: "Mongolian tögrög", symbol: "₮" }],
     languages: ["Mongolian"],
-    coordinates: [46, 105],
-    area: 1564110,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/mn.png",
-      svg: "https://flagcdn.com/mn.svg",
-    },
+    flag: "mn",
     emoji: "🇲🇳",
     countryCallingCode: "+976",
   },
   {
     name: "Poland",
-    capital: "Warsaw",
     currencies: [{ name: "Polish złoty", symbol: "zł" }],
     languages: ["Polish"],
-    coordinates: [52, 20],
-    area: 312679,
     postalCode: { format: "##-###", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/pl.png",
-      svg: "https://flagcdn.com/pl.svg",
-    },
+    flag: "pl",
     emoji: "🇵🇱",
     countryCallingCode: "+48",
   },
   {
     name: "Nepal",
-    capital: "Kathmandu",
     currencies: [{ name: "Nepalese rupee", symbol: "₨" }],
     languages: ["Nepali"],
-    coordinates: [28, 84],
-    area: 147181,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/np.png",
-      svg: "https://flagcdn.com/np.svg",
-    },
+    flag: "np",
     emoji: "🇳🇵",
     countryCallingCode: "+977",
   },
   {
     name: "Argentina",
-    capital: "Buenos Aires",
     currencies: [{ name: "Argentine peso", symbol: "$" }],
     languages: ["Guaraní", "Spanish"],
-    coordinates: [-34, -64],
-    area: 2780400,
     postalCode: { format: "@####@@@", regex: "^([A-Z]\\d{4}[A-Z]{3})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ar.png",
-      svg: "https://flagcdn.com/ar.svg",
-    },
+    flag: "ar",
     emoji: "🇦🇷",
     countryCallingCode: "+54",
   },
   {
     name: "Malawi",
-    capital: "Lilongwe",
     currencies: [{ name: "Malawian kwacha", symbol: "MK" }],
     languages: ["English", "Chewa"],
-    coordinates: [-13.5, 34],
-    area: 118484,
-    flags: {
-      png: "https://flagcdn.com/w320/mw.png",
-      svg: "https://flagcdn.com/mw.svg",
-    },
+    flag: "mw",
     emoji: "🇲🇼",
     countryCallingCode: "+265",
   },
   {
     name: "Syria",
-    capital: "Damascus",
     currencies: [{ name: "Syrian pound", symbol: "£" }],
     languages: ["Arabic"],
-    coordinates: [35, 38],
-    area: 185180,
-    flags: {
-      png: "https://flagcdn.com/w320/sy.png",
-      svg: "https://flagcdn.com/sy.svg",
-    },
+    flag: "sy",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Kyrgyzstan",
-    capital: "Bishkek",
     currencies: [{ name: "Kyrgyzstani som", symbol: "с" }],
     languages: ["Kyrgyz", "Russian"],
-    coordinates: [41, 75],
-    area: 199951,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/kg.png",
-      svg: "https://flagcdn.com/kg.svg",
-    },
+    flag: "kg",
     emoji: "🇰🇬",
     countryCallingCode: "+996",
   },
   {
     name: "Uzbekistan",
-    capital: "Tashkent",
     currencies: [{ name: "Uzbekistani soʻm", symbol: "so'm" }],
     languages: ["Russian", "Uzbek"],
-    coordinates: [41, 64],
-    area: 447400,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/uz.png",
-      svg: "https://flagcdn.com/uz.svg",
-    },
+    flag: "uz",
     emoji: "🇺🇿",
     countryCallingCode: "+998",
     tax: 0.12,
   },
   {
     name: "Netherlands",
-    capital: "Amsterdam",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Dutch"],
-    coordinates: [52.5, 5.75],
-    area: 41850,
     postalCode: { format: "#### @@", regex: "^(\\d{4}[A-Z]{2})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/nl.png",
-      svg: "https://flagcdn.com/nl.svg",
-    },
+    flag: "nl",
     emoji: "🇳🇱",
     countryCallingCode: "+31",
   },
   {
     name: "Niger",
-    capital: "Niamey",
     currencies: [{ name: "West African CFA franc", symbol: "Fr" }],
     languages: ["French"],
-    coordinates: [16, 8],
-    area: 1267000,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ne.png",
-      svg: "https://flagcdn.com/ne.svg",
-    },
+    flag: "ne",
     emoji: "🇳🇪",
     countryCallingCode: "+227",
   },
   {
     name: "Bahrain",
-    capital: "Manama",
     currencies: [{ name: "Bahraini dinar", symbol: ".د.ب" }],
     languages: ["Arabic"],
-    coordinates: [26, 50.55],
-    area: 765,
     postalCode: { format: "####|###", regex: "^(\\d{3}\\d?)$" },
-    flags: {
-      png: "https://flagcdn.com/w320/bh.png",
-      svg: "https://flagcdn.com/bh.svg",
-    },
+    flag: "bh",
     emoji: "🇧🇭",
     countryCallingCode: "+973",
     tax: 0.10,
   },
   {
     name: "Indonesia",
-    capital: "Jakarta",
     currencies: [{ name: "Indonesian rupiah", symbol: "Rp" }],
     languages: ["Indonesian"],
-    coordinates: [-5, 120],
-    area: 1904569,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/id.png",
-      svg: "https://flagcdn.com/id.svg",
-    },
+    flag: "id",
     emoji: "🇮🇩",
     countryCallingCode: "+62",
     tax: 0.11,
   },
   {
     name: "Bangladesh",
-    capital: "Dhaka",
     currencies: [{ name: "Bangladeshi taka", symbol: "৳" }],
     languages: ["Bengali"],
-    coordinates: [24, 90],
-    area: 147570,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/bd.png",
-      svg: "https://flagcdn.com/bd.svg",
-    },
+    flag: "bd",
     emoji: "🇧🇩",
     countryCallingCode: "+880",
   },
   {
     name: "Guatemala",
-    capital: "Guatemala City",
     currencies: [{ name: "Guatemalan quetzal", symbol: "Q" }],
     languages: ["Spanish"],
-    coordinates: [15.5, -90.25],
-    area: 108889,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/gt.png",
-      svg: "https://flagcdn.com/gt.svg",
-    },
+    flag: "gt",
     emoji: "🇬🇹",
     countryCallingCode: "+502",
     tax: 0.12,
   },
   {
     name: "Uruguay",
-    capital: "Montevideo",
     currencies: [{ name: "Uruguayan peso", symbol: "$" }],
     languages: ["Spanish"],
-    coordinates: [-33, -56],
-    area: 181034,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/uy.png",
-      svg: "https://flagcdn.com/uy.svg",
-    },
+    flag: "uy",
     emoji: "🇺🇾",
     countryCallingCode: "+598",
     tax: 0.22,
   },
   {
     name: "Morocco",
-    capital: "Rabat",
     currencies: [{ name: "Moroccan dirham", symbol: "د.م." }],
     languages: ["Arabic", "Berber"],
-    coordinates: [32, -5],
-    area: 446550,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ma.png",
-      svg: "https://flagcdn.com/ma.svg",
-    },
+    flag: "ma",
     emoji: "🇲🇦",
     countryCallingCode: "+212",
     tax: 0.20,
   },
   {
     name: "Germany",
-    capital: "Berlin",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["German"],
-    coordinates: [51, 9],
-    area: 357114,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/de.png",
-      svg: "https://flagcdn.com/de.svg",
-    },
+    flag: "de",
     emoji: "🇩🇪",
     countryCallingCode: "+49",
   },
   {
     name: "United States",
-    capital: "Washington, D.C.",
     currencies: [{ name: "United States dollar", symbol: "$" }],
     languages: ["English"],
-    coordinates: [38, -97],
-    area: 9372610,
     postalCode: { format: "#####-####", regex: "^\\d{5}(-\\d{4})?$" },
-    flags: {
-      png: "https://flagcdn.com/w320/us.png",
-      svg: "https://flagcdn.com/us.svg",
-    },
+    flag: "us",
     emoji: "🇺🇸",
     countryCallingCode: "+1",
   },
   {
     name: "Bulgaria",
-    capital: "Sofia",
     currencies: [{ name: "Bulgarian lev", symbol: "лв" }],
     languages: ["Bulgarian"],
-    coordinates: [43, 25],
-    area: 110879,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/bg.png",
-      svg: "https://flagcdn.com/bg.svg",
-    },
+    flag: "bg",
     emoji: "🇧🇬",
     countryCallingCode: "+359",
     tax: 0.20,
   },
   {
     name: "Papua New Guinea",
-    capital: "Port Moresby",
     currencies: [{ name: "Papua New Guinean kina", symbol: "K" }],
     languages: ["English", "Hiri Motu", "Tok Pisin"],
-    coordinates: [-6, 147],
-    area: 462840,
     postalCode: { format: "###", regex: "^(\\d{3})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/pg.png",
-      svg: "https://flagcdn.com/pg.svg",
-    },
+    flag: "pg",
     emoji: "🇵🇬",
     countryCallingCode: "+675",
   },
   {
     name: "Costa Rica",
-    capital: "San José",
     currencies: [{ name: "Costa Rican colón", symbol: "₡" }],
     languages: ["Spanish"],
-    coordinates: [10, -84],
-    area: 51100,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/cr.png",
-      svg: "https://flagcdn.com/cr.svg",
-    },
+    flag: "cr",
     emoji: "🇨🇷",
     countryCallingCode: "+506",
     tax: 0.13,
   },
   {
     name: "Ecuador",
-    capital: "Quito",
     currencies: [{ name: "United States dollar", symbol: "$" }],
     languages: ["Spanish"],
-    coordinates: [-2, -77.5],
-    area: 276841,
     postalCode: { format: "@####@", regex: "^([a-zA-Z]\\d{4}[a-zA-Z])$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ec.png",
-      svg: "https://flagcdn.com/ec.svg",
-    },
+    flag: "ec",
     emoji: "🇪🇨",
     countryCallingCode: "+593",
     tax: 0.12,
   },
   {
     name: "South Korea",
-    capital: "Seoul",
     currencies: [{ name: "South Korean won", symbol: "₩" }],
     languages: ["Korean"],
-    coordinates: [37, 127.5],
-    area: 100210,
     postalCode: {
       format: "SEOUL ###-###",
       regex: "^(?:SEOUL)*(\\d{6})$",
     },
-    flags: {
-      png: "https://flagcdn.com/w320/kr.png",
-      svg: "https://flagcdn.com/kr.svg",
-    },
+    flag: "kr",
     emoji: "",
     countryCallingCode: "",
     tax: 0.10,
   },
   {
     name: "Puerto Rico",
-    capital: "San Juan",
     currencies: [{ name: "United States dollar", symbol: "$" }],
     languages: ["English", "Spanish"],
-    coordinates: [18.25, -66.5],
-    area: 8870,
     postalCode: { format: "#####-####", regex: "^(\\d{9})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/pr.png",
-      svg: "https://flagcdn.com/pr.svg",
-    },
+    flag: "pr",
     emoji: "🇵🇷",
     countryCallingCode: "+1 787",
     tax: 0.115
   },
   {
     name: "North Korea",
-    capital: "Pyongyang",
     currencies: [{ name: "North Korean won", symbol: "₩" }],
     languages: ["Korean"],
-    coordinates: [40, 127],
-    area: 120538,
     postalCode: { format: "###-###", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/kp.png",
-      svg: "https://flagcdn.com/kp.svg",
-    },
+    flag: "kp",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Taiwan",
-    capital: "Taipei",
     currencies: [{ name: "New Taiwan dollar", symbol: "$" }],
     languages: ["Chinese"],
-    coordinates: [23.5, 121],
-    area: 36193,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/tw.png",
-      svg: "https://flagcdn.com/tw.svg",
-    },
+    flag: "tw",
     emoji: "🇹🇼",
     countryCallingCode: "+886",
     tax: 0.05,
   },
   {
     name: "Lithuania",
-    capital: "Vilnius",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Lithuanian"],
-    coordinates: [56, 24],
-    area: 65300,
     postalCode: { format: "LT-#####", regex: "^(?:LT)*(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/lt.png",
-      svg: "https://flagcdn.com/lt.svg",
-    },
+    flag: "lt",
     emoji: "🇱🇹",
     countryCallingCode: "+370",
   },
   {
     name: "Angola",
-    capital: "Luanda",
     currencies: [{ name: "Angolan kwanza", symbol: "Kz" }],
     languages: ["Portuguese"],
-    coordinates: [-12.5, 18.5],
-    area: 1246700,
-    flags: {
-      png: "https://flagcdn.com/w320/ao.png",
-      svg: "https://flagcdn.com/ao.svg",
-    },
+    flag: "ao",
     emoji: "🇦🇴",
     countryCallingCode: "+244",
   },
   {
     name: "Tunisia",
-    capital: "Tunis",
     currencies: [{ name: "Tunisian dinar", symbol: "د.ت" }],
     languages: ["Arabic"],
-    coordinates: [34, 9],
-    area: 163610,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/tn.png",
-      svg: "https://flagcdn.com/tn.svg",
-    },
+    flag: "tn",
     emoji: "🇹🇳",
     countryCallingCode: "+216",
     tax: 0.19,
   },
   {
     name: "Ghana",
-    capital: "Accra",
     currencies: [{ name: "Ghanaian cedi", symbol: "₵" }],
     languages: ["English"],
-    coordinates: [8, -2],
-    area: 238533,
-    flags: {
-      png: "https://flagcdn.com/w320/gh.png",
-      svg: "https://flagcdn.com/gh.svg",
-    },
+    flag: "gh",
     emoji: "🇬🇭",
     countryCallingCode: "+233",
   },
   {
     name: "Iraq",
-    capital: "Baghdad",
     currencies: [{ name: "Iraqi dinar", symbol: "ع.د" }],
     languages: ["Arabic", "Aramaic", "Sorani"],
-    coordinates: [33, 44],
-    area: 438317,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/iq.png",
-      svg: "https://flagcdn.com/iq.svg",
-    },
+    flag: "iq",
     emoji: "🇮🇶",
     countryCallingCode: "+964",
   },
   {
     name: "New Zealand",
-    capital: "Wellington",
     currencies: [{ name: "New Zealand dollar", symbol: "$" }],
     languages: ["English", "Māori", "New Zealand Sign Language"],
-    coordinates: [-41, 174],
-    area: 270467,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/nz.png",
-      svg: "https://flagcdn.com/nz.svg",
-    },
+    flag: "nz",
     emoji: "🇳🇿",
     countryCallingCode: "+64",
     tax: 0.15,
   },
   {
     name: "Serbia",
-    capital: "Belgrade",
     currencies: [{ name: "Serbian dinar", symbol: "дин." }],
     languages: ["Serbian"],
-    coordinates: [44, 21],
-    area: 88361,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/rs.png",
-      svg: "https://flagcdn.com/rs.svg",
-    },
+    flag: "rs",
     emoji: "🇷🇸",
     countryCallingCode: "+381",
   },
   {
     name: "Romania",
-    capital: "Bucharest",
     currencies: [{ name: "Romanian leu", symbol: "lei" }],
     languages: ["Romanian"],
-    coordinates: [46, 25],
-    area: 238391,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ro.png",
-      svg: "https://flagcdn.com/ro.svg",
-    },
+    flag: "ro",
     emoji: "🇷🇴",
     countryCallingCode: "+40",
   },
   {
     name: "Afghanistan",
-    capital: "Kabul",
     currencies: [{ name: "Afghan afghani", symbol: "؋" }],
     languages: ["Dari", "Pashto", "Turkmen"],
-    coordinates: [33, 65],
-    area: 652230,
-    flags: {
-      png: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_the_Taliban.svg/320px-Flag_of_the_Taliban.svg.png",
-      svg: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_the_Taliban.svg",
-    },
+    flag: "af",
     emoji: "🇦🇫",
     countryCallingCode: "+93",
   },
   {
     name: "India",
-    capital: "New Delhi",
     currencies: [{ name: "Indian rupee", symbol: "₹" }],
     languages: ["English", "Hindi", "Tamil"],
-    coordinates: [20, 77],
-    area: 3287590,
     postalCode: { format: "######", regex: "^(\\d{6})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/in.png",
-      svg: "https://flagcdn.com/in.svg",
-    },
+    flag: "in",
     emoji: "🇮🇳",
     countryCallingCode: "+91",
   },
   {
     name: "Denmark",
-    capital: "Copenhagen",
     currencies: [{ name: "Danish krone", symbol: "kr" }],
     languages: ["Danish"],
-    coordinates: [56, 10],
-    area: 43094,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/dk.png",
-      svg: "https://flagcdn.com/dk.svg",
-    },
+    flag: "dk",
     emoji: "🇩🇰",
     countryCallingCode: "+45",
   },
   {
     name: "Saudi Arabia",
-    capital: "Riyadh",
-    currencies: [{ name: "Saudi riyal", symbol: "ر.س" }],
+    // U+20C1 SAUDI RIYAL SIGN (SAMA 2025, Unicode 17)
+    currencies: [{ name: "Saudi riyal", symbol: "⃁" }],
     languages: ["Arabic"],
-    coordinates: [25, 45],
-    area: 2149690,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/sa.png",
-      svg: "https://flagcdn.com/sa.svg",
-    },
+    flag: "sa",
     emoji: "🇸🇦",
     countryCallingCode: "+966",
     tax: 0.15,
   },
   {
     name: "Guinea-Bissau",
-    capital: "Bissau",
     currencies: [{ name: "West African CFA franc", symbol: "Fr" }],
     languages: ["Portuguese", "Upper Guinea Creole"],
-    coordinates: [12, -15],
-    area: 36125,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/gw.png",
-      svg: "https://flagcdn.com/gw.svg",
-    },
+    flag: "gw",
     emoji: "",
     countryCallingCode: "",
   },
   {
     name: "Norway",
-    capital: "Oslo",
     currencies: [{ name: "Norwegian krone", symbol: "kr" }],
     languages: ["Norwegian Nynorsk", "Norwegian Bokmål", "Sami"],
-    coordinates: [62, 10],
-    area: 323802,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/no.png",
-      svg: "https://flagcdn.com/no.svg",
-    },
+    flag: "no",
     emoji: "🇳🇴",
     countryCallingCode: "+47",
   },
   {
     name: "Egypt",
-    capital: "Cairo",
-    currencies: [{ name: "Egyptian pound", symbol: "£" }],
+    currencies: [{ name: "Egyptian pound", symbol: "E£" }],
     languages: ["Arabic"],
-    coordinates: [27, 30],
-    area: 1002450,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/eg.png",
-      svg: "https://flagcdn.com/eg.svg",
-    },
+    flag: "eg",
     emoji: "🇪🇬",
     countryCallingCode: "+20",
     tax: 0.14,
   },
   {
     name: "Cyprus",
-    capital: "Nicosia",
     currencies: [{ name: "Euro", symbol: "€" }],
     languages: ["Greek", "Turkish"],
-    coordinates: [35, 33],
-    area: 9251,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/cy.png",
-      svg: "https://flagcdn.com/cy.svg",
-    },
+    flag: "cy",
     emoji: "🇨🇾",
     countryCallingCode: "+357",
   },
   {
     name: "Azerbaijan",
-    capital: "Baku",
     currencies: [{ name: "Azerbaijani manat", symbol: "₼" }],
     languages: ["Azerbaijani", "Russian"],
-    coordinates: [40.5, 47.5],
-    area: 86600,
     postalCode: { format: "AZ ####", regex: "^(?:AZ)*(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/az.png",
-      svg: "https://flagcdn.com/az.svg",
-    },
+    flag: "az",
     emoji: "🇦🇿",
     countryCallingCode: "+994",
     tax: 0.18,
   },
   {
     name: "Zimbabwe",
-    capital: "Harare",
     currencies: [{ name: "Zimbabwean dollar", symbol: "$" }],
     languages: [
       "Chibarwe",
@@ -2350,92 +1776,56 @@ const COUNTRIES: Country[] = [
       "Xhosa",
       "Zimbabwean Sign Language",
     ],
-    coordinates: [-20, 30],
-    area: 390757,
-    flags: {
-      png: "https://flagcdn.com/w320/zw.png",
-      svg: "https://flagcdn.com/zw.svg",
-    },
+    flag: "zw",
     emoji: "🇿🇼",
     countryCallingCode: "+263",
   },
   {
     name: "Mali",
-    capital: "Bamako",
     currencies: [{ name: "West African CFA franc", symbol: "Fr" }],
     languages: ["French"],
-    coordinates: [17, -4],
-    area: 1240192,
-    flags: {
-      png: "https://flagcdn.com/w320/ml.png",
-      svg: "https://flagcdn.com/ml.svg",
-    },
+    flag: "ml",
     emoji: "🇲🇱",
     countryCallingCode: "+223",
   },
   {
     name: "Mauritania",
-    capital: "Nouakchott",
     currencies: [{ name: "Mauritanian ouguiya", symbol: "UM" }],
     languages: ["Arabic"],
-    coordinates: [20, -12],
-    area: 1030700,
-    flags: {
-      png: "https://flagcdn.com/w320/mr.png",
-      svg: "https://flagcdn.com/mr.svg",
-    },
+    flag: "mr",
     emoji: "🇲🇷",
     countryCallingCode: "+222",
     tax: 0.16,
   },
   {
     name: "Ukraine",
-    capital: "Kyiv",
     currencies: [{ name: "Ukrainian hryvnia", symbol: "₴" }],
     languages: ["Ukrainian"],
-    coordinates: [49, 32],
-    area: 603500,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/ua.png",
-      svg: "https://flagcdn.com/ua.svg",
-    },
+    flag: "ua",
     emoji: "🇺🇦",
     countryCallingCode: "+380",
     tax: 0.20,
   },
   {
     name: "Cameroon",
-    capital: "Yaoundé",
     currencies: [{ name: "Central African CFA franc", symbol: "Fr" }],
     languages: ["English", "French"],
-    coordinates: [6, 12],
-    area: 475442,
-    flags: {
-      png: "https://flagcdn.com/w320/cm.png",
-      svg: "https://flagcdn.com/cm.svg",
-    },
+    flag: "cm",
     emoji: "🇨🇲",
     countryCallingCode: "+237",
   },
   {
     name: "Mozambique",
-    capital: "Maputo",
     currencies: [{ name: "Mozambican metical", symbol: "MT" }],
     languages: ["Portuguese"],
-    coordinates: [-18.25, 35],
-    area: 801590,
     postalCode: { format: "####", regex: "^(\\d{4})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/mz.png",
-      svg: "https://flagcdn.com/mz.svg",
-    },
+    flag: "mz",
     emoji: "🇲🇿",
     countryCallingCode: "+258",
   },
   {
     name: "Namibia",
-    capital: "Windhoek",
     currencies: [
       { name: "Namibian dollar", symbol: "$" },
       { name: "South African rand", symbol: "R" },
@@ -2451,41 +1841,24 @@ const COUNTRIES: Country[] = [
       "Ndonga",
       "Tswana",
     ],
-    coordinates: [-22, 17],
-    area: 825615,
-    flags: {
-      png: "https://flagcdn.com/w320/na.png",
-      svg: "https://flagcdn.com/na.svg",
-    },
+    flag: "na",
     emoji: "🇳🇦",
     countryCallingCode: "+264",
   },
   {
     name: "Gambia",
-    capital: "Banjul",
     currencies: [{ name: "dalasi", symbol: "D" }],
     languages: ["English"],
-    coordinates: [13.46666666, -16.56666666],
-    area: 10689,
-    flags: {
-      png: "https://flagcdn.com/w320/gm.png",
-      svg: "https://flagcdn.com/gm.svg",
-    },
+    flag: "gm",
     emoji: "🇬🇲",
     countryCallingCode: "+220",
   },
   {
     name: "Laos",
-    capital: "Vientiane",
     currencies: [{ name: "Lao kip", symbol: "₭" }],
     languages: ["Lao"],
-    coordinates: [18, 105],
-    area: 236800,
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
-    flags: {
-      png: "https://flagcdn.com/w320/la.png",
-      svg: "https://flagcdn.com/la.svg",
-    },
+    flag: "la",
     emoji: "",
     countryCallingCode: "",
   },

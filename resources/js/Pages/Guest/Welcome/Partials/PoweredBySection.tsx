@@ -1,15 +1,17 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { FaExpandAlt } from "react-icons/fa";
 import { FaGaugeHigh, FaLock, FaShield } from "react-icons/fa6";
 
 export default function PoweredBySection() {
+  const { t } = useTranslation();
   return (
     <section
-      id="powered-by-aws"
+      id="infrastructure"
       className="relative mt-64 bg-blue-gray-100 bg-opacity-50 pb-32 md:mt-20"
     >
       <div
-        className="absolute bottom-auto left-0 right-0 top-0 -mt-20 w-full"
+        className="absolute bottom-auto start-0 end-0 top-0 -mt-20 w-full"
         style={{ height: "80px" }}
       >
         <svg
@@ -29,12 +31,12 @@ export default function PoweredBySection() {
       </div>
       <div className="container mx-auto">
         <div className="flex flex-wrap items-center">
-          <div className="-mt-32 ml-auto mr-auto w-10/12 px-1 sm:px-8 md:w-6/12 md:px-4 lg:w-4/12">
+          <div className="-mt-32 ms-auto me-auto w-10/12 px-1 sm:px-8 md:w-6/12 md:px-4 lg:w-4/12">
             <div className="relative mb-6 flex w-full min-w-0 flex-col break-words rounded-lg bg-primary-600 shadow-lg">
               <img
                 src="assets/cloud-service-cut.jpg"
                 className="w-full rounded-t-lg align-middle"
-                alt="AWS servers"
+                alt={t("Cloud servers")}
                 loading="lazy"
               />
               <blockquote className="relative mb-4 p-8">
@@ -42,7 +44,7 @@ export default function PoweredBySection() {
                   preserveAspectRatio="none"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 583 95"
-                  className="absolute left-0 block w-full"
+                  className="absolute start-0 block w-full"
                   style={{ height: "95px", top: "-94px" }}
                 >
                   <polygon
@@ -51,12 +53,12 @@ export default function PoweredBySection() {
                   ></polygon>
                 </svg>
                 <h4 className="text-xl font-bold text-blue-gray-50">
-                  Powered by Amazon Web Services
+                  {t("Built on reliable infrastructure")}
                 </h4>
                 <p className="text-md mt-2 font-light text-blue-gray-50">
-                  Our system is built on the Amazon Web Services (AWS) platform,
-                  the world’s most comprehensive and broadly adopted cloud
-                  provider
+                  {t(
+                    "Our system runs on cloud servers, so you can open it from any device with a browser.",
+                  )}
                 </p>
               </blockquote>
             </div>
@@ -69,11 +71,13 @@ export default function PoweredBySection() {
                     <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white p-3 text-center shadow-md">
                       <FaLock className="text-lg text-blue-gray-600" />
                     </div>
-                    <h6 className="mb-1 text-xl font-semibold">Secure </h6>
+                    <h6 className="mb-1 text-xl font-semibold">
+                      {t("Secure")}
+                    </h6>
                     <p className="text-blueGray-500 mb-4">
-                      AWS protects our system and your data with the most
-                      advanced security features, such as encryption, firewalls,
-                      and access management.
+                      {t(
+                        "Connections use HTTPS encryption, passwords are stored only as hashes, and each staff role can do only what it needs.",
+                      )}
                     </p>
                   </div>
                 </div>
@@ -82,11 +86,11 @@ export default function PoweredBySection() {
                     <div className="text-blueGray-500 mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white p-3 text-center shadow-md">
                       <FaGaugeHigh className="text-xl text-blue-gray-600" />
                     </div>
-                    <h6 className="mb-1 text-xl font-semibold">Fast</h6>
+                    <h6 className="mb-1 text-xl font-semibold">{t("Fast")}</h6>
                     <p className="text-blueGray-500 mb-4">
-                      High-performance computing, networking, and database
-                      services that allow us to process large amounts of data
-                      and deliver results in real-time.
+                      {t(
+                        "Pages load quickly, and the checkout screen is made for quick sales at the counter.",
+                      )}
                     </p>
                   </div>
                 </div>
@@ -97,10 +101,13 @@ export default function PoweredBySection() {
                     <div className="text-blueGray-500 mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white p-3 text-center shadow-md">
                       <FaShield className="text-lg text-blue-gray-600" />
                     </div>
-                    <h6 className="mb-1 text-xl font-semibold">Reliable</h6>
+                    <h6 className="mb-1 text-xl font-semibold">
+                      {t("Reliable")}
+                    </h6>
                     <p className="text-blueGray-500 mb-4">
-                      Our system is always available and resilient to failures,
-                      with 99.99% uptime.
+                      {t(
+                        "Your records are kept on our servers, not in one browser, so you can continue on another device.",
+                      )}
                     </p>
                   </div>
                 </div>
@@ -109,11 +116,13 @@ export default function PoweredBySection() {
                     <div className="text-blueGray-500 mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white p-3 text-center shadow-md">
                       <FaExpandAlt className="text-lg text-blue-gray-600" />
                     </div>
-                    <h6 className="mb-1 text-xl font-semibold">Scalable</h6>
+                    <h6 className="mb-1 text-xl font-semibold">
+                      {t("Scalable")}
+                    </h6>
                     <p className="text-blueGray-500 mb-4">
-                      Tools such as auto-scaling and elastic load balancing,
-                      enable us to scale without compromising perfor&shy;mance,
-                      availability, or security
+                      {t(
+                        "Start with one account, then add staff accounts and products as your shop grows.",
+                      )}
                     </p>
                   </div>
                 </div>
@@ -123,12 +132,14 @@ export default function PoweredBySection() {
         </div>
       </div>
 
+      {/* The divider goes 1px into the next (same colour) section. Without
+          this overlap, a fractional section height leaves a light hairline. */}
       <div
-        className="absolute bottom-0 left-0 right-0 top-auto -mt-20 w-full"
+        className="pointer-events-none absolute -bottom-px start-0 end-0 top-auto w-full"
         style={{ height: "80px" }}
       >
         <svg
-          className="absolute bottom-0 overflow-hidden"
+          className="absolute bottom-0 block w-full overflow-hidden"
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
           version="1.1"
@@ -144,7 +155,7 @@ export default function PoweredBySection() {
       </div>
       {/* <div className="container mx-auto overflow-hidden pb-20">
         <div className="flex flex-wrap items-center">
-          <div className="ml-auto mr-auto mt-48 w-full px-12 md:w-4/12 md:px-4">
+          <div className="ms-auto me-auto mt-48 w-full px-12 md:w-4/12 md:px-4">
             <div className="text-blueGray-500 mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white p-3 text-center shadow-lg">
               <i className="fas fa-sitemap text-xl"></i>
             </div>
@@ -157,28 +168,28 @@ export default function PoweredBySection() {
               have different colours.
             </p>
             <div className="block pb-6">
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Buttons
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Inputs
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Labels
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Menus
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Navbars
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Pagination
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Progressbars
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Typography
               </span>
             </div>
@@ -187,10 +198,10 @@ export default function PoweredBySection() {
               href="/learning-lab/tailwind-starter-kit/documentation/css/alerts"
             >
               View All{" "}
-              <i className="fa fa-angle-double-right ml-1 leading-relaxed"></i>
+              <i className="fa fa-angle-double-right ms-1 leading-relaxed"></i>
             </a>
           </div>
-          <div className="ml-auto mr-auto mt-32 w-full px-4 md:w-5/12">
+          <div className="ms-auto me-auto mt-32 w-full px-4 md:w-5/12">
             <div className="relative mb-6 mt-48 flex w-full min-w-0 flex-col md:mt-0">
               <img
                 alt="..."
@@ -242,7 +253,7 @@ export default function PoweredBySection() {
           </div>
         </div>
         <div className="flex flex-wrap items-center pt-32">
-          <div className="ml-auto mr-auto mt-32 w-full px-4 md:w-6/12">
+          <div className="ms-auto me-auto mt-32 w-full px-4 md:w-6/12">
             <div className="relative flex flex-wrap justify-center">
               <div className="my-4 w-full px-4 lg:w-6/12">
                 <div className="bg-lightBlue-500 rounded-lg p-8 text-center shadow-lg">
@@ -306,7 +317,7 @@ export default function PoweredBySection() {
               </div>
             </div>
           </div>
-          <div className="ml-auto mr-auto mt-48 w-full px-12 md:w-4/12 md:px-4">
+          <div className="ms-auto me-auto mt-48 w-full px-12 md:w-4/12 md:px-4">
             <div className="text-blueGray-500 mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white p-3 text-center shadow-lg">
               <i className="fas fa-drafting-compass text-xl"></i>
             </div>
@@ -323,28 +334,28 @@ export default function PoweredBySection() {
               you.
             </p>
             <div className="block pb-6">
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Alerts
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Dropdowns
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Menus
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Modals
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Navbars
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Popovers
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Tabs
               </span>
-              <span className="text-blueGray-500 mr-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:mr-0">
+              <span className="text-blueGray-500 me-2 mt-2 inline-block rounded-full bg-white px-2 py-1 text-xs font-semibold uppercase uppercase last:me-0">
                 Tooltips
               </span>
             </div>
@@ -353,15 +364,15 @@ export default function PoweredBySection() {
               href="/learning-lab/tailwind-starter-kit/documentation/vue/alerts"
             >
               View all{" "}
-              <i className="fa fa-angle-double-right ml-1 leading-relaxed"></i>
+              <i className="fa fa-angle-double-right ms-1 leading-relaxed"></i>
             </a>
           </div>
         </div>
       </div> */}
       {/* <div className="container mx-auto px-4 pb-32 pt-48">
         <div className="flex flex-wrap items-center">
-          <div className="ml-auto w-full px-12 md:w-5/12 md:px-4">
-            <div className="md:pr-12">
+          <div className="ms-auto w-full px-12 md:w-5/12 md:px-4">
+            <div className="md:pe-12">
               <div className="text-blueGray-500 mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white p-3 text-center shadow-lg">
                 <i className="fas fa-file-alt text-xl"></i>
               </div>
@@ -376,7 +387,7 @@ export default function PoweredBySection() {
                 <li className="py-2">
                   <div className="flex items-center">
                     <div>
-                      <span className="text-blueGray-500 bg-blueGray-50 mr-3 inline-block rounded-full px-2 py-1 text-xs font-semibold uppercase">
+                      <span className="text-blueGray-500 bg-blueGray-50 me-3 inline-block rounded-full px-2 py-1 text-xs font-semibold uppercase">
                         <i className="fas fa-fingerprint"></i>
                       </span>
                     </div>
@@ -390,7 +401,7 @@ export default function PoweredBySection() {
                 <li className="py-2">
                   <div className="flex items-center">
                     <div>
-                      <span className="text-blueGray-500 bg-blueGray-50 mr-3 inline-block rounded-full px-2 py-1 text-xs font-semibold uppercase">
+                      <span className="text-blueGray-500 bg-blueGray-50 me-3 inline-block rounded-full px-2 py-1 text-xs font-semibold uppercase">
                         <i className="fab fa-html5"></i>
                       </span>
                     </div>
@@ -404,7 +415,7 @@ export default function PoweredBySection() {
                 <li className="py-2">
                   <div className="flex items-center">
                     <div>
-                      <span className="text-blueGray-500 bg-blueGray-50 mr-3 inline-block rounded-full px-2 py-1 text-xs font-semibold uppercase">
+                      <span className="text-blueGray-500 bg-blueGray-50 me-3 inline-block rounded-full px-2 py-1 text-xs font-semibold uppercase">
                         <i className="far fa-paper-plane"></i>
                       </span>
                     </div>
@@ -418,7 +429,7 @@ export default function PoweredBySection() {
               </ul>
             </div>
           </div>
-          <div className="mr-auto w-full px-4 pt-24 md:w-6/12 md:pt-0">
+          <div className="me-auto w-full px-4 pt-24 md:w-6/12 md:pt-0">
             <img
               alt="..."
               className="max-w-full rounded-lg shadow-xl"
