@@ -7,6 +7,7 @@ import { FormEventHandler } from "react";
 import TaxRateInput from "@/Pages/Authenticating/Register/Partials/BusinessForm/Partials/TaxRateInput";
 import PrimaryMaterialBtn from "@/Components/Buttons/Material/PrimaryMaterialBtn";
 import { useTranslation } from "react-i18next";
+import { SAUDI_RIYAL_SIGN } from "@/Utilities/currency";
 
 export default function FinancialSection({
   business,
@@ -63,10 +64,20 @@ export default function FinancialSection({
             hint={
               <span>
                 {t("You can use any Unicode symbol")}({" "}
-                <span className="font-semibold text-blue-gray-600">$</span>,{" "}
-                <span className="font-semibold text-blue-gray-600">£</span>,{" "}
-                <span className="font-semibold text-blue-gray-600">¥</span>,{" "}
-                <span className="font-semibold text-blue-gray-600">€</span>,
+                {/* A click puts the symbol in the input (most keyboards cannot type the riyal sign). */}
+                {["$", "£", "¥", "€", SAUDI_RIYAL_SIGN].map((symbol) => (
+                  <span key={symbol}>
+                    <button
+                      type="button"
+                      className="font-semibold text-blue-gray-600 hover:text-primary-700"
+                      onClick={() => form.setData("currency", symbol)}
+                      disabled={form.processing}
+                    >
+                      {symbol}
+                    </button>
+                    ,{" "}
+                  </span>
+                ))}
                 ...etc)
               </span>
             }

@@ -3,6 +3,14 @@ import moment from "moment";
 // Vite loads the ESM build of moment (dist/moment.js); its locales are in dist/locale.
 import "moment/dist/locale/ar";
 import React from "react";
+
+// Keep Arabic month and day names, but use Western digits (0-9): the "ar" locale
+// changes digits to ١٢٣ in postformat. Keep its Arabic comma.
+moment.updateLocale("ar", {
+  postformat: (s: string) => s.replace(/,/g, "،"),
+});
+// updateLocale also sets the global locale; each date sets its own locale below.
+moment.locale("en");
 import { useTranslation } from "react-i18next";
 
 export default function FromDate({

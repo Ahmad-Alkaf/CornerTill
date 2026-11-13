@@ -2,6 +2,8 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 import withMT from '@material-tailwind/react/utils/withMT';
 
+const riyalSign = '"CornerTill Riyal Sign"';
+
 
 /** @type {import('tailwindcss').Config} */
 export default withMT({
@@ -17,8 +19,12 @@ export default withMT({
 
   theme: {
     extend: {
+      // "CornerTill Riyal Sign" has only U+20C1 (see resources/css/app.css).
+      // Keep it first in each stack, so the riyal sign always shows.
       fontFamily: {
-        sans: ['Figtree Variable', ...defaultTheme.fontFamily.sans],
+        sans: [riyalSign, 'Figtree Variable', ...defaultTheme.fontFamily.sans],
+        serif: [riyalSign, 'Roboto Slab', 'serif'],
+        body: [riyalSign, 'Roboto', 'sans-serif'],
       },
       colors: {
         // CornerTill logo colors.

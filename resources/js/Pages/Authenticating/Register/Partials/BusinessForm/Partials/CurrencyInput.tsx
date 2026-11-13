@@ -13,60 +13,53 @@ export default function CurrencyInput<T extends ICreateBusiness>({
   form: UseBetterForm<T>;
   chosenCountry: Country | null;
 }) {
-  let countries = useMemo(
-    () =>
-      COUNTRIES.filter(
-        (c) => c.currencies?.[0]?.name && c.currencies?.[0]?.symbol,
-      )
-        .sort((a, b) =>
-          a.currencies[0].name > b.currencies[0].name
-            ? 1
-            : a.currencies[0].name < b.currencies[0].name
-              ? -1
-              : 0,
-        )
-        .filter(
-          (v, i, arr) =>
-            arr.length > i + 1 &&
-            v.currencies[0].name !== arr[i + 1].currencies[0].name,
-        ),
-    [],
-  );
+  //One option for each currency name (many countries use the Euro), sorted by name.
+  const currencies = useMemo(() => {
+    const byName = new Map<string, { name: string; symbol: string }>();
+    for (const c of COUNTRIES) {
+      const currency = c.currencies?.[0];
+      if (currency?.name && currency?.symbol && !byName.has(currency.name))
+        byName.set(currency.name, {
+          name: currency.name,
+          symbol: currency.symbol,
+        });
+    }
+    return [...byName.values()].sort((a, b) =>
+      a.name > b.name ? 1 : a.name < b.name ? -1 : 0,
+    );
+  }, []);
 
-  function getCountryIndex(country: Country | null): number | null {
-    let i: number | null = null;
-    if (country !== null)
-      i = countries.findIndex((c) => c.name == country.name);
-    if (i === -1) i = null;
-    return i;
+  //The option of the country's currency (found by the currency name, not by the country).
+  function getCurrencyIndex(country: Country | null): number | null {
+    const name = country?.currencies?.[0]?.name;
+    const i = name ? currencies.findIndex((c) => c.name === name) : -1;
+    return i === -1 ? null : i;
   }
 
   useEffect(() => {
-    let index = getCountryIndex(country);
-    if (index) {
-      setCountryIndex(index);
-      form.setData("currency", countries[index].currencies[0].symbol as string);
-    }
+    if (country === null) return;
+    const index = getCurrencyIndex(country);
+    setCurrencyIndex(index);
+    //No currency for this country: clear it, so the owner selects one
+    //(do not keep the currency of the country selected before).
+    form.setData("currency", index === null ? "" : currencies[index].symbol);
   }, [country]);
 
-  const [countryIndex, setCountryIndex] = useState<number | null>(
-    getCountryIndex(country),
+  const [currencyIndex, setCurrencyIndex] = useState<number | null>(
+    getCurrencyIndex(country),
   );
 
   const { t } = useTranslation();
   return (
     <SelectInput
       label="Currency"
-      value={countryIndex?.toString()}
+      value={currencyIndex?.toString()}
       errorMsg={form.errors.currency}
       hideError={form.isDirty("currency")}
       disabled={form.processing}
       onChange={(v) => {
-        setCountryIndex(Number(v));
-        form.setData(
-          "currency",
-          countries[Number(v)].currencies[0].symbol as string,
-        );
+        setCurrencyIndex(Number(v));
+        form.setData("currency", currencies[Number(v)].symbol);
       }}
       required
       selected={(element) =>
@@ -78,14 +71,14 @@ export default function CurrencyInput<T extends ICreateBusiness>({
         })
       }
     >
-      {countries.map((c, i) => (
+      {currencies.map((c, i) => (
         <Option
           key={i}
           value={i.toString()}
           className="flex items-center gap-2"
         >
-          <span className="w-7 text-gray-900">{c.currencies[0].symbol}</span>
-          {t(c.currencies[0].name)}
+          <span className="w-7 text-gray-900">{c.symbol}</span>
+          {t(c.name)}
         </Option>
       ))}
     </SelectInput>

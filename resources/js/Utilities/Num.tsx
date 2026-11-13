@@ -2,6 +2,13 @@ import { AuthPageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { HTMLAttributes } from "react";
 import { useTranslation } from "react-i18next";
+import { isSymbolAlwaysLeft } from "./currency";
+
+/**
+ * Western digits (0-9) in all languages and on all browser locales, with one
+ * format: 1,234.56. The browser locale (for example ar-SA) would give ١٬٢٣٤٫٥٦.
+ */
+export const NUMBER_LOCALE = "en-US";
 export type NumProps = {
   className?: string;
   fixed?: number;
@@ -38,13 +45,20 @@ export default function Num({
   compact = false,
 }: NumProps) {
   let number: string; //number is either number or noAmount. Ex: '1123' or 'N/A'
+  const symbol =
+    showCurrency && amount !== null
+      ? currencySymbol
+        ? currencySymbol
+        : usePage<AuthPageProps>().props.auth.business.currency
+      : null;
+  //SAMA rules for the Saudi riyal sign: always left of the number, with a space.
+  const symbolLeft = symbol !== null && isSymbolAlwaysLeft(symbol);
   const currency =
-    showCurrency && amount !== null ? (
+    symbol !== null ? (
       <span>
-        {currencySymbol
-          ? currencySymbol
-          : usePage<AuthPageProps>().props.auth.business.currency}
-        &#8239;
+        {symbol}
+        {/* &nbsp; is a no-break space, &#8239; is a thin space */}
+        {symbolLeft ? <>&nbsp;</> : <>&#8239;</>}
       </span>
     ) : (
       ""
@@ -53,7 +67,9 @@ export default function Num({
   const { t } = useTranslation();
   if (amount === null) number = (noAmount ? t(noAmount) : noAmount) ?? t("N/A");
   else if (compact && amount !== 0) {
-    let formatter = new Intl.NumberFormat("en", { notation: "compact" });
+    let formatter = new Intl.NumberFormat(NUMBER_LOCALE, {
+      notation: "compact",
+    });
     number = formatter.format(amount);
   } else {
     amount = Number(Number(amount).toFixed(fixed));
@@ -61,15 +77,25 @@ export default function Num({
     //Welcome to javascript where (0 * -1 = -0) 😑
     //also (-0 === 0 is true)
     if (Object.is(amount, -0)) number = "0";
-    else number = amount.toLocaleString();
+    else number = amount.toLocaleString(NUMBER_LOCALE);
   }
 
   return (
     <span className={className}>
       {/* &#8239; is thin space */}
       {prefix && <span {...prefixProps}>{prefix}&#8239;</span>}
-      {currency}
-      {number}
+      {symbolLeft ? (
+        //dir="ltr" isolates the amount, so in Arabic the sign stays on the left.
+        <span dir="ltr">
+          {currency}
+          {number}
+        </span>
+      ) : (
+        <>
+          {currency}
+          {number}
+        </>
+      )}
       {suffix && <span {...suffixProps}>&#8239;{suffix}</span>}
     </span>
   );

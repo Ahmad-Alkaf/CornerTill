@@ -745,8 +745,8 @@ const COUNTRIES: Country[] = [
   {
     name: "Palestine",
     currencies: [
-      { name: "Egyptian pound", symbol: "E£" },
       { name: "Israeli new shekel", symbol: "₪" },
+      { name: "Egyptian pound", symbol: "E£" },
       { name: "Jordanian dinar", symbol: "JD" },
     ],
     languages: ["Arabic"],
@@ -1700,7 +1700,8 @@ const COUNTRIES: Country[] = [
   },
   {
     name: "Saudi Arabia",
-    currencies: [{ name: "Saudi riyal", symbol: "ر.س" }],
+    // U+20C1 SAUDI RIYAL SIGN (SAMA 2025, Unicode 17)
+    currencies: [{ name: "Saudi riyal", symbol: "⃁" }],
     languages: ["Arabic"],
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
     flag: "sa",
@@ -1728,7 +1729,7 @@ const COUNTRIES: Country[] = [
   },
   {
     name: "Egypt",
-    currencies: [{ name: "Egyptian pound", symbol: "£" }],
+    currencies: [{ name: "Egyptian pound", symbol: "E£" }],
     languages: ["Arabic"],
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
     flag: "eg",
