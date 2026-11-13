@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -20,13 +21,13 @@ class SaleValues
     /** @return array{bills:int, bill_details:int, riyal_signs:int} the number of rows filled or changed */
     public static function fillMissing(): array
     {
-        $bills = DB::table('bills')->whereNull('taxPercent')->update([
+        $bills = self::updateIfAny(DB::table('bills')->whereNull('taxPercent'), [
             'taxPercent' => DB::raw('(SELECT business.taxPercent FROM business WHERE business.id = bills.business_id)'),
         ]);
-        $bills += DB::table('bills')->whereNull('currency')->update([
+        $bills += self::updateIfAny(DB::table('bills')->whereNull('currency'), [
             'currency' => DB::raw('(SELECT business.currency FROM business WHERE business.id = bills.business_id)'),
         ]);
-        $details = DB::table('bill_details')->whereNull('productName')->update([
+        $details = self::updateIfAny(DB::table('bill_details')->whereNull('productName'), [
             'price' => DB::raw('(SELECT products.price FROM products WHERE products.id = bill_details.product_id)'),
             'productName' => DB::raw('(SELECT products.name FROM products WHERE products.id = bill_details.product_id)'),
         ]);
@@ -42,13 +43,28 @@ class SaleValues
      */
     private static function normalizeRiyal(): int
     {
-        $changed = DB::table('bills')
-            ->whereIn(DB::raw('TRIM(currency)'), Currency::OLD_SAUDI_RIYAL_SYMBOLS)
-            ->update(['currency' => Currency::SAUDI_RIYAL_SIGN]);
-        $changed += DB::table('bills')
-            ->whereIn(DB::raw('UPPER(TRIM(currency))'), Currency::OLD_RIYAL_SYMBOLS_IN_SAUDI_ARABIA)
-            ->whereIn('business_id', DB::table('business')->where('country', 'Saudi Arabia')->select('id'))
-            ->update(['currency' => Currency::SAUDI_RIYAL_SIGN]);
+        $changed = self::updateIfAny(
+            DB::table('bills')->whereIn(DB::raw('TRIM(currency)'), Currency::OLD_SAUDI_RIYAL_SYMBOLS),
+            ['currency' => Currency::SAUDI_RIYAL_SIGN],
+        );
+        $changed += self::updateIfAny(
+            DB::table('bills')
+                ->whereIn(DB::raw('UPPER(TRIM(currency))'), Currency::OLD_RIYAL_SYMBOLS_IN_SAUDI_ARABIA)
+                ->whereIn('business_id', DB::table('business')->where('country', 'Saudi Arabia')->select('id')),
+            ['currency' => Currency::SAUDI_RIYAL_SIGN],
+        );
         return $changed;
+    }
+
+    /**
+     * The fill runs every hour and nearly always finds nothing. A SELECT ... LIMIT 1
+     * reads without locks (InnoDB consistent read); the UPDATE, which locks the rows
+     * it scans, runs only when a row matches.
+     */
+    private static function updateIfAny(Builder $query, array $values): int
+    {
+        if (!(clone $query)->exists())
+            return 0;
+        return $query->update($values);
     }
 }

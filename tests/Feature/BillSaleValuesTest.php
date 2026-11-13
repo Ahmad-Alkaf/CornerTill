@@ -228,6 +228,20 @@ class BillSaleValuesTest extends TestCase
         $this->artisan('bills:fill-sale-values')->expectsOutputToContain('riyal_signs=0')->assertSuccessful();
     }
 
+    public function test_the_fill_runs_no_update_when_nothing_is_missing(): void
+    {
+        $this->sell([['product_id' => $this->apple->id, 'quantity' => 1]]);
+        $updates = 0;
+        DB::listen(function ($query) use (&$updates) {
+            if (str_starts_with(strtolower(ltrim($query->sql)), 'update'))
+                $updates++;
+        });
+
+        $this->artisan('bills:fill-sale-values')->assertSuccessful();
+
+        $this->assertSame(0, $updates);
+    }
+
     public function test_the_fill_runs_every_hour(): void
     {
         $event = collect(app(\Illuminate\Console\Scheduling\Schedule::class)->events())
