@@ -22,7 +22,7 @@ class BillPolicy
             return true;
         } else {
             //bill is issued in less than 6 months.
-            if (now()->diffInDays($bill->created_at) < 180) {
+            if (now()->diffInDays($bill->created_at, true) < 180) {
                 return true;
             } else { //otherwise the response will be Not Found for ambiguity
                 abort(404);
