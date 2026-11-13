@@ -25,7 +25,10 @@ export default function ProductOptions({
 
   const { t } = useTranslation();
   return (
-    <div className="absolute end-2 top-2 hidden group-hover:block">
+    // `invisible`, not `hidden`: with `display: none` (when the mouse leaves the
+    // card, for example to a modal) the leave transition of the menu never ends,
+    // so the menu stays open.
+    <div className="invisible absolute end-2 top-2 group-hover:visible">
       <Dropdown>
         <Dropdown.Trigger>
           <span className="inline-flex">
