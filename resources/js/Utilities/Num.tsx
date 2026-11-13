@@ -2,6 +2,7 @@ import { AuthPageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { HTMLAttributes } from "react";
 import { useTranslation } from "react-i18next";
+import { isSymbolAlwaysLeft } from "./currency";
 export type NumProps = {
   className?: string;
   fixed?: number;
@@ -38,13 +39,20 @@ export default function Num({
   compact = false,
 }: NumProps) {
   let number: string; //number is either number or noAmount. Ex: '1123' or 'N/A'
+  const symbol =
+    showCurrency && amount !== null
+      ? currencySymbol
+        ? currencySymbol
+        : usePage<AuthPageProps>().props.auth.business.currency
+      : null;
+  //SAMA rules for the Saudi riyal sign: always left of the number, with a space.
+  const symbolLeft = symbol !== null && isSymbolAlwaysLeft(symbol);
   const currency =
-    showCurrency && amount !== null ? (
+    symbol !== null ? (
       <span>
-        {currencySymbol
-          ? currencySymbol
-          : usePage<AuthPageProps>().props.auth.business.currency}
-        &#8239;
+        {symbol}
+        {/* &nbsp; is a no-break space, &#8239; is a thin space */}
+        {symbolLeft ? <>&nbsp;</> : <>&#8239;</>}
       </span>
     ) : (
       ""
@@ -68,8 +76,18 @@ export default function Num({
     <span className={className}>
       {/* &#8239; is thin space */}
       {prefix && <span {...prefixProps}>{prefix}&#8239;</span>}
-      {currency}
-      {number}
+      {symbolLeft ? (
+        //dir="ltr" isolates the amount, so in Arabic the sign stays on the left.
+        <span dir="ltr">
+          {currency}
+          {number}
+        </span>
+      ) : (
+        <>
+          {currency}
+          {number}
+        </>
+      )}
       {suffix && <span {...suffixProps}>&#8239;{suffix}</span>}
     </span>
   );

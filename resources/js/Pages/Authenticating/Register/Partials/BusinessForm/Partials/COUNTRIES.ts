@@ -1700,7 +1700,8 @@ const COUNTRIES: Country[] = [
   },
   {
     name: "Saudi Arabia",
-    currencies: [{ name: "Saudi riyal", symbol: "ر.س" }],
+    // U+20C1 SAUDI RIYAL SIGN (SAMA 2025, Unicode 17)
+    currencies: [{ name: "Saudi riyal", symbol: "⃁" }],
     languages: ["Arabic"],
     postalCode: { format: "#####", regex: "^(\\d{5})$" },
     flag: "sa",

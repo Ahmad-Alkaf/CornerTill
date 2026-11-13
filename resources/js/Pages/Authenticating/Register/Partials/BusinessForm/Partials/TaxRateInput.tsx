@@ -41,13 +41,15 @@ export default function TaxRateInput({
           </span>{" "}
           {t("tax on")}{" "}
           <span className="font-semibold text-blue-gray-600">
-            {currency && <span>{currency}&thinsp;</span>}
-            <Num amount={100} showCurrency={!currency} />
+            <Num amount={100} showCurrency currency={currency} />
           </span>{" "}
           {t("is")}{" "}
           <span className="font-semibold text-blue-gray-600">
-            {currency && <span>{currency}&thinsp;</span>}
-            <Num amount={(value / 100) * 100} showCurrency={!currency} />
+            <Num
+              amount={(value / 100) * 100}
+              showCurrency
+              currency={currency}
+            />
           </span>
         </span>
       }
