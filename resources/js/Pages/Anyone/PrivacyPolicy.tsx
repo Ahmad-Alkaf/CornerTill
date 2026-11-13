@@ -1,289 +1,296 @@
-import AppName from "@/Components/Logo/AppName";
-import SupportEmailLink from "@/Components/SupportEmailLink";
-import { H2 } from "@/Components/Typography/H2";
-import { H4 } from "@/Components/Typography/H4";
 import LI from "@/Components/Typography/LI";
 import P from "@/Components/Typography/P";
 import UL from "@/Components/Typography/UL";
-import GuestAuthLayout from "@/Layouts/GuestAuthLayout";
+import { KAFLABS_PRIVACY_URL, PRIVACY_EMAIL } from "@/Utilities/Constant";
 import { PageProps } from "@/types";
-import { Head } from "@inertiajs/react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
+import LegalPage, { ExtLink, LegalSection } from "./Partials/LegalPage";
 
+const GOOGLE_USER_DATA_POLICY_URL =
+  "https://developers.google.com/terms/api-services-user-data-policy";
+
+/**
+ * CornerTill supplement to the KafLabs Privacy Policy.
+ * Each statement here must be true for the code. When the data that CornerTill
+ * collects, the providers, or the retention change, change this page and
+ * LEGAL_LAST_UPDATED (Utilities/Constant.ts).
+ */
 export default function PrivacyPolicy({ auth }: PageProps) {
   const { t } = useTranslation();
+  const b = <strong className="font-semibold text-gray-900" />;
+  const mail = <ExtLink href={`mailto:${PRIVACY_EMAIL}`} />;
+
   return (
-    <>
-      <Head title={t("Privacy Policy")} />
-      <GuestAuthLayout user={auth.user} header={t("Privacy Policy")}>
-        <Content />
-      </GuestAuthLayout>
-    </>
-  );
-}
-
-function Content() {
-  const { t } = useTranslation();
-  return (
-    <section className="mx-auto mt-6 w-11/12 space-y-3 md:w-10/12">
-      <header>
-        <H2>
-          {t("Privacy Policy for")} <AppName />
-        </H2>
-
+    <LegalPage
+      user={auth.user}
+      title={t("CornerTill Privacy Policy")}
+      subtitle={t("Supplement to the KafLabs Privacy Policy")}
+      intro={
         <P>
-          {t("At")} <AppName />,{" "}
-          {t(
-            "accessible from www.cornertill.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by CornerTill and how we use it.",
-          )}
+          <Trans
+            i18nKey="CornerTill is a KafLabs product. This page is a supplement to the <master>KafLabs Privacy Policy</master>, which applies to all KafLabs products. It states the facts that are specific to CornerTill. Where this page and the KafLabs Privacy Policy differ, this page applies to CornerTill."
+            components={{ master: <ExtLink href={KAFLABS_PRIVACY_URL} /> }}
+          />
         </P>
-
+      }
+    >
+      <LegalSection n={1} title={t("Who is responsible")}>
         <P>
           {t(
-            "If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.",
-          )}
-        </P>
-
-        <P>
-          {t(
-            "This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in <AppName />. This policy is not applicable to any information collected offline or via channels other than this website.",
-          )}
-        </P>
-      </header>
-
-      <section>
-        <H4>{t("Consent")}</H4>
-
-        <P>
-          {t(
-            "By using our website, you hereby consent to our Privacy Policy and agree to its terms.",
-          )}
-        </P>
-      </section>
-
-      <section>
-        <H4>{t("Information we collect")}</H4>
-
-        <P>
-          {t(
-            "The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information.",
+            "KafLabs runs CornerTill. KafLabs is responsible for your account data and for the technical data on this page.",
           )}
         </P>
         <P>
           {t(
-            "If you contact us directly, we may receive additional information about you such as your name, email address, phone number, the contents of the message and/or attachments you may send us, and any other information you may choose to provide.",
+            "A business uses CornerTill to record its own sales and to give accounts to its staff. For the staff accounts and the sales records that a business enters, the business decides what to record and is responsible for that data (it is the controller). KafLabs stores and processes that data for the business.",
           )}
         </P>
         <P>
-          {t(
-            "When you register for an Account, we may ask for your contact information, including items such as name, business name, country, city, address, email, and phone number.",
-          )}
+          <Trans
+            i18nKey="For privacy questions and requests, email <mail>privacy@kaflabs.com</mail>."
+            components={{ mail }}
+          />
         </P>
-      </section>
+      </LegalSection>
 
-      <section>
-        <H4>{t("How we use your information")}</H4>
-
-        <P>
-          {t(
-            "We use the information we collect in various ways, including to:",
-          )}
-        </P>
-
+      <LegalSection n={2} title={t("What CornerTill collects")}>
+        <P>{t("CornerTill collects only the data below.")}</P>
         <UL>
-          <LI>{t("Provide, operate, and maintain our website")}</LI>
-          <LI>{t("Improve, personalize, and expand our website")}</LI>
-          <LI>{t("Understand and analyze how you use our website")}</LI>
           <LI>
-            {t("Develop new products, services, features, and functionality")}
+            <Trans
+              i18nKey="<b>Your account:</b> your name, email address, and password. We store only a hash of the password, never the password itself. We also store your role (Owner, Maintainer, or Cashier) and the time when you confirmed your email address."
+              components={{ b }}
+            />
+          </LI>
+          <LI>
+            <Trans
+              i18nKey="<b>Your business:</b> the business name, country, city, address, phone number, currency, and tax rate. If you add them, also the tax identification number and the logo."
+              components={{ b }}
+            />
+          </LI>
+          <LI>
+            <Trans
+              i18nKey="<b>Your records:</b> products (name, price, stock, barcode, description, and image) and bills (the products, the quantities, the cash received, and the time of each sale). CornerTill also records which account created each product and bill."
+              components={{ b }}
+            />
+          </LI>
+          <LI>
+            <Trans
+              i18nKey="<b>Staff accounts:</b> when an Owner adds a staff member, CornerTill stores that person's name, email address, password hash, and role, and sends an invitation to that email address."
+              components={{ b }}
+            />
+          </LI>
+          <LI>
+            <Trans
+              i18nKey="<b>Server logs:</b> for each request, our web server records the IP address, the date and time, the page requested, the referring page, and the browser type."
+              components={{ b }}
+            />
+          </LI>
+        </UL>
+        <P>
+          {t(
+            "CornerTill does not ask for the names or contact details of the customers of your business.",
+          )}
+        </P>
+      </LegalSection>
+
+      <LegalSection n={3} title={t("Cookies and browser storage")}>
+        <P>{t("CornerTill uses only the cookies that it needs to work:")}</P>
+        <UL>
+          <LI>{t("a session cookie that keeps you signed in;")}</LI>
+          <LI>
+            {t(
+              "a security cookie (XSRF-TOKEN) that protects forms against cross-site request forgery;",
+            )}
           </LI>
           <LI>
             {t(
-              "Communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the website, and for marketing and promotional purposes",
+              "a “remember me” cookie, only when you select “Remember me” at sign-in;",
             )}
           </LI>
-          <LI>{t("Send you emails")}</LI>
-          <LI>{t("Find and prevent fraud")}</LI>
+          <LI>{t("a language cookie (i18next) that keeps your language.")}</LI>
         </UL>
-      </section>
+        <P>
+          {t(
+            "Your browser also keeps your language and some checkout settings (for example the size of the product tiles and whether to print after each sale) in its local storage. These settings stay on your device.",
+          )}
+        </P>
+        <P>
+          {t(
+            "CornerTill has no advertising and no third-party analytics. It loads no advertising or analytics scripts and sets no tracking cookies.",
+          )}
+        </P>
+      </LegalSection>
 
-      <section>
-        <H4>{t("Log Files")}</H4>
+      <LegalSection n={4} title={t("Registration with Google, GitHub, or X")}>
+        <P>
+          {t(
+            "You can register with your Google, GitHub, or X account. The provider then sends CornerTill your name (or user name) and your email address. CornerTill uses them only to fill in the registration form and to mark your email address as confirmed. You still choose your own password.",
+          )}
+        </P>
+        <P>
+          {t(
+            "CornerTill does not store your provider account ID, your profile picture, or any access token. It does not read or change any other data in your Google, GitHub, or X account. We do not sell this data, we do not use it for advertising, and we share it only as this page describes.",
+          )}
+        </P>
+        <P>
+          <Trans
+            i18nKey="CornerTill's use of information received from Google APIs follows the <policy>Google API Services User Data Policy</policy>, including the Limited Use requirements."
+            components={{
+              policy: <ExtLink href={GOOGLE_USER_DATA_POLICY_URL} />,
+            }}
+          />
+        </P>
+      </LegalSection>
 
+      <LegalSection n={5} title={t("How we use the data")}>
+        <UL>
+          <LI>
+            {t(
+              "to run CornerTill: sign you in, store and show your business records, and print receipts;",
+            )}
+          </LI>
+          <LI>
+            {t(
+              "to send service emails: email confirmation, password reset, staff invitations, and a welcome email;",
+            )}
+          </LI>
+          <LI>{t("to keep CornerTill secure, and to find and fix errors;")}</LI>
+          <LI>{t("to answer your support requests;")}</LI>
+          <LI>
+            {t(
+              "to count the total numbers of businesses, accounts, products, and bills, so that we can plan the service.",
+            )}
+          </LI>
+        </UL>
         <P>
-          <AppName />{" "}
-          {t(
-            "follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.",
-          )}
+          {t("We do not sell personal data, and we do not use it for advertising.")}
         </P>
-      </section>
-      <section>
-        <H4>{t("Advertising Partners Privacy Policies")}</H4>
+      </LegalSection>
 
+      <LegalSection n={6} title={t("Receipt links")}>
         <P>
           {t(
-            "You may consult this list to find the Privacy Policy for each of the advertising partners of",
-          )}{" "}
-          <AppName />.
+            "Each printed receipt has a QR code with a link to its bill. The link contains a long random ID. Anyone who has the link can open the bill for 180 days after the sale. The bill page shows the business details, the products, the amounts, and the name of the staff member who made the sale. After 180 days, only signed-in accounts of the business can open the bill.",
+          )}
         </P>
+      </LegalSection>
 
+      <LegalSection n={7} title={t("Service providers")}>
         <P>
           {t(
-            "Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on",
-          )}{" "}
-          <AppName />,{" "}
-          {t(
-            "which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.",
+            "We share data only with the providers that help us run CornerTill, and only as much as their work needs:",
           )}
         </P>
+        <UL>
+          <LI>
+            <Trans
+              i18nKey="<b>Hetzner</b> hosts the CornerTill servers and database."
+              components={{ b }}
+            />
+          </LI>
+          <LI>
+            <Trans
+              i18nKey="<b>Cloudflare</b> provides the network, DNS, and protection for cornertill.com. All traffic to CornerTill passes through Cloudflare."
+              components={{ b }}
+            />
+          </LI>
+          <LI>
+            <Trans
+              i18nKey="<b>Resend</b> sends the CornerTill emails."
+              components={{ b }}
+            />
+          </LI>
+          <LI>
+            <Trans
+              i18nKey="<b>Bunny Fonts</b> (fonts.bunny.net) delivers the font of the pages. Your browser sends your IP address to Bunny Fonts when it loads the font."
+              components={{ b }}
+            />
+          </LI>
+          <LI>
+            <Trans
+              i18nKey="<b>Google, GitHub, and X</b> only when you choose to register with one of them (see section 4)."
+              components={{ b }}
+            />
+          </LI>
+        </UL>
+        <P>
+          {t(
+            "CornerTill takes no payments now, so no payment provider receives your data. Before any paid plan starts, we will name the payment provider on this page.",
+          )}
+        </P>
+        <P>
+          {t(
+            "We can also disclose data when the law requires it. Our providers can process data in countries other than yours; the KafLabs Privacy Policy describes these international transfers.",
+          )}
+        </P>
+      </LegalSection>
 
+      <LegalSection n={8} title={t("How long we keep data")}>
+        <UL>
+          <LI>
+            {t(
+              "Account, business, and product data stay while the business uses CornerTill.",
+            )}
+          </LI>
+          <LI>
+            {t(
+              "Once a year, CornerTill automatically deletes the bills that were last changed more than 12 months before.",
+            )}
+          </LI>
+          <LI>
+            {t(
+              "An Owner can remove a staff account. A removed account can be restored, or the Owner can delete it permanently.",
+            )}
+          </LI>
+          <LI>
+            {t(
+              "When an Owner deletes the business, CornerTill deletes the business logo at once, signs the Owner out, and marks the business and the Owner account as deleted. The products, product images, bills, and staff accounts of the business stay in our database.",
+            )}
+          </LI>
+        </UL>
         <P>
-          {t("Note that")} <AppName />{" "}
-          {t(
-            "has no access to or control over these cookies that are used by third-party advertisers.",
-          )}
+          <Trans
+            i18nKey="To have all data of a deleted business removed permanently, email <mail>privacy@kaflabs.com</mail>."
+            components={{ mail }}
+          />
         </P>
-      </section>
+      </LegalSection>
 
-      <section>
-        <H4>{t("Third Party Privacy Policies")}</H4>
+      <LegalSection n={9} title={t("Your rights")}>
+        <P>
+          {t(
+            "You can change your name, email address, and password on your profile page. An Owner can change the business details and remove staff accounts. CornerTill has no export tool yet.",
+          )}
+        </P>
+        <P>
+          <Trans
+            i18nKey="To get a copy of your data, to have it corrected or deleted, or to use any other right that the KafLabs Privacy Policy lists, email <mail>privacy@kaflabs.com</mail>."
+            components={{ mail }}
+          />
+        </P>
+        <P>
+          {t(
+            "If you are a staff member, first contact the business you work for. The business is responsible for your staff account, and we help the business to answer your request.",
+          )}
+        </P>
+      </LegalSection>
 
+      <LegalSection n={10} title={t("Children")}>
         <P>
-          <AppName />
           {t(
-            "'s Privacy Policy does not apply to other advertisers or websites.  Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options.",
+            "CornerTill is a tool for businesses. It is not directed to children under 13, and we do not knowingly collect their data.",
           )}
         </P>
+      </LegalSection>
 
+      <LegalSection n={11} title={t("Changes and other points")}>
         <P>
           {t(
-            "You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers' respective websites.",
+            "When we change this page, we change the “Last updated” date at the top. For all points that this page does not cover, the KafLabs Privacy Policy applies.",
           )}
         </P>
-      </section>
-
-      <section>
-        <H4>
-          {t("CCPA Privacy Rights (Do Not Sell My Personal Information)")}
-        </H4>
-
-        <P>
-          {t(
-            "Under the CCPA, among other rights, California consumers have the right to:",
-          )}
-        </P>
-        <P>
-          {t(
-            "Request that a business that collects a consumer's personal data disclose the categories and specific pieces of personal data that a business has collected about consumers.",
-          )}
-        </P>
-        <P>
-          {t(
-            "Request that a business delete any personal data about the consumer that a business has collected.",
-          )}
-        </P>
-        <P>
-          {t(
-            "Request that a business that sells a consumer's personal data, not sell the consumer's personal data.",
-          )}
-        </P>
-        <P>
-          {t(
-            "If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.",
-          )}
-        </P>
-      </section>
-
-      <section>
-        <H4>{t("GDPR Data Protection Rights")}</H4>
-
-        <P>
-          {t(
-            "We would like to make sure you are fully aware of all of your data protection rights. Every user is entitled to the following:",
-          )}
-        </P>
-        <P>
-          {t(
-            "The right to access – You have the right to request copies of your personal data. We may charge you a small fee for this service.",
-          )}
-        </P>
-        <P>
-          {t(
-            "The right to rectification – You have the right to request that we correct any information you believe is inaccurate. You also have the right to request that we complete the information you believe is incomplete.",
-          )}
-        </P>
-        <P>
-          {t(
-            "The right to erasure – You have the right to request that we erase your personal data, under certain conditions.",
-          )}
-        </P>
-        <P>
-          {t(
-            "The right to restrict processing – You have the right to request that we restrict the processing of your personal data, under certain conditions.",
-          )}
-        </P>
-        <P>
-          {t(
-            "The right to object to processing – You have the right to object to our processing of your personal data, under certain conditions.",
-          )}
-        </P>
-        <P>
-          {t(
-            "The right to data portability – You have the right to request that we transfer the data that we have collected to another organization, or directly to you, under certain conditions.",
-          )}
-        </P>
-        <P>
-          {t(
-            "If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.",
-          )}
-        </P>
-      </section>
-
-      <section>
-        <H4>{t("Children's Information")}</H4>
-
-        <P>
-          {t(
-            "Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.",
-          )}
-        </P>
-
-        <P>
-          <AppName />{" "}
-          {t(
-            "does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.",
-          )}
-        </P>
-      </section>
-
-      <section>
-        <H4>{t("Changes to This Privacy Policy")}</H4>
-
-        <P>
-          {t(
-            "We may update our Privacy Policy from time to time. Thus, we advise you to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page.  These changes are effective immediately, after they are posted on this page.",
-          )}
-        </P>
-
-        <P>
-          {t("Our Privacy Policy was created with the help of the")}{" "}
-          <a href="https://www.termsfeed.com/privacy-policy-generator/">
-            {t("Privacy Policy Generator")}
-          </a>
-          .
-        </P>
-      </section>
-
-      <section>
-        <H4>{t("Contact Us")}</H4>
-
-        <P>
-          {t(
-            "If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us",
-          )}{" "}
-          <SupportEmailLink />.
-        </P>
-      </section>
-    </section>
+      </LegalSection>
+    </LegalPage>
   );
 }
