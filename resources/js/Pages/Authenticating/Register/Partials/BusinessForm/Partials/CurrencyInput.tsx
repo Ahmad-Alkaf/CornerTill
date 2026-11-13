@@ -43,7 +43,7 @@ export default function CurrencyInput<T extends ICreateBusiness>({
 
   useEffect(() => {
     let index = getCountryIndex(country);
-    if (index) {
+    if (index !== null) {
       setCountryIndex(index);
       form.setData("currency", countries[index].currencies[0].symbol as string);
     }

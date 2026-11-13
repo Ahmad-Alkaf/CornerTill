@@ -42,8 +42,11 @@ export default function useBetterForm<T extends object>(
     setProcessing(form.processing);
   }, [form.processing]);
 
+  //Use the function form of `setData`. In @inertiajs/react 1.x `setData(key, value)` copies
+  //the data of the last render. So two calls in one render (for example two effects) lose
+  //the first value: the register form sent `currency: "$"` for Saudi Arabia.
   const setData: UseBetterForm<T>["setData"] = (key, value) => {
-    form.setData(key, value);
+    form.setData((previous: T) => ({ ...previous, [key]: value }));
   };
 
   const setAllData: UseBetterForm<T>["setAllData"] = (data) => {
