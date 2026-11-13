@@ -21,16 +21,16 @@ export type UseBetterForm<T extends object> = Omit<
 
 export default function useBetterForm<T extends object>(
   initialValue: T,
-  rememberKey?: string,
 ): UseBetterForm<T> {
   const [oldValues, setOldValues] = useState<T>(
     JSON.parse(JSON.stringify(initialValue)),
   );
 
-  const form = useForm<T>(
-    rememberKey === undefined ? "hi" : rememberKey,
-    initialValue,
-  );
+  //No remember key: the form does not keep its data in the browser history.
+  //A shared key made all forms of a page restore the same data after a reload
+  //(the Location and Financial forms of /business showed empty fields and saved
+  //wrong data). The server data is the source of each form.
+  const form = useForm<T>(initialValue);
 
   const [processing, setProcessing] = useState<boolean>(form.processing);
 

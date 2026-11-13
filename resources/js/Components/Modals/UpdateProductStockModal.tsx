@@ -19,10 +19,7 @@ export default function UpdateProductStockModal({
 }) {
   const product = modalAction.product;
   const [increase, setIncrease] = useState<number>(0);
-  const form = useBetterForm<{ stock: number }>(
-    { stock: product?.stock ?? 0 },
-    product?.id,
-  );
+  const form = useBetterForm<{ stock: number }>({ stock: product?.stock ?? 0 });
 
   useEffect(() => setIncrease(0), [product]);
 
