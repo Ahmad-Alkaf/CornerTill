@@ -311,6 +311,20 @@ class DeleteBusinessTest extends TestCase
             ->assertSuccessful();
     }
 
+    public function test_restore_refuses_a_with_user_that_is_not_a_deleted_account_of_the_business(): void
+    {
+        ['business' => $business, 'owner' => $owner] = $this->businessWithData('a');
+        $other = $this->businessWithData('b');
+        $this->deleteBusiness($owner);
+
+        $this->artisan('business:restore', ['id' => $business->id, '--with-user' => [$other['staff']->id]])
+            ->expectsOutputToContain("--with-user={$other['staff']->id} is not a deleted account of business {$business->id}")
+            ->assertFailed();
+
+        $this->assertTrue(Business::withTrashed()->find($business->id)->trashed());
+        $this->assertTrue(User::withTrashed()->find($other['staff']->id)->trashed());
+    }
+
     public function test_purge_is_scheduled_daily(): void
     {
         $event = collect(app(\Illuminate\Console\Scheduling\Schedule::class)->events())

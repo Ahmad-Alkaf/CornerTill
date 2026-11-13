@@ -39,6 +39,17 @@ class RestoreBusiness extends Command
             return self::FAILURE;
         }
 
+        // Each --with-user must be a deleted account of this business. Check all
+        // of them before anything changes.
+        $requested = collect($this->option('with-user'))->unique();
+        $known = User::onlyTrashed()->where('business_id', $id)->whereIn('id', $requested)->pluck('id');
+        $unknown = $requested->diff($known);
+        if ($unknown->isNotEmpty()) {
+            foreach ($unknown as $userId)
+                $this->error("--with-user={$userId} is not a deleted account of business {$id}. Nothing was restored.");
+            return self::FAILURE;
+        }
+
         $counts = [
             'bills' => DB::table('bills')->where('business_id', $id)->count(),
             'products' => DB::table('products')->where('business_id', $id)->count(),
