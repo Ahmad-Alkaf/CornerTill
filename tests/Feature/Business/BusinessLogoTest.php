@@ -28,7 +28,7 @@ class BusinessLogoTest extends TestCase
             'email_verified_at' => now(),
             'deleted_at' => null,
         ]);
-        $this->owner->business->update(['logo' => null]);
+        $this->owner->business->update(['logo' => null, 'name' => 'Corner Shop']);
     }
 
     private function uploadLogo(): string
