@@ -38,7 +38,8 @@ class PurgeDeletedBusinesses extends Command
         $failed = 0;
         foreach ($ids as $id) {
             if ($dryRun) {
-                $this->line("Would purge business {$id}: " . $this->format($purger->count($id)));
+                $blocker = $purger->blocker($id);
+                $this->line($blocker ?? "Would purge business {$id}: " . $this->format($purger->count($id)));
                 continue;
             }
             try {

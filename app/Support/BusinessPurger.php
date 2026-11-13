@@ -36,6 +36,8 @@ class BusinessPurger
             return $counts; // already purged
         if ($business->deleted_at === null)
             throw new RuntimeException("Business {$businessId} is not deleted.");
+        if (($blocker = $this->blocker($businessId)) !== null)
+            throw new RuntimeException($blocker);
 
         // 1. Bills and bill details.
         while (($billIds = DB::table('bills')->where('business_id', $businessId)->orderBy('id')->limit(self::CHUNK)->pluck('id'))->isNotEmpty()) {
@@ -44,16 +46,6 @@ class BusinessPurger
                 $counts['bills'] += DB::table('bills')->whereIn('id', $billIds)->delete();
             });
         }
-
-        // A product of this business in a bill of another business (only possible
-        // with data from before products were checked per business): stop, and do
-        // not delete data of the other business.
-        $usedElsewhere = DB::table('bill_details')
-            ->join('products', 'products.id', '=', 'bill_details.product_id')
-            ->where('products.business_id', $businessId)
-            ->count();
-        if ($usedElsewhere > 0)
-            throw new RuntimeException("{$usedElsewhere} bill details of other businesses use products of business {$businessId}.");
 
         // 2. Products and their image files.
         while (($products = DB::table('products')->where('business_id', $businessId)->orderBy('id')->limit(self::CHUNK)->get(['id', 'img']))->isNotEmpty()) {
@@ -121,6 +113,29 @@ class BusinessPurger
             'accounts' => DB::table('users')->where('business_id', $businessId)->count(),
             'logo' => $business->logo !== null && $this->storedPath($business->logo) !== null ? 1 : 0,
         ];
+    }
+
+    /**
+     * Why the business cannot be purged, or null. Checked before anything is
+     * deleted, so a blocked business keeps all its data and can still be restored.
+     *
+     * A product of this business in a bill of another business (only possible with
+     * data from before products were checked per business) cannot be deleted
+     * without changing the bills of the other business. The purge then skips the
+     * business every day with an error in the log, until support resolves it by
+     * hand. It never deletes or changes data of another business.
+     */
+    public function blocker(string $businessId): ?string
+    {
+        $sharedLines = DB::table('bill_details')
+            ->join('products', 'products.id', '=', 'bill_details.product_id')
+            ->join('bills', 'bills.id', '=', 'bill_details.bill_id')
+            ->where('products.business_id', $businessId)
+            ->where('bills.business_id', '!=', $businessId)
+            ->count();
+        if ($sharedLines === 0)
+            return null;
+        return "Skipped: {$sharedLines} bill details of other businesses use products of business {$businessId}. Nothing was deleted; support must resolve this by hand.";
     }
 
     /** @return array<string,int> */
