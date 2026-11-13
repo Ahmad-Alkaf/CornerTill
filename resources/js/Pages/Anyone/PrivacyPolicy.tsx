@@ -203,12 +203,6 @@ export default function PrivacyPolicy({ auth }: PageProps) {
           </LI>
           <LI>
             <Trans
-              i18nKey="<b>Bunny Fonts</b> (fonts.bunny.net) delivers the font of the pages. Your browser sends your IP address to Bunny Fonts when it loads the font."
-              components={{ b }}
-            />
-          </LI>
-          <LI>
-            <Trans
               i18nKey="<b>Google, GitHub, and X</b> only when you choose to register with one of them (see section 4)."
               components={{ b }}
             />
