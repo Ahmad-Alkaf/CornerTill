@@ -1,8 +1,12 @@
 export const MAX_QUANTITY = 9999;
 export const ID_LENGTH = 8;//show last 8 id characters. Maximum length is 26
-/** Image types that the server accepts for product images and business logos (SVG is blocked). */
+/**
+ * Image types that the server accepts for product images and business logos.
+ * Keep it equal to the Laravel `image` rule (jpg, png, gif, bmp, webp; an APNG
+ * file is detected as PNG). SVG is blocked; AVIF is not accepted by `image`.
+ */
 export const ACCEPTED_IMAGE_TYPES =
-  "image/jpeg,image/png,image/apng,image/bmp,image/avif,image/webp,image/gif";
+  "image/jpeg,image/png,image/apng,image/bmp,image/webp,image/gif";
 
 /**
  * CornerTill is a KafLabs product. The KafLabs master Terms and Privacy Policy

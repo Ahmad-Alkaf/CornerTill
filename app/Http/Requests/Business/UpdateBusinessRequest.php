@@ -30,7 +30,7 @@ class UpdateBusinessRequest extends FormRequest
                 'min:3',
                 Rule::unique(Business::class)->ignore($this->user()->business_id),
             ],
-            'logoFile' => 'nullable|image|mimes:jpeg,jpg,png,apng,bmp,avif,webp,gif|max:2048',
+            'logoFile' => 'nullable|image|mimes:jpeg,jpg,png,apng,bmp,webp,gif|max:2048',
             //max file 2 MB
             'logo' => 'nullable|string|max:250',
             'phone' => [
