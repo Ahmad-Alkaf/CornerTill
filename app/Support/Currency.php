@@ -20,11 +20,11 @@ class Currency
      * Other countries use them too (for example '﷼' for the Iranian and the Yemeni rial).
      * Compared without case.
      */
-    public const OLD_RIYAL_SYMBOLS_IN_SAUDI_ARABIA = ['﷼', 'ريال', 'SAR', 'SR'];
+    public const OLD_RIYAL_SYMBOLS_IN_SAUDI_ARABIA = ['﷼', 'ريال', "ر\u{06CC}ال", 'SAR', 'SR']; // the 3rd has the Persian yeh U+06CC
 
     /**
      * Change an old Saudi riyal symbol to the Saudi riyal sign.
-     * Other values do not change.
+     * Other values do not change, but lose the spaces at the start and the end.
      */
     public static function normalize(?string $currency, ?string $country): ?string
     {
@@ -41,6 +41,6 @@ class Currency
         )
             return self::SAUDI_RIYAL_SIGN;
 
-        return $currency;
+        return $symbol;
     }
 }

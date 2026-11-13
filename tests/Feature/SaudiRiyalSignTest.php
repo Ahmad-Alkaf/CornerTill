@@ -24,6 +24,9 @@ class SaudiRiyalSignTest extends TestCase
         $this->assertSame(self::SIGN, Currency::normalize('sar', 'Saudi Arabia'));
         $this->assertSame(self::SIGN, Currency::normalize('﷼', 'Saudi Arabia'));
         $this->assertSame(self::SIGN, Currency::normalize(self::SIGN, 'Saudi Arabia'));
+        $this->assertSame(self::SIGN, Currency::normalize(' ' . self::SIGN . ' ', 'Yemen'));
+        $this->assertSame(self::SIGN, Currency::normalize("ر\u{06CC}ال", 'Saudi Arabia'));
+        $this->assertSame('$', Currency::normalize(' $ ', 'Germany'));
 
         // The rial sign is also the Iranian and the Yemeni rial.
         $this->assertSame('﷼', Currency::normalize('﷼', 'Yemen'));
