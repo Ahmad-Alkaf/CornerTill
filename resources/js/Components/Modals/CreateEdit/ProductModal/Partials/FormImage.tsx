@@ -1,3 +1,4 @@
+import { ACCEPTED_IMAGE_TYPES } from "@/Utilities/Constant";
 import DangerButton from "@/Components/Buttons/DangerButton";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton";
 import Input from "@/Components/Inputs/Input";
@@ -134,7 +135,7 @@ function InputImage({
         }
         type="file"
         className="mt-1 block w-full"
-        accept="image/*"
+        accept={ACCEPTED_IMAGE_TYPES}
         hidden={!!img}
         disabled={state === "show" || form.processing}
         required={false}

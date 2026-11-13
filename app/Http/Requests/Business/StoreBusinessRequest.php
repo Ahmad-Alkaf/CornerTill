@@ -25,7 +25,7 @@ class StoreBusinessRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:50|min:3|unique:' . Business::class,
-            'logoFile' => 'nullable|image:allow_svg|mimes:jpeg,jpg,png,apng,bmp,avif,webp,gif,svg|max:2048',//max file 2 MB
+            'logoFile' => 'nullable|image|mimes:jpeg,jpg,png,apng,bmp,avif,webp,gif|max:2048',//max file 2 MB
             'phone' => 'required|string|max:15|min:4|unique:' . Business::class,
             'countryCallingCode'=>'required|string|max:6',
             'taxPercent' => 'required|decimal:0,8|min:0|max:10',//0.5 is 50% tax rate
