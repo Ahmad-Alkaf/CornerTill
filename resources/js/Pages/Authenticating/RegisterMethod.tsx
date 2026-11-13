@@ -105,7 +105,7 @@ export default function RegisterMethod() {
           <A href={route("termsAndConditions")}>{t("Terms & Conditions")}</A>{" "}
           {t("and confirm you have read our")}{" "}
           <A href={route("privacyPolicy")}>
-            {t("Privacy and Cookie Statement")}
+            {t("Privacy Policy")}
           </A>
           .
         </p>

@@ -1,3 +1,4 @@
+import flagUrl from "@/Utilities/flagUrl";
 import { Option } from "@material-tailwind/react";
 import React, { useMemo } from "react";
 import COUNTRIES from "./COUNTRIES";
@@ -41,7 +42,7 @@ export default function CountryInput<
         .map((c, i) => (
           <Option key={i} value={c.name} className="flex items-center gap-2">
             <img
-              src={c.flags.svg}
+              src={flagUrl(c.flag)}
               alt={c.emoji}
               className="h-5 w-7 rounded object-cover"
             />

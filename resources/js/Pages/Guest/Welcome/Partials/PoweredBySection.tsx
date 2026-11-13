@@ -7,7 +7,7 @@ export default function PoweredBySection() {
   const { t } = useTranslation();
   return (
     <section
-      id="powered-by-aws"
+      id="infrastructure"
       className="relative mt-64 bg-blue-gray-100 bg-opacity-50 pb-32 md:mt-20"
     >
       <div
@@ -36,7 +36,7 @@ export default function PoweredBySection() {
               <img
                 src="assets/cloud-service-cut.jpg"
                 className="w-full rounded-t-lg align-middle"
-                alt="AWS servers"
+                alt={t("Cloud servers")}
                 loading="lazy"
               />
               <blockquote className="relative mb-4 p-8">
@@ -53,11 +53,11 @@ export default function PoweredBySection() {
                   ></polygon>
                 </svg>
                 <h4 className="text-xl font-bold text-blue-gray-50">
-                  {t("Powered by Amazon Web Services")}
+                  {t("Built on reliable infrastructure")}
                 </h4>
                 <p className="text-md mt-2 font-light text-blue-gray-50">
                   {t(
-                    "Our system is built on the Amazon Web Services (AWS) platform, the world’s most comprehensive and broadly adopted cloud provider",
+                    "Our system runs on cloud servers, so you can open it from any device with a browser.",
                   )}
                 </p>
               </blockquote>
@@ -76,7 +76,7 @@ export default function PoweredBySection() {
                     </h6>
                     <p className="text-blueGray-500 mb-4">
                       {t(
-                        "AWS protects our system and your data with the most advanced security features, such as encryption, firewalls, and access management.",
+                        "Connections use HTTPS encryption, passwords are stored only as hashes, and each staff role can do only what it needs.",
                       )}
                     </p>
                   </div>
@@ -89,7 +89,7 @@ export default function PoweredBySection() {
                     <h6 className="mb-1 text-xl font-semibold">{t("Fast")}</h6>
                     <p className="text-blueGray-500 mb-4">
                       {t(
-                        "High-performance computing, networking, and database services that allow us to process large amounts of data and deliver results in real-time.",
+                        "Pages load quickly, and the checkout screen is made for quick sales at the counter.",
                       )}
                     </p>
                   </div>
@@ -106,7 +106,7 @@ export default function PoweredBySection() {
                     </h6>
                     <p className="text-blueGray-500 mb-4">
                       {t(
-                        "Our system is always available and resilient to failures, with 99.99% uptime.",
+                        "Your records are kept on our servers, not in one browser, so you can continue on another device.",
                       )}
                     </p>
                   </div>
@@ -121,8 +121,7 @@ export default function PoweredBySection() {
                     </h6>
                     <p className="text-blueGray-500 mb-4">
                       {t(
-                        "Tools such as auto-scaling and elastic load balancing, enable us to scale without compromising perfor{{shy}}mance, availability, or security",
-                        { shy: "\u00AD" /* &shy; break a long word*/ },
+                        "Start with one account, then add staff accounts and products as your shop grows.",
                       )}
                     </p>
                   </div>
@@ -133,12 +132,14 @@ export default function PoweredBySection() {
         </div>
       </div>
 
+      {/* The divider goes 1px into the next (same colour) section. Without
+          this overlap, a fractional section height leaves a light hairline. */}
       <div
-        className="absolute bottom-0 start-0 end-0 top-auto -mt-20 w-full"
+        className="pointer-events-none absolute -bottom-px start-0 end-0 top-auto w-full"
         style={{ height: "80px" }}
       >
         <svg
-          className="absolute bottom-0 overflow-hidden"
+          className="absolute bottom-0 block w-full overflow-hidden"
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
           version="1.1"

@@ -37,9 +37,7 @@
     <meta property="twitter:image" content="{{ $mediumLogo }}">
     <meta name="twitter:site" content="@Ahmad_Alkaf_">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
+    <!-- Fonts: Figtree is bundled by Vite (resources/js/app.tsx); no font CDN. -->
 
     <!-- Scripts -->
     @routes

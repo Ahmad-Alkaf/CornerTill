@@ -1,3 +1,4 @@
+import { ACCEPTED_IMAGE_TYPES } from "@/Utilities/Constant";
 import { UseBetterForm } from "@/Utilities/useBetterForm";
 import { IBusiness } from "@/types";
 import { useRef, useState } from "react";
@@ -44,7 +45,7 @@ export default function BusinessLogoInput<
             ref={fileInputRef}
             type="file"
             hidden={true}
-            accept="image/*"
+            accept={ACCEPTED_IMAGE_TYPES}
             onChange={(e) => {
               let file = e?.target?.files?.[0];
               if (file) {

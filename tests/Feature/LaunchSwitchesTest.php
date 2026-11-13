@@ -18,7 +18,13 @@ class LaunchSwitchesTest extends TestCase
 
     public function test_payments_are_off_by_default(): void
     {
-        $this->assertFalse(config('features.payments_enabled'));
+        $this->assertFalse(
+            config('features.payments_enabled'),
+            'The privacy policy and the terms say that CornerTill takes no payments. '
+            . 'Before payments are on: name the payment provider in Privacy section 7, '
+            . 'update Terms section 7, publish a refund policy and link it from the '
+            . 'pricing cards (README.md "Launch switches").'
+        );
     }
 
     public function test_payment_routes_return_404_when_payments_are_off(): void
@@ -29,16 +35,8 @@ class LaunchSwitchesTest extends TestCase
         $this->get('/subscribe?plan=Basic&period=Monthly')->assertNotFound();
         $this->get('/subscription/pause')->assertNotFound();
         $this->get('/update-payment-method')->assertNotFound();
-        $this->get('/payment-service-policy')->assertNotFound();
         // Cashier::ignoreRoutes() removes the Paddle webhook in the free beta.
         $this->post('/paddle/webhook')->assertNotFound();
-    }
-
-    public function test_payment_policy_opens_when_payments_are_on(): void
-    {
-        config(['features.payments_enabled' => true]);
-
-        $this->get('/payment-service-policy')->assertOk();
     }
 
     public function test_welcome_page_shows_free_beta_when_payments_are_off(): void

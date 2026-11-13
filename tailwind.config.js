@@ -18,7 +18,7 @@ export default withMT({
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+        sans: ['Figtree Variable', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         // CornerTill logo colors.

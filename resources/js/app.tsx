@@ -1,4 +1,6 @@
 import "./bootstrap";
+// Figtree (variable font, weights 300-900) from the app itself, not from a font CDN.
+import "@fontsource-variable/figtree";
 import "../css/app.css";
 import i18n from "./i18n";
 import { createRoot } from "react-dom/client";

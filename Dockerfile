@@ -1,4 +1,4 @@
-# CornerTill - Laravel 10 image for Coolify.
+# CornerTill - Laravel 12 image for Coolify.
 #
 # One image, three roles (CONTAINER_ROLE):
 #   all (default) - nginx + PHP-FPM + queue worker + scheduler under supervisord.

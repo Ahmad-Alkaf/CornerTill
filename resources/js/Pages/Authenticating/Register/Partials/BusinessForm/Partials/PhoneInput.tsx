@@ -1,3 +1,4 @@
+import flagUrl from "@/Utilities/flagUrl";
 import {
   Input,
   Menu,
@@ -56,7 +57,7 @@ export function PhoneInput<
         border-blue-gray-200 bg-blue-gray-500/10 ltr:pl-3 rtl:pr-3 focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1"
             >
               <img
-                src={country.flags.svg}
+                src={flagUrl(country.flag)}
                 alt={country.name}
                 className="h-4 w-5 rounded object-cover"
               />
@@ -83,7 +84,7 @@ export function PhoneInput<
                   onPointerLeaveCapture={undefined}
                 >
                   <img
-                    src={c.flags.svg}
+                    src={flagUrl(c.flag)}
                     alt={c.name}
                     className="h-5 w-7 rounded object-cover"
                   />
