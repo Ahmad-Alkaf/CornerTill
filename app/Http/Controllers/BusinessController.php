@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Business;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
@@ -198,7 +200,12 @@ class BusinessController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft-delete the business and its accounts. Nothing else is deleted now (also
+     * not the logo file), so a mistaken delete can be restored for
+     * config('constants.deletedBusinessRetentionDays') days:
+     * `php artisan business:restore {id}`. After that, the daily job
+     * `business:purge-deleted` deletes all data of the business permanently.
+     * No account of a deleted business can sign in (ActiveBusinessUserProvider).
      */
     public function destroy(Request $request, Business $business)
     {
@@ -207,15 +214,17 @@ class BusinessController extends Controller
         ]);
         Gate::authorize('destroy', $business);
 
-        if (isset($business->logo)) {
-            $this->deleteFile($business->logo);
-            $business->update(['logo' => null]);
-        }
+        DB::transaction(function () use ($business) {
+            // One time for the business and its accounts: business:restore restores
+            // the accounts with this time, not the accounts that the Owner removed before.
+            $deletedAt = now();
+            // The policy leaves only the Owner, but delete every active account of the business.
+            User::where('business_id', $business->id)->update(['deleted_at' => $deletedAt]);
+            $business->deleted_at = $deletedAt;
+            $business->save();
+        });
 
-        $user = $request->user();
         Auth::logout();
-        $user->delete();
-        $business->delete();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

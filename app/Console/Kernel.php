@@ -24,6 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        // Permanently delete the businesses that were deleted more than
+        // constants.deletedBusinessRetentionDays days ago (all their data).
+        $schedule->command('business:purge-deleted')->daily()->withoutOverlapping();
+
         //email me database table counts
         $schedule->call(function () {
             $businesses = DB::table('business')->count();

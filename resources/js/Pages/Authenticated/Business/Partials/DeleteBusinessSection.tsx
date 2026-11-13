@@ -59,7 +59,9 @@ export default function DeleteBusinessSection({
           <h2 className="text-lg font-medium text-gray-900">{ t( "Delete Business" ) }</h2>
 
           <p className="text-normal mt-3 text-gray-600">
-            { t( "When you delete your business, you will lose access to all the resources associated with it, such as accounts, products, bills, and business data. They will be permanently erased from our system and cannot be recovered." ) }
+            {t(
+              "When you delete your business, no account of the business can sign in any more, starting at once. CornerTill keeps all data of the business (accounts, products, bills, and business details) for 30 days. To restore the business in these 30 days, contact support@kaflabs.com. After 30 days, CornerTill deletes all the data permanently, and it cannot be restored.",
+            )}
           </p>
           <p className="text-normal mt-3 text-gray-600">
             { t( "To prevent accidental deletion of large businesses, you must first delete all other accounts under your business. This is a safety measure to ensure that you are fully aware of the consequences of deleting your business." ) }
@@ -83,7 +85,9 @@ export default function DeleteBusinessSection({
             </h2>
 
             <p className="mt-1 text-sm text-gray-600">
-              { t( "You will lose access to all the resources associated with it, such as accounts, products, bills, and business data. They will be permanently erased from our system and cannot be recovered." ) }
+              {t(
+                "No account of the business can sign in any more, starting at once. After 30 days, CornerTill deletes all data of the business permanently. To restore the business before that, contact support@kaflabs.com.",
+              )}
                 </p>
 
             <div className="mt-6">

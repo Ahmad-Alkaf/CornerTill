@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bill;
+use App\Models\Business;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,6 +37,9 @@ class BillController extends Controller
     /**Bill show can be accessed by anyone for QR link on the bill paper (Bill/Invoice page) */
     protected function show(Bill $bill)
     {
+        // The bills of a deleted business are not shown (also not by the receipt link).
+        if (!Business::whereKey($bill->business_id)->exists())
+            abort(404);
         Gate::authorize('show', $bill);
         $bill = $bill->load([
             'bill_details.product',
