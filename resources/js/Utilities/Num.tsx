@@ -3,6 +3,12 @@ import { usePage } from "@inertiajs/react";
 import { HTMLAttributes } from "react";
 import { useTranslation } from "react-i18next";
 import { isSymbolAlwaysLeft } from "./currency";
+
+/**
+ * Western digits (0-9) in all languages and on all browser locales, with one
+ * format: 1,234.56. The browser locale (for example ar-SA) would give ١٬٢٣٤٫٥٦.
+ */
+export const NUMBER_LOCALE = "en-US";
 export type NumProps = {
   className?: string;
   fixed?: number;
@@ -61,7 +67,9 @@ export default function Num({
   const { t } = useTranslation();
   if (amount === null) number = (noAmount ? t(noAmount) : noAmount) ?? t("N/A");
   else if (compact && amount !== 0) {
-    let formatter = new Intl.NumberFormat("en", { notation: "compact" });
+    let formatter = new Intl.NumberFormat(NUMBER_LOCALE, {
+      notation: "compact",
+    });
     number = formatter.format(amount);
   } else {
     amount = Number(Number(amount).toFixed(fixed));
@@ -69,7 +77,7 @@ export default function Num({
     //Welcome to javascript where (0 * -1 = -0) 😑
     //also (-0 === 0 is true)
     if (Object.is(amount, -0)) number = "0";
-    else number = amount.toLocaleString();
+    else number = amount.toLocaleString(NUMBER_LOCALE);
   }
 
   return (
