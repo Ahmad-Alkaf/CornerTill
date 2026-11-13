@@ -13,18 +13,17 @@ class Kernel extends ConsoleKernel
 {
     /**
      * Define the application's command schedule.
+     *
+     * This app uses the Laravel 10 structure (bootstrap/app.php binds this
+     * kernel), so the scheduler reads this method, not routes/console.php.
+     * In production, supervisord runs `php artisan schedule:work`
+     * (docker/supervisord.conf, CONTAINER_ROLE=all or scheduler).
+     *
+     * Bills are never deleted on a schedule: a business must keep its sales
+     * records for years (for example for VAT).
      */
     protected function schedule(Schedule $schedule): void
     {
-        //delete old bills
-        $schedule->call(function () {
-            $deletedCount = DB::table('bills')
-                ->where('updated_at', '<', now()->subYear())
-                ->orWhere('created_at', '<', now()->subYears(2))
-                ->delete();
-            Log::warning('Annual Schedule: Delete Old Bills: have deleted ' . $deletedCount . ' bills.');
-        })->yearly()->name('Delete Old Bills');
-
         //email me database table counts
         $schedule->call(function () {
             $businesses = DB::table('business')->count();
