@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import BillDetailsTable from "./BillDetailsTable";
 import ID from "@/Utilities/ID";
 import Num from "@/Utilities/Num";
+import { saleUnitPrice } from "@/Utilities/saleValues";
 import QRCode from "react-qr-code";
 import FromDate from "@/Utilities/FromDate";
 import Logo from "@/Components/Logo/Logo";
@@ -16,12 +17,15 @@ export default function BillInfo({ bill }: { bill: IBill }) {
 
   const subTotalPrice = useMemo(
     () =>
-      bill.bill_details.reduce((v, t) => v + (t.price ?? 0) * t.quantity, 0),
+      bill.bill_details.reduce(
+        (v, t) => v + (saleUnitPrice(t) ?? 0) * t.quantity,
+        0,
+      ),
     [bill.bill_details],
   );
 
   //The values of the sale, not the current values of the business.
-  const taxPercent = bill.taxPercent;
+  const taxPercent = bill.taxPercent ?? bill.business.taxPercent;
   const currency = bill.currency ?? bill.business.currency;
   const totalPrice = subTotalPrice * (1 + taxPercent);
 

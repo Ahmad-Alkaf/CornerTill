@@ -28,6 +28,10 @@ class Kernel extends ConsoleKernel
         // constants.deletedBusinessRetentionDays days ago (all their data).
         $schedule->command('business:purge-deleted')->daily()->withoutOverlapping();
 
+        // Bills written by the old code during a rolling deploy get their sale
+        // values (the entrypoint also runs it after the migrations).
+        $schedule->command('bills:fill-sale-values')->hourly()->withoutOverlapping();
+
         //email me database table counts
         $schedule->call(function () {
             $businesses = DB::table('business')->count();

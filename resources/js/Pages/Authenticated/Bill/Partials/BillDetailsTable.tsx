@@ -44,7 +44,7 @@ export default function BillDetailsTable({ bill }: { bill: IBill }) {
             <BillDetailRow
               key={t.id}
               transaction={t}
-              taxPercent={bill.taxPercent}
+              taxPercent={bill.taxPercent ?? bill.business?.taxPercent ?? 0}
             />
           ))}
         </tbody>

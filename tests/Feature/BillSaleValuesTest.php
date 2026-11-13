@@ -141,6 +141,81 @@ class BillSaleValuesTest extends TestCase
         $this->assertSame(0, Bill::count());
     }
 
+    /** A bill exactly as the old BillController::store wrote it (old container in a rolling deploy). */
+    private function oldCodeBill(): Bill
+    {
+        $bill = Bill::create(['cashReceived' => null, 'business_id' => $this->owner->business_id, 'createdBy_id' => $this->owner->id]);
+        $bill->bill_details()->createMany([['product_id' => $this->apple->id, 'quantity' => 2]]);
+        return $bill;
+    }
+
+    public function test_a_bill_from_the_old_code_has_no_stored_values_and_the_command_fills_them(): void
+    {
+        $bill = $this->oldCodeBill();
+        $this->assertNull(DB::table('bills')->where('id', $bill->id)->value('taxPercent'));
+        $this->assertNull(DB::table('bill_details')->where('bill_id', $bill->id)->value('productName'));
+
+        $this->artisan('bills:fill-sale-values')->expectsOutputToContain('bills=2, bill_details=1')->assertSuccessful();
+
+        $bill = Bill::with('bill_details')->find($bill->id);
+        $this->assertSame(0.15, $bill->taxPercent);
+        $this->assertSame('$', $bill->currency);
+        $this->assertSame(7.0, $bill->bill_details[0]->price);
+        $this->assertSame('Apple', $bill->bill_details[0]->productName);
+
+        // Safe to run again; a product without a price at the sale keeps its NULL price.
+        $free = $this->product('Free bag', null);
+        $sold = $this->sell([['product_id' => $free->id, 'quantity' => 1]]);
+        $this->apple->update(['price' => 9]);
+        $this->artisan('bills:fill-sale-values')->expectsOutputToContain('bills=0, bill_details=0')->assertSuccessful();
+        $this->assertSame(7.0, Bill::with('bill_details')->find($bill->id)->bill_details[0]->price);
+        $this->assertNull($sold->fresh('bill_details')->bill_details[0]->price);
+    }
+
+    public function test_an_update_of_a_bill_from_the_old_code_takes_the_current_values(): void
+    {
+        $old = $this->oldCodeBill();
+
+        $new = $this->sell([['product_id' => $this->apple->id, 'quantity' => 3]], $old->id);
+
+        $this->assertSame(0.15, $new->taxPercent);
+        $this->assertSame('$', $new->currency);
+        $this->assertSame(7.0, $new->bill_details[0]->price);
+        $this->assertSame('Apple', $new->bill_details[0]->productName);
+    }
+
+    public function test_the_edit_page_of_a_bill_from_the_old_code_shows_the_product_values(): void
+    {
+        $old = $this->oldCodeBill();
+
+        $this->actingAs($this->owner)->get(route('bill.edit', $old->id))
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->where('bill.taxPercent', null)
+                ->where('bill.bill_details.0.product.price', 7)
+                ->where('bill.bill_details.0.product.name', 'Apple')
+                ->etc());
+    }
+
+    public function test_the_fill_runs_every_hour(): void
+    {
+        $event = collect(app(\Illuminate\Console\Scheduling\Schedule::class)->events())
+            ->first(fn ($e) => str_contains($e->command ?? '', 'bills:fill-sale-values'));
+        $this->assertNotNull($event);
+        $this->assertSame('0 * * * *', $event->expression);
+    }
+
+    public function test_the_migration_can_run_again(): void
+    {
+        $migration = require database_path('migrations/9-2026_11_13_000001_store_sale_values_on_bills.php');
+        $bill = $this->sell([['product_id' => $this->apple->id, 'quantity' => 2]]);
+        $this->apple->update(['price' => 9]);
+
+        $migration->up(); // the columns exist: no error, no change
+
+        $this->assertSame(7.0, $bill->fresh('bill_details')->bill_details[0]->price);
+    }
+
     public function test_the_migration_copies_the_current_values_into_old_bills(): void
     {
         $migration = require database_path('migrations/9-2026_11_13_000001_store_sale_values_on_bills.php');

@@ -61,9 +61,12 @@ class BillController extends Controller
         $bill = $bill->load('bill_details.product');
         // The cart shows the values of the original sale (store() keeps them).
         // Only the copy for this page changes; the products are not saved.
+        // A row that is not filled yet (productName NULL, see SaleValues) keeps the product values.
         foreach ($bill->bill_details as $detail) {
+            if ($detail->productName === null)
+                continue;
             $detail->product->price = $detail->price;
-            $detail->product->name = $detail->productName ?? $detail->product->name;
+            $detail->product->name = $detail->productName;
         }
         return $this->checkoutPage($request, $bill);
     }
@@ -123,19 +126,21 @@ class BillController extends Controller
         foreach ($validated['bill_details'] as $line) {
             $product = $products[$line['product_id']];
             $oldLine = $oldLines->get($product->id);
+            // An old line without stored values (productName NULL, see SaleValues) takes the product values.
+            $keep = $oldLine !== null && $oldLine->productName !== null;
             $billDetails[] = [
                 'product_id' => $product->id,
                 'quantity' => $line['quantity'],
-                'price' => $oldLine ? $oldLine->price : $product->price,
-                'productName' => $oldLine ? ($oldLine->productName ?? $product->name) : $product->name,
+                'price' => $keep ? $oldLine->price : $product->price,
+                'productName' => $keep ? $oldLine->productName : $product->name,
             ];
         }
 
         $createdBill = DB::transaction(function () use ($validated, $user, $business, $oldBill, $billDetails) {
             $bill = new Bill([
                 'cashReceived' => $validated['cashReceived'] ?? null,
-                'taxPercent' => $oldBill ? $oldBill->taxPercent : $business->taxPercent,
-                'currency' => $oldBill ? $oldBill->currency : $business->currency,
+                'taxPercent' => $oldBill?->taxPercent ?? $business->taxPercent,
+                'currency' => $oldBill?->currency ?? $business->currency,
             ]);
             $bill->business_id = $user->business_id;
             $bill->createdBy_id = $user->id;

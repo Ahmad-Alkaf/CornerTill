@@ -1,4 +1,5 @@
 import Num from "@/Utilities/Num";
+import { saleProductName, saleUnitPrice } from "@/Utilities/saleValues";
 import { IBillDetail } from "@/types";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -12,8 +13,8 @@ export default function BillDetailRow({
 }) {
   const { t } = useTranslation();
   //The values of the sale, not the current values of the product.
-  const price = transaction.price;
-  const name = transaction.productName ?? transaction.product.name;
+  const price = saleUnitPrice(transaction);
+  const name = saleProductName(transaction);
   return (
     <>
       <tr className="h-10 max-h-10 border-x border-t">

@@ -76,8 +76,9 @@ export interface IBill extends ICreateBill, BasicModel {
   createdBy_id: string;
   created_by?: IUser;
   override bill_details: IBillDetail[];
-  /** Tax rate of the sale (0.15 is 15%). It does not change when the business changes. */
-  taxPercent: number;
+  /** Tax rate of the sale (0.15 is 15%). It does not change when the business changes.
+   * Null only for a bill that the old code wrote and that is not filled yet (Utilities/saleValues.ts). */
+  taxPercent: number | null;
   /** Currency of the sale. Null only if the business had none. */
   currency: string | null;
 }
@@ -92,7 +93,7 @@ export interface IBillDetail extends ICreateBillDetail, BasicModel {
   bill_id: string;
   /** Unit price of the sale, tax not included. It does not change when the product changes. */
   price: number | null;
-  /** Product name at the time of the sale. */
+  /** Product name at the time of the sale. Null only for a row that is not filled yet (Utilities/saleValues.ts). */
   productName: string | null;
 }
 

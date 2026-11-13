@@ -74,12 +74,24 @@ class DashboardController extends Controller
             ->get();
     }
 
+    /**
+     * SQL for the amount of one bill detail, tax included, with the values stored
+     * with the sale (not the current tax rate and prices). A row that is not
+     * filled yet (see App\Support\SaleValues) uses the current values.
+     */
+    private function saleAmountSql(): string
+    {
+        $tax = (float) request()->user()->business->taxPercent;
+        return "COALESCE(CASE WHEN bill_details.productName IS NULL THEN products.price ELSE bill_details.price END, 0)"
+            . " * bill_details.quantity * (1 + COALESCE(bills.taxPercent, {$tax}))";
+    }
+
     private function calcSales()
     {
-        // The values stored with each sale, not the current tax rate and prices.
         $res = request()->user()->business->bills()
-            ->selectRaw("DAY(bills.created_at) AS day, SUM(COALESCE(bill_details.price, 0) * bill_details.quantity * (1 + bills.taxPercent)) AS daily_sales")
+            ->selectRaw("DAY(bills.created_at) AS day, SUM({$this->saleAmountSql()}) AS daily_sales")
             ->join('bill_details', 'bills.id', '=', 'bill_details.bill_id')
+            ->leftJoin('products', 'products.id', '=', 'bill_details.product_id')
             ->whereBetween('bills.created_at', [Carbon::now()->subDays(2), Carbon::now()])
             ->groupBy('day')
             ->orderByDesc('day')
@@ -131,10 +143,10 @@ class DashboardController extends Controller
 
     private function calcMonthlySales(): array
     {
-        // The values stored with each sale, not the current tax rate and prices.
         $res = request()->user()->business->bills()
-            ->selectRaw("MONTH(bills.created_at) AS month, SUM(COALESCE(bill_details.price, 0) * bill_details.quantity * (1 + bills.taxPercent)) AS month_sales")
+            ->selectRaw("MONTH(bills.created_at) AS month, SUM({$this->saleAmountSql()}) AS month_sales")
             ->join('bill_details', 'bills.id', '=', 'bill_details.bill_id')
+            ->leftJoin('products', 'products.id', '=', 'bill_details.product_id')
             ->whereBetween('bills.created_at', [Carbon::now()->subYear()->addDay(), Carbon::now()])
             ->groupByRaw('month')
             ->get();
