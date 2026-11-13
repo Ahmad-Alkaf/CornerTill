@@ -1,9 +1,6 @@
 import SupportEmailLink from "@/Components/SupportEmailLink";
-import {
-  KAFLABS_PRIVACY_URL,
-  KAFLABS_TERMS_URL,
-  KAFLABS_URL,
-} from "@/Utilities/Constant";
+import { KAFLABS_URL } from "@/Utilities/Constant";
+import { Link } from "@inertiajs/react";
 import { Tooltip } from "@material-tailwind/react";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -51,23 +48,14 @@ export default function Footer({ className = "" }: { className?: string }) {
               </span>
             </Tooltip>
             {" · "}
-            <a
-              className={linkClass}
-              href={KAFLABS_TERMS_URL}
-              target="_blank"
-              rel="noopener"
-            >
+            {/* CornerTill supplements on this domain; they link to the KafLabs master pages. */}
+            <Link className={linkClass} href={route("termsAndConditions")}>
               {t("Terms")}
-            </a>
+            </Link>
             {" · "}
-            <a
-              className={linkClass}
-              href={KAFLABS_PRIVACY_URL}
-              target="_blank"
-              rel="noopener"
-            >
+            <Link className={linkClass} href={route("privacyPolicy")}>
               {t("Privacy Policy")}
-            </a>
+            </Link>
           </div>
         </footer>
       </div>
