@@ -41,13 +41,14 @@ export default function TaxRateInput({
           </span>{" "}
           {t("tax on")}{" "}
           <span className="font-semibold text-blue-gray-600">
-            <Num amount={100} showCurrency currency={currency} />
+            {/* No symbol while the currency is empty (Num would read the business of the logged-in user). */}
+            <Num amount={100} showCurrency={!!currency} currency={currency} />
           </span>{" "}
           {t("is")}{" "}
           <span className="font-semibold text-blue-gray-600">
             <Num
               amount={(value / 100) * 100}
-              showCurrency
+              showCurrency={!!currency}
               currency={currency}
             />
           </span>
