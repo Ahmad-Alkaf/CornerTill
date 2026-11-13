@@ -7,7 +7,7 @@ export default function PoweredBySection() {
   const { t } = useTranslation();
   return (
     <section
-      id="powered-by-aws"
+      id="infrastructure"
       className="relative mt-64 bg-blue-gray-100 bg-opacity-50 pb-32 md:mt-20"
     >
       <div
@@ -36,7 +36,7 @@ export default function PoweredBySection() {
               <img
                 src="assets/cloud-service-cut.jpg"
                 className="w-full rounded-t-lg align-middle"
-                alt="AWS servers"
+                alt={t("Cloud servers")}
                 loading="lazy"
               />
               <blockquote className="relative mb-4 p-8">
@@ -53,11 +53,11 @@ export default function PoweredBySection() {
                   ></polygon>
                 </svg>
                 <h4 className="text-xl font-bold text-blue-gray-50">
-                  {t("Powered by Amazon Web Services")}
+                  {t("Built on reliable infrastructure")}
                 </h4>
                 <p className="text-md mt-2 font-light text-blue-gray-50">
                   {t(
-                    "Our system is built on the Amazon Web Services (AWS) platform, the world’s most comprehensive and broadly adopted cloud provider",
+                    "Our system runs on cloud servers, so you can open it from any device with a browser.",
                   )}
                 </p>
               </blockquote>
@@ -76,7 +76,7 @@ export default function PoweredBySection() {
                     </h6>
                     <p className="text-blueGray-500 mb-4">
                       {t(
-                        "AWS protects our system and your data with the most advanced security features, such as encryption, firewalls, and access management.",
+                        "We protect our system and your data with security features such as encryption, firewalls, and access management.",
                       )}
                     </p>
                   </div>
