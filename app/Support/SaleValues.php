@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
  */
 class SaleValues
 {
-    /** @return array{bills:int, bill_details:int} the number of rows filled */
+    /** @return array{bills:int, bill_details:int, riyal_signs:int} the number of rows filled or changed */
     public static function fillMissing(): array
     {
         $bills = DB::table('bills')->whereNull('taxPercent')->update([
@@ -31,6 +31,24 @@ class SaleValues
             'productName' => DB::raw('(SELECT products.name FROM products WHERE products.id = bill_details.product_id)'),
         ]);
 
-        return ['bills' => $bills, 'bill_details' => $details];
+        return ['bills' => $bills, 'bill_details' => $details, 'riyal_signs' => self::normalizeRiyal()];
+    }
+
+    /**
+     * Stored bill currencies with an old Saudi riyal symbol get the Saudi riyal
+     * sign, with the rules of Currency::normalize (the same currency, written the
+     * new way). For example bills that an older version copied from a business
+     * before its currency was normalized.
+     */
+    private static function normalizeRiyal(): int
+    {
+        $changed = DB::table('bills')
+            ->whereIn(DB::raw('TRIM(currency)'), Currency::OLD_SAUDI_RIYAL_SYMBOLS)
+            ->update(['currency' => Currency::SAUDI_RIYAL_SIGN]);
+        $changed += DB::table('bills')
+            ->whereIn(DB::raw('UPPER(TRIM(currency))'), Currency::OLD_RIYAL_SYMBOLS_IN_SAUDI_ARABIA)
+            ->whereIn('business_id', DB::table('business')->where('country', 'Saudi Arabia')->select('id'))
+            ->update(['currency' => Currency::SAUDI_RIYAL_SIGN]);
+        return $changed;
     }
 }

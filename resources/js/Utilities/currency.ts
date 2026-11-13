@@ -11,6 +11,21 @@ export const SAUDI_RIYAL_SIGN = "⃁";
  * bidi character and shows to the right of the number. So we show such an
  * amount as an isolated left-to-right unit.
  */
+/**
+ * Old Saudi riyal symbols that mean the Saudi riyal in any country (the same
+ * list as App\Support\Currency::OLD_SAUDI_RIYAL_SYMBOLS). The server already
+ * stores the new sign; this keeps the display right for an old stored value
+ * (for example on a bill that was not normalized yet).
+ */
+const OLD_SAUDI_RIYAL_SYMBOLS = ["ر.س", "ر.س.", "ر. س"];
+
+/** The symbol to show: an old Saudi riyal symbol shows as the Saudi riyal sign. */
+export function displaySymbol(symbol: string): string {
+  return OLD_SAUDI_RIYAL_SYMBOLS.includes(symbol.trim())
+    ? SAUDI_RIYAL_SIGN
+    : symbol;
+}
+
 export function isSymbolAlwaysLeft(symbol: string): boolean {
   return symbol.trim() === SAUDI_RIYAL_SIGN;
 }

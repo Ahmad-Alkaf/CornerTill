@@ -19,8 +19,8 @@ class FillSaleValues extends Command
     public function handle(): int
     {
         $filled = SaleValues::fillMissing();
-        $line = "Filled sale values: bills={$filled['bills']}, bill_details={$filled['bill_details']}";
-        if ($filled['bills'] + $filled['bill_details'] > 0)
+        $line = "Filled sale values: bills={$filled['bills']}, bill_details={$filled['bill_details']}, riyal_signs={$filled['riyal_signs']}";
+        if (array_sum($filled) > 0)
             Log::info($line);
         $this->line($line);
         return self::SUCCESS;

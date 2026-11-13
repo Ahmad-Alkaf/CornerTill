@@ -2,7 +2,7 @@ import { AuthPageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { HTMLAttributes } from "react";
 import { useTranslation } from "react-i18next";
-import { isSymbolAlwaysLeft } from "./currency";
+import { displaySymbol, isSymbolAlwaysLeft } from "./currency";
 
 /**
  * Western digits (0-9) in all languages and on all browser locales, with one
@@ -47,9 +47,11 @@ export default function Num({
   let number: string; //number is either number or noAmount. Ex: '1123' or 'N/A'
   const symbol =
     showCurrency && amount !== null
-      ? currencySymbol
-        ? currencySymbol
-        : usePage<AuthPageProps>().props.auth.business.currency
+      ? displaySymbol(
+          currencySymbol
+            ? currencySymbol
+            : usePage<AuthPageProps>().props.auth.business.currency,
+        )
       : null;
   //SAMA rules for the Saudi riyal sign: always left of the number, with a space.
   const symbolLeft = symbol !== null && isSymbolAlwaysLeft(symbol);

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Bill;
 use App\Models\Product;
 use App\Models\User;
+use App\Support\Currency;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -195,6 +196,36 @@ class BillSaleValuesTest extends TestCase
                 ->where('bill.bill_details.0.product.price', 7)
                 ->where('bill.bill_details.0.product.name', 'Apple')
                 ->etc());
+    }
+
+    public function test_a_saudi_sale_stores_the_saudi_riyal_sign(): void
+    {
+        // An old row: the riyal migration has not changed it (raw update, no Business::saving).
+        DB::table('business')->where('id', $this->owner->business_id)->update(['country' => 'Saudi Arabia', 'currency' => 'ر.س']);
+        $this->owner->unsetRelation('business');
+
+        $bill = $this->sell([['product_id' => $this->apple->id, 'quantity' => 1]]);
+
+        $this->assertSame(Currency::SAUDI_RIYAL_SIGN, $bill->currency);
+    }
+
+    public function test_the_fill_normalizes_old_riyal_symbols_on_stored_bills(): void
+    {
+        $saudi = $this->sell([['product_id' => $this->apple->id, 'quantity' => 1]]);
+        $anywhere = $this->sell([['product_id' => $this->apple->id, 'quantity' => 1]]);
+        DB::table('bills')->where('id', $saudi->id)->update(['currency' => 'SAR']);
+        DB::table('bills')->where('id', $anywhere->id)->update(['currency' => 'ر.س']);
+
+        // 'SAR' means the riyal only in Saudi Arabia; 'ر.س' everywhere.
+        DB::table('business')->where('id', $this->owner->business_id)->update(['country' => 'Bahrain']);
+        $this->artisan('bills:fill-sale-values')->expectsOutputToContain('riyal_signs=1')->assertSuccessful();
+        $this->assertSame('SAR', DB::table('bills')->where('id', $saudi->id)->value('currency'));
+        $this->assertSame(Currency::SAUDI_RIYAL_SIGN, DB::table('bills')->where('id', $anywhere->id)->value('currency'));
+
+        DB::table('business')->where('id', $this->owner->business_id)->update(['country' => 'Saudi Arabia']);
+        $this->artisan('bills:fill-sale-values')->expectsOutputToContain('riyal_signs=1')->assertSuccessful();
+        $this->assertSame(Currency::SAUDI_RIYAL_SIGN, DB::table('bills')->where('id', $saudi->id)->value('currency'));
+        $this->artisan('bills:fill-sale-values')->expectsOutputToContain('riyal_signs=0')->assertSuccessful();
     }
 
     public function test_the_fill_runs_every_hour(): void
