@@ -18,6 +18,11 @@ return [
     | subscription routes, the Paddle webhook and Paddle.js are off, and
     | every business uses the "beta" resource limits (config/constants.php).
     | PAYMENTS_ENABLED=true: the Paddle subscription flow works as before.
+    |
+    | Before you set it to true: the legal pages say that CornerTill takes no
+    | payments. First name the payment provider in Privacy section 7, update
+    | Terms section 7, publish a refund policy and link it from the pricing
+    | cards, and change LEGAL_LAST_UPDATED (see README.md "Launch switches").
     */
     'payments_enabled' => (bool) env('PAYMENTS_ENABLED', false),
 

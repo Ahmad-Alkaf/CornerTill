@@ -18,7 +18,13 @@ class LaunchSwitchesTest extends TestCase
 
     public function test_payments_are_off_by_default(): void
     {
-        $this->assertFalse(config('features.payments_enabled'));
+        $this->assertFalse(
+            config('features.payments_enabled'),
+            'The privacy policy and the terms say that CornerTill takes no payments. '
+            . 'Before payments are on: name the payment provider in Privacy section 7, '
+            . 'update Terms section 7, publish a refund policy and link it from the '
+            . 'pricing cards (README.md "Launch switches").'
+        );
     }
 
     public function test_payment_routes_return_404_when_payments_are_off(): void
