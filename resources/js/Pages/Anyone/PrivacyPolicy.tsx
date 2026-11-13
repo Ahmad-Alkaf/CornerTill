@@ -117,7 +117,17 @@ export default function PrivacyPolicy({ auth }: PageProps) {
         </P>
         <P>
           {t(
-            "CornerTill has no advertising and no third-party analytics. It loads no advertising or analytics scripts and sets no tracking cookies.",
+            "CornerTill has no advertising, and it sets no advertising or cross-site tracking cookies.",
+          )}
+        </P>
+        <P>
+          {t(
+            "To count visits and to measure how fast pages load, CornerTill uses Cloudflare Web Analytics. Cloudflare adds a small script to each page. For each page view, Cloudflare records the page address (without the query string), the referring page, the page-load timings, and the country, browser, operating system, and device type of the visitor.",
+          )}
+        </P>
+        <P>
+          {t(
+            "Cloudflare states that Web Analytics uses no cookies or local storage, does not fingerprint visitors, and does not track visitors across websites.",
           )}
         </P>
       </LegalSection>
@@ -159,6 +169,11 @@ export default function PrivacyPolicy({ auth }: PageProps) {
           <LI>{t("to answer your support requests;")}</LI>
           <LI>
             {t(
+              "to count visits and to measure how fast pages load (see section 3);",
+            )}
+          </LI>
+          <LI>
+            {t(
               "to count the total numbers of businesses, accounts, products, and bills, so that we can plan the service.",
             )}
           </LI>
@@ -191,7 +206,7 @@ export default function PrivacyPolicy({ auth }: PageProps) {
           </LI>
           <LI>
             <Trans
-              i18nKey="<b>Cloudflare</b> provides the network, DNS, and protection for cornertill.com. All traffic to CornerTill passes through Cloudflare."
+              i18nKey="<b>Cloudflare</b> provides the network, DNS, and protection for cornertill.com, and the visit and page-speed statistics (Cloudflare Web Analytics). All traffic to CornerTill passes through Cloudflare."
               components={{ b }}
             />
           </LI>
