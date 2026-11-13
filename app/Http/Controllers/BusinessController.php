@@ -173,17 +173,26 @@ class BusinessController extends Controller
         Gate::authorize('update', $business);
 
         $updatedBusiness = $request->validated();
-        //1- if logo is null OR there is new logo THEN delete the old logo.
-        if (isset($business->logo) && ($request->hasFile('logoFile') || !isset($updatedBusiness['logo']))) {
-            $this->deleteFile($business->logo);
-        }
-        //2- if there is new logo store it.
+        // The logo changes only when the request uploads a new file (logoFile) or
+        // explicitly removes it (logo: null). The other forms of the business page
+        // (Location & Contact, Financial) do not send `logo`: they keep the logo.
+        // A logo name sent by the client is never stored, so a request cannot
+        // point the logo to (and later delete) another file.
+        $removeLogo = array_key_exists('logo', $updatedBusiness) && $updatedBusiness['logo'] === null;
+        unset($updatedBusiness['logo'], $updatedBusiness['logoFile']);
         if ($request->hasFile('logoFile')) {
             $updatedBusiness['logo'] = $this->storeFile($request);
+        } else if ($removeLogo) {
+            $updatedBusiness['logo'] = null;
         }
 
+        $oldLogo = $business->logo;
         $business->update($updatedBusiness);
-        $business->save();
+
+        // Delete the old file only after the new value is saved.
+        if (isset($oldLogo) && $oldLogo !== $business->logo) {
+            $this->deleteFile($oldLogo);
+        }
 
         return redirect()->back()->with('success', __('Successfully updated'));
     }
