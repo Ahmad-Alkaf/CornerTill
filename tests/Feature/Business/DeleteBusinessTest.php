@@ -54,7 +54,10 @@ class DeleteBusinessTest extends TestCase
         BillDetail::factory()->create(['bill_id' => $bill->id, 'product_id' => $product->id, 'quantity' => 2]);
 
         DB::table('password_reset_tokens')->insert(['email' => $owner->email, 'token' => 'hash', 'created_at' => now()]);
-        $owner->createToken('test');
+        // tokenable_id is a big integer (morphs()) and user IDs are ULIDs: MySQL cannot
+        // store such a token, so the row exists only on sqlite.
+        if (DB::getDriverName() === 'sqlite')
+            $owner->createToken('test');
         DB::table('customers')->insert(['billable_type' => Business::class, 'billable_id' => $business->id, 'paddle_id' => "ctm_{$prefix}", 'name' => 'x', 'email' => $owner->email, 'created_at' => now(), 'updated_at' => now()]);
         $subscriptionId = DB::table('subscriptions')->insertGetId(['billable_type' => Business::class, 'billable_id' => $business->id, 'type' => 'default', 'paddle_id' => "sub_{$prefix}", 'status' => 'canceled', 'created_at' => now(), 'updated_at' => now()]);
         DB::table('subscription_items')->insert(['subscription_id' => $subscriptionId, 'product_id' => 'pro_1', 'price_id' => 'pri_1', 'status' => 'canceled', 'quantity' => 1, 'created_at' => now(), 'updated_at' => now()]);
@@ -218,7 +221,7 @@ class DeleteBusinessTest extends TestCase
         Storage::disk('businesses-logo')->assertMissing('a-logo.png');
         Storage::disk('products-images')->assertMissing('a-apple.png');
         $this->assertSame(0, DB::table('password_reset_tokens')->where('email', $owner->email)->count());
-        $this->assertSame(0, DB::table('personal_access_tokens')->where('tokenable_id', $owner->id)->count());
+        $this->assertSame(0, DB::table('personal_access_tokens')->where(DB::raw('CAST(tokenable_id AS CHAR)'), $owner->id)->count());
         foreach (['customers', 'subscriptions', 'transactions'] as $table)
             $this->assertSame(0, DB::table($table)->where('billable_id', $business->id)->count(), $table);
         $this->assertSame(1, DB::table('subscription_items')->count()); // only the other business's item
@@ -235,6 +238,77 @@ class DeleteBusinessTest extends TestCase
 
         // A second run has nothing to do (idempotent).
         $this->artisan('business:purge-deleted')->assertSuccessful();
+    }
+
+    public function test_a_purge_blocked_by_another_business_deletes_nothing(): void
+    {
+        ['business' => $business, 'owner' => $owner, 'product' => $product] = $this->businessWithData('a');
+        $other = $this->businessWithData('b');
+        // Old data: business B sold a product of A (before products were checked per business).
+        BillDetail::factory()->create(['bill_id' => $other['bill']->id, 'product_id' => $product->id, 'quantity' => 1]);
+        $this->deleteBusiness($owner);
+        $this->deletedDaysAgo($business, 31);
+
+        $this->artisan('business:purge-deleted', ['--dry-run' => true])
+            ->expectsOutputToContain('Skipped: 1 bill details of other businesses use products of business')
+            ->assertSuccessful();
+        $this->artisan('business:purge-deleted')->assertFailed();
+
+        // Nothing of A is deleted, and B is untouched.
+        $this->assertSame(1, Bill::where('business_id', $business->id)->count());
+        $this->assertNotNull(Product::find($product->id));
+        $this->assertSame(2, User::withTrashed()->where('business_id', $business->id)->count());
+        Storage::disk('businesses-logo')->assertExists('a-logo.png');
+        $this->assertSame(2, BillDetail::where('bill_id', $other['bill']->id)->count());
+    }
+
+    public function test_restore_after_the_retention_period_needs_force(): void
+    {
+        ['business' => $business, 'owner' => $owner] = $this->businessWithData();
+        $this->deleteBusiness($owner);
+        $this->deletedDaysAgo($business, 31);
+
+        $this->artisan('business:restore', ['id' => $business->id])
+            ->expectsOutputToContain('Check the data, then run again with --force')
+            ->assertFailed();
+        $this->assertTrue(Business::withTrashed()->find($business->id)->trashed());
+
+        $this->artisan('business:restore', ['id' => $business->id, '--force' => true])
+            ->expectsOutputToContain('and 1 account(s). Data: bills=1, products=1, accounts=2')
+            ->assertSuccessful();
+        $this->assertFalse(Business::find($business->id)->trashed());
+    }
+
+    public function test_restore_of_a_business_that_the_old_code_deleted(): void
+    {
+        // The old destroy() deleted the user and the business with two separate times.
+        ['business' => $business, 'owner' => $owner, 'staff' => $staff] = $this->businessWithData();
+        DB::table('users')->where('id', $owner->id)->update(['deleted_at' => now()->subDays(3)->subSecond()]);
+        DB::table('business')->where('id', $business->id)->update(['deleted_at' => now()->subDays(3)]);
+
+        $this->artisan('business:restore', ['id' => $business->id])
+            ->expectsOutputToContain('and 1 account(s)')
+            ->expectsOutputToContain('These accounts stay deleted')
+            ->assertSuccessful();
+        $this->post('/login', ['email' => $owner->email, 'password' => 'asdfasdf'])->assertSessionHasNoErrors();
+        $this->assertTrue(User::withTrashed()->find($staff->id)->trashed());
+    }
+
+    public function test_restore_with_user_restores_a_chosen_account(): void
+    {
+        ['business' => $business, 'owner' => $owner, 'staff' => $staff] = $this->businessWithData();
+        $this->deleteBusiness($owner);
+
+        $this->artisan('business:restore', ['id' => $business->id, '--with-user' => [$staff->id]])
+            ->expectsOutputToContain('and 2 account(s)')
+            ->assertSuccessful();
+        $this->assertFalse(User::find($staff->id)->trashed());
+
+        // Also later, on a business that is not deleted.
+        DB::table('users')->where('id', $staff->id)->update(['deleted_at' => now()]);
+        $this->artisan('business:restore', ['id' => $business->id, '--with-user' => [$staff->id]])
+            ->expectsOutputToContain('and 1 account(s)')
+            ->assertSuccessful();
     }
 
     public function test_purge_is_scheduled_daily(): void
