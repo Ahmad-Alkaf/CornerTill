@@ -1,5 +1,4 @@
 import PrimaryButton from "@/Components/Buttons/PrimaryButton";
-import A from "@/Components/Typography/A";
 import Num from "@/Utilities/Num";
 import { Tooltip } from "@material-tailwind/react";
 import React, { ButtonHTMLAttributes, ReactNode } from "react";
@@ -91,13 +90,6 @@ export default function Plan({
           {t(actionText)}
         </PrimaryButton>
       )}
-
-      <A
-        className="mt-2 text-xs text-gray-500 hover:underline"
-        href={route("paymentServicePolicy")}
-      >
-        {t("Payment & Refund Policy")}
-      </A>
     </div>
   );
 }

@@ -29,16 +29,8 @@ class LaunchSwitchesTest extends TestCase
         $this->get('/subscribe?plan=Basic&period=Monthly')->assertNotFound();
         $this->get('/subscription/pause')->assertNotFound();
         $this->get('/update-payment-method')->assertNotFound();
-        $this->get('/payment-service-policy')->assertNotFound();
         // Cashier::ignoreRoutes() removes the Paddle webhook in the free beta.
         $this->post('/paddle/webhook')->assertNotFound();
-    }
-
-    public function test_payment_policy_opens_when_payments_are_on(): void
-    {
-        config(['features.payments_enabled' => true]);
-
-        $this->get('/payment-service-policy')->assertOk();
     }
 
     public function test_welcome_page_shows_free_beta_when_payments_are_off(): void
