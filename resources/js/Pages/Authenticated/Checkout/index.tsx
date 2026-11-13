@@ -39,11 +39,13 @@ export default function Checkout({
   const [productItemSize, setProductItemSize] = useState<number>(
     JSON.parse(localStorage.getItem("productItemSize") ?? "192"),
   );
+  //The cart comes back after a reload or Back (one key for a new bill, one per edited bill).
   const form = useBetterForm<ICreateBill | IBill>(
     bill ?? {
       bill_details: [],
       cashReceived: null,
     },
+    bill ? "checkout:" + bill.id : "checkout",
   );
 
   const setBill = (

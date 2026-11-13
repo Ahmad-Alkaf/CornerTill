@@ -19,18 +19,28 @@ export type UseBetterForm<T extends object> = Omit<
   readonly processing: boolean;
 };
 
+/**
+ * @param rememberKey Optional. With a key, the form keeps its data in the browser
+ * history, so it comes back after a reload or Back (the checkout cart uses this).
+ * The key must be unique on the page and must not change while the component is
+ * mounted. Never use it for a form with a password, and not for forms that show
+ * server data (a remembered value would hide a newer server value).
+ * Without a key (the default) the form starts from `initialValue` each time.
+ * A shared default key ("hi") made all forms of a page restore the same data.
+ */
 export default function useBetterForm<T extends object>(
   initialValue: T,
+  rememberKey?: string,
 ): UseBetterForm<T> {
   const [oldValues, setOldValues] = useState<T>(
     JSON.parse(JSON.stringify(initialValue)),
   );
 
-  //No remember key: the form does not keep its data in the browser history.
-  //A shared key made all forms of a page restore the same data after a reload
-  //(the Location and Financial forms of /business showed empty fields and saved
-  //wrong data). The server data is the source of each form.
-  const form = useForm<T>(initialValue);
+  //`rememberKey` is fixed for the life of the component, so the same hooks run each render.
+  const form =
+    rememberKey === undefined
+      ? useForm<T>(initialValue)
+      : useForm<T>(rememberKey, initialValue);
 
   const [processing, setProcessing] = useState<boolean>(form.processing);
 
