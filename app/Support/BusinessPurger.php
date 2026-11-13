@@ -77,9 +77,11 @@ class BusinessPurger
             DB::table('transactions')->where('billable_id', $businessId)->delete();
             DB::table('customers')->where('billable_id', $businessId)->delete();
 
+            // tokenable_id is a big integer (morphs()) and user IDs are ULID strings:
+            // compare as text (MySQL strict mode refuses a string-to-number compare).
             DB::table('personal_access_tokens')
                 ->where('tokenable_type', User::class)
-                ->whereIn('tokenable_id', $userIds)
+                ->whereIn(DB::raw('CAST(tokenable_id AS CHAR)'), $userIds)
                 ->delete();
             DB::table('password_reset_tokens')->whereIn('email', $accounts->pluck('email'))->delete();
             // Sessions are files (SESSION_DRIVER=file); a "sessions" table exists only with the database driver.
