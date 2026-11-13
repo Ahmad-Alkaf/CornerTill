@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Support\Currency;
 use Laravel\Paddle\Billable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,6 +14,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Business extends Model
 {
     use HasFactory, HasUlids, SoftDeletes, Billable;
+
+    protected static function booted(): void
+    {
+        // Store the new Saudi riyal sign when the owner types an old riyal symbol (for example 'ر.س').
+        static::saving(function (Business $business) {
+            $business->currency = Currency::normalize($business->currency, $business->country);
+        });
+    }
 
     public function onTrial()
     {
