@@ -29,10 +29,12 @@ return [
     /*
     | Social login providers. A disabled provider hides its button, and its
     | /auth/{provider}/redirect and /auth/{provider}/callback routes return 404.
+    | Launch decision: only Google is on. Before you turn GitHub or X on, name
+    | the provider in Privacy section 4 and section 7.
     */
     'social' => [
         'google' => (bool) env('SOCIAL_GOOGLE_ENABLED', true),
-        'github' => (bool) env('SOCIAL_GITHUB_ENABLED', true),
+        'github' => (bool) env('SOCIAL_GITHUB_ENABLED', false),
         'x' => (bool) env('SOCIAL_X_ENABLED', false),
     ],
 

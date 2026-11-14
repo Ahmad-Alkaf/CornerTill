@@ -21,4 +21,4 @@ export const PRIVACY_EMAIL = "privacy@kaflabs.com";
 export const LEGAL_EMAIL = "legal@kaflabs.com";
 export const SUPPORT_EMAIL = "support@kaflabs.com";
 /** Keep this date equal to the day the wording of a legal page last changed. */
-export const LEGAL_LAST_UPDATED = "13 November 2026";
+export const LEGAL_LAST_UPDATED = "14 November 2026";

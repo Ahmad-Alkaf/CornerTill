@@ -112,10 +112,10 @@ php artisan serve
 | `PAYMENTS_ENABLED` | `false` | `false`: free beta. Paddle plans, pricing, subscription routes, the Paddle webhook, and Paddle.js are off (routes return 404). The pages show "Free during beta". Every business uses the beta limits. `true`: the Paddle subscription flow works as before (see the warning below). |
 | `BETA_MAX_ACCOUNTS`, `BETA_MAX_PRODUCTS`, `BETA_MAX_BILLS_PER_MONTH` | `2`, `500`, `15000` | Beta limits for each business (same as the Basic plan). |
 | `SOCIAL_GOOGLE_ENABLED` | `true` | Google login button and `/auth/google/*` routes. |
-| `SOCIAL_GITHUB_ENABLED` | `true` | GitHub login button and `/auth/github/*` routes. |
+| `SOCIAL_GITHUB_ENABLED` | `false` | GitHub login button and `/auth/github/*` routes. |
 | `SOCIAL_X_ENABLED` | `false` | X login button and `/auth/x/*` routes. |
 
-A disabled provider hides its button, and its routes return 404.
+A disabled provider hides its button, and its routes return 404. The privacy policy names only Google; name each other provider there (sections 4 and 7) before you turn it on.
 
 **Before you set `PAYMENTS_ENABLED=true`:** name the payment provider in Privacy section 7 (`resources/js/Pages/Anyone/PrivacyPolicy.tsx`), update Terms section 7 (`resources/js/Pages/Anyone/TermsAndConditions.tsx`), publish a refund policy and link it from the pricing cards, and change `LEGAL_LAST_UPDATED` (`resources/js/Utilities/Constant.ts`). The legal pages now say that CornerTill takes no payments and has no paid plans, and the flag does not change them.
 
@@ -150,6 +150,7 @@ Required environment variables:
 | `FILESYSTEM_DISK` | `local` (image default; uploads on the volume) or `s3`. Do not leave it empty: `config/filesystems.php` then selects the S3 disks. |
 | `MAIL_MAILER`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_ENCRYPTION` | SMTP account |
 | `MAIL_FROM_ADDRESS`, `MAIL_FROM_NAME` | `noreply@kaflabs.com`, `CornerTill` |
+| `MAIL_REPLY_TO_ADDRESS`, `MAIL_REPLY_TO_NAME` | `support@kaflabs.com`, `CornerTill Support` (defaults). Every email gets this Reply-To header, because the sender address has no mailbox. Empty address: no header. |
 | `ADMIN_REPORT_EMAIL` | Receiver of the daily database table counts email (scheduled task). Empty: no email; the counts go only to the log. |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | OAuth apps, or turn the provider off with its `SOCIAL_*_ENABLED` switch |
 | `PAYMENTS_ENABLED` | `false` for the free beta (read the warning in "Launch switches" before `true`) |

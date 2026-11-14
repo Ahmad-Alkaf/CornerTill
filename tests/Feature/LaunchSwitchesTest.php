@@ -60,11 +60,11 @@ class LaunchSwitchesTest extends TestCase
     public function test_default_social_switches(): void
     {
         $this->assertTrue(config('features.social.google'));
-        $this->assertTrue(config('features.social.github'));
+        $this->assertFalse(config('features.social.github'));
         $this->assertFalse(config('features.social.x'));
 
         $this->get('/')->assertInertia(fn (Assert $page) => $page
-            ->where('features.social', ['google' => true, 'github' => true, 'x' => false])
+            ->where('features.social', ['google' => true, 'github' => false, 'x' => false])
             ->etc());
     }
 
