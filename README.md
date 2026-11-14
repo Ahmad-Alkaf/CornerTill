@@ -112,10 +112,10 @@ php artisan serve
 | `PAYMENTS_ENABLED` | `false` | `false`: free beta. Paddle plans, pricing, subscription routes, the Paddle webhook, and Paddle.js are off (routes return 404). The pages show "Free during beta". Every business uses the beta limits. `true`: the Paddle subscription flow works as before (see the warning below). |
 | `BETA_MAX_ACCOUNTS`, `BETA_MAX_PRODUCTS`, `BETA_MAX_BILLS_PER_MONTH` | `2`, `500`, `15000` | Beta limits for each business (same as the Basic plan). |
 | `SOCIAL_GOOGLE_ENABLED` | `true` | Google login button and `/auth/google/*` routes. |
-| `SOCIAL_GITHUB_ENABLED` | `true` | GitHub login button and `/auth/github/*` routes. |
+| `SOCIAL_GITHUB_ENABLED` | `false` | GitHub login button and `/auth/github/*` routes. |
 | `SOCIAL_X_ENABLED` | `false` | X login button and `/auth/x/*` routes. |
 
-A disabled provider hides its button, and its routes return 404.
+A disabled provider hides its button, and its routes return 404. The privacy policy names only Google; name each other provider there (sections 4 and 7) before you turn it on.
 
 **Before you set `PAYMENTS_ENABLED=true`:** name the payment provider in Privacy section 7 (`resources/js/Pages/Anyone/PrivacyPolicy.tsx`), update Terms section 7 (`resources/js/Pages/Anyone/TermsAndConditions.tsx`), publish a refund policy and link it from the pricing cards, and change `LEGAL_LAST_UPDATED` (`resources/js/Utilities/Constant.ts`). The legal pages now say that CornerTill takes no payments and has no paid plans, and the flag does not change them.
 

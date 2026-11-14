@@ -137,15 +137,15 @@ export default function PrivacyPolicy({ auth }: PageProps) {
         </P>
       </LegalSection>
 
-      <LegalSection n={4} title={t("Registration with Google, GitHub, or X")}>
+      <LegalSection n={4} title={t("Registration with Google")}>
         <P>
           {t(
-            "You can register with your Google, GitHub, or X account. The provider then sends CornerTill your name (or user name) and your email address. CornerTill uses them only to fill in the registration form and to mark your email address as confirmed. You still choose your own password.",
+            "You can register with your Google account. Google then sends CornerTill your name and your email address. CornerTill uses them only to fill in the registration form and to mark your email address as confirmed. You still choose your own password.",
           )}
         </P>
         <P>
           {t(
-            "CornerTill does not store your provider account ID, your profile picture, or any access token. It does not read or change any other data in your Google, GitHub, or X account. We do not sell this data, we do not use it for advertising, and we share it only as this page describes.",
+            "CornerTill does not store your provider account ID, your profile picture, or any access token. It does not read or change any other data in your Google account. We do not sell this data, we do not use it for advertising, and we share it only as this page describes.",
           )}
         </P>
         <P>
@@ -223,7 +223,7 @@ export default function PrivacyPolicy({ auth }: PageProps) {
           </LI>
           <LI>
             <Trans
-              i18nKey="<b>Google, GitHub, and X</b> only when you choose to register with one of them (see section 4)."
+              i18nKey="<b>Google</b> only when you choose to register with your Google account (see section 4)."
               components={{ b }}
             />
           </LI>
