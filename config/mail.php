@@ -104,6 +104,16 @@ return [
     ],
 
     /*
+    | Global "Reply-To" address of every email. The sender address has no
+    | mailbox, so replies go to the support address. Empty: no Reply-To header.
+    */
+
+    'reply_to' => [
+        'address' => env('MAIL_REPLY_TO_ADDRESS', 'support@kaflabs.com') ?: null,
+        'name' => env('MAIL_REPLY_TO_NAME', 'CornerTill Support'),
+    ],
+
+    /*
     | Receiver of the daily "Database Tables Counts" report (app/Console/Kernel.php).
     | Empty: the scheduled task only writes the counts to the log.
     */
