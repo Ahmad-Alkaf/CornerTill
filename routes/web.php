@@ -112,6 +112,21 @@ Route::get('/terms-and-conditions', function () {
     return Inertia::render('Anyone/TermsAndConditions');
 })->name('termsAndConditions');
 
+// The public pages for search engines. public/robots.txt points to this URL.
+// The language comes from a cookie, so each page has only one URL.
+Route::get('/sitemap.xml', function () {
+    $urls = [url('/'), route('privacyPolicy'), route('termsAndConditions')];
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n"
+        .'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
+    foreach ($urls as $loc) {
+        $xml .= '  <url><loc>'.e($loc).'</loc></url>'."\n";
+    }
+    $xml .= '</urlset>'."\n";
+
+    return response($xml, 200, ['Content-Type' => 'application/xml; charset=UTF-8']);
+})->name('sitemap');
+
 
 
 
