@@ -16,7 +16,8 @@ class SentryTest extends TestCase
 {
     public function test_sentry_is_off_without_a_dsn(): void
     {
-        $this->assertNull(config('sentry.dsn'));
+        // null without the variable; '' when .env has "SENTRY_LARAVEL_DSN=".
+        $this->assertEmpty(config('sentry.dsn'));
     }
 
     public function test_settings_keep_personal_data_out(): void
