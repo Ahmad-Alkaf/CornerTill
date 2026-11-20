@@ -39,6 +39,13 @@
 
     <!-- Fonts: Figtree is bundled by Vite (resources/js/app.tsx); no font CDN. -->
 
+    {{-- Sentry error reports from the browser (resources/js/sentry.ts).
+         No tag = off. A browser DSN is public by design. --}}
+    @if (config('services.sentry.browser_dsn'))
+        <meta name="sentry-dsn" content="{{ config('services.sentry.browser_dsn') }}">
+        <meta name="sentry-environment" content="{{ config('app.env') }}">
+    @endif
+
     <!-- Scripts -->
     @routes
     {{-- No @viteReactRefresh: vite.config.js has no React plugin, so its
