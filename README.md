@@ -153,6 +153,7 @@ Required environment variables:
 | `MAIL_REPLY_TO_ADDRESS`, `MAIL_REPLY_TO_NAME` | `support@kaflabs.com`, `CornerTill Support` (defaults). Every email gets this Reply-To header, because the sender address has no mailbox. Empty address: no header. |
 | `ADMIN_REPORT_EMAIL` | Receiver of the daily database table counts email (scheduled task). Empty: no email; the counts go only to the log. |
 | `SENTRY_LARAVEL_DSN` | DSN of the Sentry project for server error reports. Empty: Sentry is off. Set it as a runtime-only variable. `config/sentry.php` and `App\Support\SentryScrubber` keep the user, IP address, request body, cookies, and SQL values out of the reports. Test: `php artisan sentry:test` in the container. |
+| `SENTRY_BROWSER_DSN` | DSN of a separate Sentry project for browser error reports. Empty: the browser SDK is not downloaded and nothing is sent. Set it as a runtime-only variable; the page gets it in a `<meta>` tag. `resources/js/sentry.ts` keeps the user, cookies, headers, bodies, query strings, and console text out of the reports. In the Sentry project, keep "Prevent Storing of IP Addresses" on. |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | OAuth apps, or turn the provider off with its `SOCIAL_*_ENABLED` switch |
 | `PAYMENTS_ENABLED` | `false` for the free beta (read the warning in "Launch switches" before `true`) |
 

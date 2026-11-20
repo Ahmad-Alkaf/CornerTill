@@ -223,7 +223,7 @@ export default function PrivacyPolicy({ auth }: PageProps) {
           </LI>
           <LI>
             <Trans
-              i18nKey="<b>Sentry</b> receives a report when an error occurs on the CornerTill servers. A report contains the technical details of the error, the address of the page, and your browser type. Before a report is sent, we remove the form contents, the cookies, your IP address, and your account identity. Sentry keeps a report for up to 90 days."
+              i18nKey="<b>Sentry</b> receives a report when an error occurs on the CornerTill servers or in a CornerTill page in your browser. A report contains the technical details of the error, the address of the page, and your browser type. Before a report is sent, we remove the form contents, the cookies, your IP address, and your account identity. A report from your browser goes directly to Sentry, and we have set Sentry not to store the IP address of that connection. Sentry keeps a report for up to 90 days."
               components={{ b }}
             />
           </LI>

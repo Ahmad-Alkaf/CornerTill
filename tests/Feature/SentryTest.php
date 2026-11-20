@@ -73,4 +73,19 @@ class SentryTest extends TestCase
     {
         $this->assertSame('Division by zero', SentryScrubber::withoutSql('Division by zero'));
     }
+
+    public function test_page_has_no_browser_dsn_tag_when_the_variable_is_empty(): void
+    {
+        config(['services.sentry.browser_dsn' => null]);
+
+        $this->get('/privacy-policy')->assertOk()->assertDontSee('name="sentry-dsn"', false);
+    }
+
+    public function test_page_gives_the_browser_dsn_to_the_script(): void
+    {
+        config(['services.sentry.browser_dsn' => 'https://key@o1.ingest.de.sentry.io/2']);
+
+        $this->get('/privacy-policy')->assertOk()
+            ->assertSee('<meta name="sentry-dsn" content="https://key@o1.ingest.de.sentry.io/2">', false);
+    }
 }

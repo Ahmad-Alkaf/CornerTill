@@ -73,4 +73,10 @@ return [
         ],
     ],
 
+    // Sentry error reports from the browser (resources/js/sentry.ts). Empty =
+    // off. The server side has its own project and DSN: config/sentry.php.
+    'sentry' => [
+        'browser_dsn' => env('SENTRY_BROWSER_DSN'),
+    ],
+
 ];
