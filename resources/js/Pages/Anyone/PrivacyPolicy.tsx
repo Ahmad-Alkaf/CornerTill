@@ -223,6 +223,12 @@ export default function PrivacyPolicy({ auth }: PageProps) {
           </LI>
           <LI>
             <Trans
+              i18nKey="<b>Sentry</b> receives a report when an error occurs on the CornerTill servers. A report contains the technical details of the error, the address of the page, and your browser type. Before a report is sent, we remove the form contents, the cookies, your IP address, and your account identity. Sentry keeps a report for up to 90 days."
+              components={{ b }}
+            />
+          </LI>
+          <LI>
+            <Trans
               i18nKey="<b>Google</b> only when you choose to register with your Google account (see section 4)."
               components={{ b }}
             />
