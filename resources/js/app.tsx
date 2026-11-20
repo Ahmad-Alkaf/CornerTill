@@ -1,4 +1,6 @@
 import "./bootstrap";
+// Error reports from the browser; off without SENTRY_BROWSER_DSN.
+import "./sentry";
 // Figtree (variable font, weights 300-900) from the app itself, not from a font CDN.
 import "@fontsource-variable/figtree";
 import "../css/app.css";
