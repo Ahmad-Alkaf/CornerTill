@@ -1,6 +1,6 @@
 import { IBill, IUser } from "@/types";
 import BillInfo from "./Partials/BillInfo";
-import { PageProps } from "@inertiajs/inertia";
+import { PageProps } from "@inertiajs/core";
 import { Head } from "@inertiajs/react";
 import BillHeader from "./Partials/BillHeader";
 import GuestAuthLayout from "@/Layouts/GuestAuthLayout";

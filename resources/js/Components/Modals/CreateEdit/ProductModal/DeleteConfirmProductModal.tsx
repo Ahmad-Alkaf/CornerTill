@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import AlertModal from "../../AlertModal";
 import { IProduct } from "@/types";
-import { Inertia, Method } from "@inertiajs/inertia";
 import { router } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 

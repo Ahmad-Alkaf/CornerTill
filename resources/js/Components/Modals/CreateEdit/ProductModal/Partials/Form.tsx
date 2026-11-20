@@ -3,7 +3,7 @@ import React, { FormEvent } from "react";
 import FormInputs from "./FormInputs";
 import FormActions from "./FormActions";
 import useBetterForm from "@/Utilities/useBetterForm";
-import { VisitOptions } from "@inertiajs/inertia";
+import { VisitOptions } from "@inertiajs/core";
 
 export default function Form({
   modalAction,
