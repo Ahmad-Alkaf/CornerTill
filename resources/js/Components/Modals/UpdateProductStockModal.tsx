@@ -5,7 +5,7 @@ import { IProduct } from "@/types";
 import useBetterForm from "@/Utilities/useBetterForm";
 import Input from "../Inputs/Input";
 import SecondaryMaterialBtn from "../Buttons/Material/SecondaryMaterialBtn";
-import { VisitOptions } from "@inertiajs/inertia";
+import { VisitOptions } from "@inertiajs/core";
 import { useTranslation } from "react-i18next";
 
 export default function UpdateProductStockModal({
