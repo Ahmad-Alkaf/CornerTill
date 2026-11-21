@@ -1,7 +1,10 @@
 import { InertiaFormProps } from "@/types/global";
-import { setDataByMethod, setDataByObject } from "@inertiajs/inertia-react";
 import { useForm } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+
+//@inertiajs/react does not export these two `setData` types, so they are copied here.
+type setDataByObject<TForm> = (data: TForm) => void;
+type setDataByMethod<TForm> = (data: (previousData: TForm) => TForm) => void;
 /**
  * `useBetterForm` is a add-on on `useForm` which adds more functionality such as `setData` with type hint.
  * And `dirty` which tells if a field have been changed, which typically will be used for hiding an error, after user change the field
