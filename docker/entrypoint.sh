@@ -34,6 +34,16 @@ php artisan route:cache
 php artisan view:cache
 php artisan event:cache
 
+# After a server reboot, this container can start before MySQL accepts
+# connections. A failed migrate is an unhandled exception that goes to Sentry
+# (CORNERTILL-2), so wait for the database first. If it stays down, the start
+# stops here with exit code 1, and Docker starts the container again.
+db_wait="${DB_WAIT_SECONDS:-60}"
+if ! php artisan db:wait --timeout="$db_wait"; then
+  echo "The database did not accept connections in $db_wait seconds. Stop." >&2
+  exit 1
+fi
+
 if [ "$role" = "all" ] || [ "$role" = "web" ]; then
   if [ "${RUN_MIGRATIONS:-true}" = "true" ]; then
     tries=0

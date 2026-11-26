@@ -6,8 +6,9 @@
 #   worker        - php artisan queue:work only.
 #   scheduler     - php artisan schedule:work only.
 #
-# On start the container caches config, routes, views, and events, and
-# (roles all and web) runs `php artisan migrate --force`.
+# On start the container caches config, routes, views, and events, waits for
+# the database (`php artisan db:wait`, DB_WAIT_SECONDS), and (roles all and
+# web) runs `php artisan migrate --force`.
 #
 # The app listens on port 8080 as the www-data user. Health check: /api/health.
 # Persistent data (uploads, sessions, logs): mount a volume at
