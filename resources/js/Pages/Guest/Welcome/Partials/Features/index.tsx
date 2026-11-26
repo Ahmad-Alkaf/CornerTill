@@ -40,9 +40,9 @@ export default function Features() {
         <div className="pt-12 xl:pt-20">
           {/* Section header */}
           <div className="mx-auto max-w-3xl pb-12 text-center xl:pb-16">
-            <h1 className="mb-5 text-4xl font-light uppercase tracking-wide text-primary-600">
+            <h2 className="mb-5 text-4xl font-light uppercase tracking-wide text-primary-600">
               { t( "Explore the solutions" ) }
-            </h1>
+            </h2>
             <Solutions />
           </div>
 

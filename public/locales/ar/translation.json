@@ -774,5 +774,6 @@
     "Cloudflare states that Web Analytics uses no cookies or local storage, does not fingerprint visitors, and does not track visitors across websites.": "وتذكر Cloudflare أن خدمة Web Analytics لا تستخدم ملفات تعريف الارتباط ولا التخزين المحلي، ولا تُنشئ بصمة رقمية للزوار، ولا تتتبع الزوار عبر المواقع.",
     "to count visits and to measure how fast pages load (see section 3);": "لحساب عدد الزيارات ولقياس سرعة تحميل الصفحات (انظر القسم 3)؛",
     "<b>Cloudflare</b> provides the network, DNS, and protection for cornertill.com, and the visit and page-speed statistics (Cloudflare Web Analytics). All traffic to CornerTill passes through Cloudflare.": "<b>Cloudflare</b> توفّر الشبكة ونظام أسماء النطاقات (DNS) والحماية لموقع cornertill.com، وإحصاءات الزيارات وسرعة الصفحات (Cloudflare Web Analytics). وتمر جميع حركة البيانات إلى كورنر تِل عبر Cloudflare.",
-    "To get a copy of your records, email <mail>support@kaflabs.com</mail>.": "للحصول على نسخة من سجلاتك، راسلنا على <mail>support@kaflabs.com</mail>."
+    "To get a copy of your records, email <mail>support@kaflabs.com</mail>.": "للحصول على نسخة من سجلاتك، راسلنا على <mail>support@kaflabs.com</mail>.",
+    "Point of Sale App": "تطبيق نقاط البيع"
 }

@@ -29,6 +29,7 @@ export default function PrivacyPolicy({ auth }: PageProps) {
     <LegalPage
       user={auth.user}
       title={t("CornerTill Privacy Policy")}
+      headTitle="Privacy Policy"
       subtitle={t("Supplement to the KafLabs Privacy Policy")}
       intro={
         <P>
