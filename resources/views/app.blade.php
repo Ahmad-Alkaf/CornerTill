@@ -58,7 +58,9 @@
     @endif
 
     <!-- Scripts -->
-    @routes
+    {{-- Only the route list (JSON); the route() function is in the bundle
+         (resources/js/ziggy.ts). --}}
+    @routes(json: true)
     {{-- No @viteReactRefresh: vite.config.js has no React plugin, so its
          /@react-refresh script does not exist (a 404 with `npm run dev`).
          Production output is the same: the directive prints nothing without
