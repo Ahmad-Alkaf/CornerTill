@@ -6,11 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     @php
-        $title = 'CornerTill';
-        $description = 'Simplify your sales process and boost your productivity.';
-        $url = config('app.url', 'http://localhost:8000');
-        $mediumLogo = '/assets/logo/cornertill-logo.png';
-
+        // There is no Inertia SSR: search engines and link previews read only
+        // these tags. A route gives the page title and description with
+        // withViewData(['meta' => [...]]). The title has the same form as the
+        // title callback in resources/js/app.tsx (U+202F around the hyphen).
+        // Only <title> has the inertia attribute: Inertia removes the head
+        // tags that have it, and the canonical link must stay.
+        $meta = $meta ?? [];
+        $appName = __(config('app.name', 'CornerTill'));
+        $title = isset($meta['title']) ? $meta['title'] . "\u{202F}-\u{202F}" . $appName : $appName;
+        $description = $meta['description'] ?? __('Simplify your sales process and boost your productivity.');
+        $url = request()->path() === '/' ? url('/') . '/' : url()->current();
+        $mediumLogo = url('/assets/logo/cornertill-logo.png');
     @endphp
 
     <!-- General -->
@@ -18,9 +25,13 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <title inertia>{{ config('app.name', $title) }}</title>
+    <title inertia>{{ $title }}</title>
     <meta name="title" content="{{ $title }}">
     <meta name="description" content="{{ $description }}">
+    <link rel="canonical" href="{{ $url }}">
+    @isset($meta['robots'])
+        <meta name="robots" content="{{ $meta['robots'] }}">
+    @endisset
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">

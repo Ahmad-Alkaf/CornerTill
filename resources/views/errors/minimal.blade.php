@@ -32,6 +32,10 @@
                         @yield('message')
                     </div>
                 </div>
+
+                <div class="mt-8 text-center">
+                    <a href="{{ url('/') }}" class="text-gray-600 dark:text-gray-400 underline">{{ __('Go to the home page') }}</a>
+                </div>
             </div>
         </div>
     </body>

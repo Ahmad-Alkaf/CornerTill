@@ -18,7 +18,7 @@ export default function Welcome() {
 
   return (
     <GuestLayout>
-      <Head title="Welcome" />
+      <Head title="Point of Sale App" />
       <Hero />
       <Features />
       <PoweredBySection />

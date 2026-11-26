@@ -96,7 +96,11 @@ Route::middleware(['guest'])->group(function () {
             'canRegister' => Route::has('register'),
             //'laravelVersion' => Application::VERSION,//10.25.2
             //'phpVersion' => PHP_VERSION,//8.1.10
-        ]);
+        ])->withViewData(['meta' => [
+            // The same words as the <Head title> and the hero text of the page.
+            'title' => __('Point of Sale App'),
+            'description' => __('Simplify your sales process and boost your productivity. Streamline your business operations with our user-friendly Point of Sale app.'),
+        ]]);
     });
 });
 
@@ -105,11 +109,17 @@ Route::get('/bill/{bill}', [BillController::class, 'show'])->name('bill.show');
 
 //if you changed privacy & terms url you have to redirect the old url; it used on third party such as X(twitter).
 Route::get('/privacy-policy', function () {
-    return Inertia::render('Anyone/PrivacyPolicy');
+    return Inertia::render('Anyone/PrivacyPolicy')->withViewData(['meta' => [
+        'title' => __('Privacy Policy'),
+        'description' => __('CornerTill Privacy Policy. Supplement to the KafLabs Privacy Policy.'),
+    ]]);
 })->name('privacyPolicy');
 //if you changed privacy & terms url you have to redirect the old url; it is used on third party such as X(twitter).
 Route::get('/terms-and-conditions', function () {
-    return Inertia::render('Anyone/TermsAndConditions');
+    return Inertia::render('Anyone/TermsAndConditions')->withViewData(['meta' => [
+        'title' => __('Terms'),
+        'description' => __('CornerTill Terms. Supplement to the KafLabs Terms of Service.'),
+    ]]);
 })->name('termsAndConditions');
 
 // The public pages for search engines. public/robots.txt points to this URL.

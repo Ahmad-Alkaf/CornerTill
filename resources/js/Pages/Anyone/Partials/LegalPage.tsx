@@ -36,23 +36,26 @@ export function ExtLink({
 export default function LegalPage({
   user,
   title,
+  headTitle,
   subtitle,
   intro,
   children,
 }: PropsWithChildren<{
   user: IUser | null;
   title: string;
+  /** Translation key of the browser tab title (shorter than the heading). */
+  headTitle: string;
   subtitle: string;
   intro: ReactNode;
 }>) {
   const { t } = useTranslation();
   return (
     <>
-      <Head title={title} />
+      <Head title={headTitle} />
       <GuestAuthLayout user={user} header={title}>
         <article className="mx-auto mt-6 w-11/12 max-w-4xl space-y-6 md:w-10/12">
           <header className="space-y-2">
-            <H2>{title}</H2>
+            <H2 as="h1">{title}</H2>
             <P className="text-lg font-semibold">{subtitle}</P>
             <P className="text-sm !text-gray-500">
               {t("Last updated: {{date}}", { date: t(LEGAL_LAST_UPDATED) })}
