@@ -48,7 +48,7 @@ export default function Product({ bill }: PropsProduct) {
       </TD>
       <TD>
         {bill.createdBy_id === loggedInId ? (
-          <span className="select-none text-gray-600">You</span>
+          <span className="select-none text-gray-600">{t("You")}</span>
         ) : (
           bill.created_by?.name ?? t("N/A")
         )}
