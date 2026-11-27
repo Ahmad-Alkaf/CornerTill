@@ -66,7 +66,9 @@ class PageMetaTest extends TestCase
 
     public function test_bill_receipt_is_not_for_search_engines(): void
     {
-        $bill = Bill::factory()->create();
+        // A guest sees only the receipts of the last 180 days (BillPolicy::show);
+        // the factory date is random in the last year.
+        $bill = Bill::factory()->create(['created_at' => now()->subDay()]);
 
         $this->get('/bill/' . $bill->id)->assertOk()
             ->assertSee('<meta name="robots" content="noindex">', false);
