@@ -1,3 +1,4 @@
+import "./ziggy";
 import "./bootstrap";
 // Error reports from the browser; off without SENTRY_BROWSER_DSN.
 import "./sentry";

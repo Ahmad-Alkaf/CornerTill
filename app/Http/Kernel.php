@@ -29,6 +29,8 @@ class Kernel extends HttpKernel
         // Global, so 404 pages of unknown URLs are translated too. The
         // i18next cookie is not encrypted (EncryptCookies $except).
         \App\Http\Middleware\SetLocale::class,
+        // Global, so error pages get the headers too.
+        \App\Http\Middleware\SecurityHeaders::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,

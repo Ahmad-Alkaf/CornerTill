@@ -33,5 +33,14 @@
     "Too Many Requests": "طلبات كثيرة جدًا",
     "Unauthorized": "غير مصرح",
     "A product in this bill does not exist. Remove it from the bill and try again.": "أحد المنتجات في هذه الفاتورة غير موجود. احذفه من الفاتورة ثم حاول مرة أخرى.",
-    "This business was deleted on :date. All its data will be deleted permanently after :purgeDate. To restore the business before that date, contact support@kaflabs.com.": "حُذف هذا النشاط التجاري في :date. وستُحذف جميع بياناته نهائيًا بعد :purgeDate. لاستعادة النشاط التجاري قبل هذا التاريخ، تواصل مع support@kaflabs.com."
+    "This business was deleted on :date. All its data will be deleted permanently after :purgeDate. To restore the business before that date, contact support@kaflabs.com.": "حُذف هذا النشاط التجاري في :date. وستُحذف جميع بياناته نهائيًا بعد :purgeDate. لاستعادة النشاط التجاري قبل هذا التاريخ، تواصل مع support@kaflabs.com.",
+    "CornerTill": "كورنر تِل",
+    "Point of Sale App": "تطبيق نقاط البيع",
+    "Simplify your sales process and boost your productivity.": "بسّط عمليات مبيعاتك وعزّز إنتاجيتك.",
+    "Simplify your sales process and boost your productivity. Streamline your business operations with our user-friendly Point of Sale app.": "بسّط عمليات مبيعاتك وعزّز إنتاجيتك. قم بتبسيط عمليات عملك من خلال تطبيق نقاط البيع سهل الاستخدام.",
+    "Privacy Policy": "سياسة الخصوصية",
+    "Terms": "الشروط",
+    "CornerTill Privacy Policy. Supplement to the KafLabs Privacy Policy.": "سياسة الخصوصية في كورنر تِل. ملحق بسياسة الخصوصية لدى KafLabs.",
+    "CornerTill Terms. Supplement to the KafLabs Terms of Service.": "شروط كورنر تِل. ملحق بشروط الخدمة لدى KafLabs.",
+    "Go to the home page": "اذهب إلى الصفحة الرئيسية"
 }

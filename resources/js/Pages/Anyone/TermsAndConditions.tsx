@@ -26,6 +26,7 @@ export default function TermsAndConditions({ auth }: PageProps) {
     <LegalPage
       user={auth.user}
       title={t("CornerTill Terms")}
+      headTitle="Terms"
       subtitle={t("Supplement to the KafLabs Terms of Service")}
       intro={
         <P>

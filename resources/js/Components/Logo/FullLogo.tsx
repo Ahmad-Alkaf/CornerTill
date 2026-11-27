@@ -20,9 +20,10 @@ export default function FullLogo({
   return (
     <Link href="/" className="flex shrink-0 items-center gap-2 self-stretch">
       <Logo className={logoSize} />
-      <h1 className={"px-1 tracking-tight " + textSize}>
+      {/* Not a heading: each page has its own h1. */}
+      <span className={"px-1 tracking-tight " + textSize}>
         <AppName className="!font-extrabold" />
-      </h1>
+      </span>
     </Link>
   );
 }

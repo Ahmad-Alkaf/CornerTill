@@ -26,7 +26,7 @@ export default function OpenSourceSection() {
               {" "}
               <a
                 target="_blank"
-                href="https://polyformproject.org/licenses/noncommercial/1.0.0/"
+                href="https://polyformproject.org/licenses/noncommercial/1.0.0"
                 className="text-blue-gray-400 hover:underline"
               >
                 PolyForm Noncommercial 1.0.0.

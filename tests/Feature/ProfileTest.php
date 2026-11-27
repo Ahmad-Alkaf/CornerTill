@@ -97,4 +97,33 @@ class ProfileTest extends TestCase
 
         $this->assertNotNull($user->fresh());
     }
+
+    public function test_empty_name_gets_the_required_message(): void
+    {
+        // A name of only spaces passes the required attribute of the input.
+        // TrimStrings and ConvertEmptyStringsToNull make it null; the message
+        // was "The name field must be a string."
+        $user = User::factory()->create(['email_verified_at' => now(), 'deleted_at' => null]);
+
+        $this->actingAs($user)
+            ->from('/profile')
+            ->patch('/profile', ['name' => '   ', 'email' => $user->email])
+            ->assertSessionHasErrors(['name' => 'The name field is required.'])
+            ->assertRedirect('/profile');
+
+        $this->assertSame($user->name, $user->fresh()->name);
+    }
+
+    public function test_owner_gets_the_required_message_for_an_empty_account_name(): void
+    {
+        $owner = User::factory()->create(['email_verified_at' => now(), 'deleted_at' => null, 'role' => 'Owner']);
+        $cashier = User::factory()->create(['email_verified_at' => now(), 'deleted_at' => null, 'role' => 'Cashier', 'business_id' => $owner->business_id]);
+
+        $this->actingAs($owner)
+            ->from('/accounts')
+            ->patch(route('account.update', $cashier->id), ['name' => '', 'email' => $cashier->email, 'role' => 'Cashier'])
+            ->assertSessionHasErrors(['name' => 'The name field is required.']);
+
+        $this->assertSame($cashier->name, $cashier->fresh()->name);
+    }
 }

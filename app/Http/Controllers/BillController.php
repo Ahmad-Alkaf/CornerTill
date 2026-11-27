@@ -49,9 +49,10 @@ class BillController extends Controller
             }
         ]);
 
+        // A receipt (QR code link) is not a page for search engines.
         return Inertia::render('Authenticated/Bill/index', [
             'bill' => $bill,
-        ]);
+        ])->withViewData(['meta' => ['robots' => 'noindex']]);
     }
 
     /**Bill edit will be displayed in Checkout Page */
