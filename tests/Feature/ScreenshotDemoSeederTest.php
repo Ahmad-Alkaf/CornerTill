@@ -15,6 +15,9 @@ class ScreenshotDemoSeederTest extends TestCase
     public function test_it_creates_the_screenshot_demo_data(): void
     {
         Storage::fake('products-images');
+        // The seeder places the bills by the hour of the day. After about 23:50,
+        // the bills of 6 days ago are before the 7-day window (62 in place of 68).
+        $this->travelTo(now()->setTime(12, 0));
 
         $this->seed(ScreenshotDemoSeeder::class);
 
